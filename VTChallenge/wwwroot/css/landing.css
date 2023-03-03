@@ -1,0 +1,201 @@
+body {
+    background-image: url("../imgs/app/background-sin-jett.png");
+    background-position: center;
+    background-size: 100%;
+    user-select: none;
+}
+.background-filter {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: auto;
+}
+
+.hero {
+    height: 90vh;
+    display: flex;
+}
+
+.hero-text {
+    width: 45%;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 60px;
+}
+
+.hero-img {
+    width: 55%;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.cartel-img {
+    background-image: url("../imgs/app/landig-back.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.login-user-video {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 55%;
+    height: 100vh;
+    object-fit: cover;
+    object-position: 100% 100%;
+}
+
+.form-login, .form-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.input-login, .input-register {
+    width: 90%;
+    font-family: var(--font-calibri);
+    font-size: 25px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: solid 2px var(--color-primary-val);
+    background-color: transparent;
+    color: white;
+    height: 80px;
+    outline: none;
+}
+
+.group-register {
+    width: 90%;
+    margin-top: 20px;
+    height: 80px;
+    display: flex;
+}
+
+    .group-register .input-register {
+        margin-top: 0 !important;
+    }
+
+.input-login:nth-child(2) {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.input-register:nth-last-child() {
+    margin-bottom: 30px;
+}
+
+input::placeholder {
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+    width: 90%;
+}
+
+.tournament-format-text {
+    width: 70%;
+    margin: auto;
+}
+
+.tournament-rank {
+    width: 80%;
+    margin: auto;
+    border-radius: 20px;
+    background-image: url("../imgs/app/landig-back-2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 60px;
+}
+
+.tournament-rank-text {
+    width: 35%;
+}
+.tournament-rank-imgs {
+    display: flex;
+    align-items: flex-end;
+}
+
+.tournament-rank-imgs .image {
+    width: 150px;
+    height: 150px;
+    margin-inline: 20px;
+    animation-duration: 3s; /* duracion de la animacion */
+    animation-iteration-count: infinite; /* animacion infinita */
+    animation-timing-function: ease-in-out;
+}
+
+.image1 {
+    animation-name: float1;
+}
+
+.image2 {
+    animation-name: float2;
+}
+
+.image3 {
+    animation-name: float3;
+}
+
+.image4 {
+    animation-name: float4;
+}
+
+/* animacion */
+@keyframes float1 {
+    0% {
+        transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(-50px);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes float2 {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes float3 {
+    0% {
+        transform: translateY(-50px);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(-50px);
+    }
+}
+
+@keyframes float4 {
+    0% {
+        transform: translateY(-30px);
+    }
+    50% {
+        transform: translateY(-60px);
+    }
+    100% {
+        transform: translateY(-30px);
+    }
+}

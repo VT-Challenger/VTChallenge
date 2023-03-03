@@ -1,0 +1,105 @@
+.container-cards {
+    width: 70%;
+    margin: auto;
+    padding: 0px 0px 60px;
+    overflow-y: scroll;
+}
+.card {
+    width: 30%;
+    border: none;
+    background-color: var(--color-dark-secondary-val);
+    border-radius: 20px;
+    float: left;
+    margin: 20px;
+    background-position: center;
+}
+.card-filter {
+    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.card-header {
+    padding: 0;
+    position: relative;
+}
+
+.card-img {
+    border-radius: 0px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 12vh;
+    object-fit: cover;
+    object-position: top;
+}
+.player-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 20px;
+    color: white;
+    font-weight: bold;
+    font-family: var(--font-val);
+    background-color: #192b4598;
+    border-radius: 20px;
+}
+
+.card-body {
+    position: relative;
+}
+.card-title {
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    font-family: var(--font-calibri);
+}
+.card-text {
+    font-size: 18px;
+    color: var(--color-light-text);
+    font-family: var(--font-calibri);
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0.1rem;
+}
+.icons-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+.icon-img {
+    position: relative;
+    width: 35px;
+    height: auto;
+}
+.icon-img:nth-child(1) {
+    margin-right: 10px;
+}
+
+.card-footer {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+.card-footer-text {
+    font-size: 18px;
+    color: white;
+    font-family: "Console", "Courier New", monospace;
+}
+.card-button {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: var(--font-val);
+    text-decoration: none;
+    color: white;
+    background-color: var(--color-primary-val);
+    padding: 5px 20px 0px 20px;
+    border-radius: 5px;
+}
+
+.card-button:hover {
+    color: white;
+    background-color: var(--color-secondary-val);
+}

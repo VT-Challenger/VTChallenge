@@ -1,9 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using VTChallenge.Data;
+using VTChallenge.Repositories;
+using VTChallenge.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+string connectionString = builder.Configuration.GetConnectionString("SqlVtChallengeTaj");
 
+builder.Services.AddTransient<HttpClient>();
+builder.Services.AddTransient<IRepositoryUsers, RepositoryUsers>();
+builder.Services.AddTransient<IServiceValorant, ServiceValorant>();
+builder.Services.AddDbContext<VTChallengeContext>(options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
@@ -23,6 +33,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Landing}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,8 +1,11 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    var a = ViewData["prueba"];
-}
+﻿@model List<Users>
+
 
 <div class="text-center">
-    <p>Hola</p>
+   
+    <ul>
+        @foreach(Users user in Model) {
+            <li>@user.Name</li>
+        }
+    </ul>
 </div>

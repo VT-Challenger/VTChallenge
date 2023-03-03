@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "_LayoutFormsAuth";
+}
+<div class="hero-text">
+    <h1 class="main-title">Iniciar Sesión</h1>
+    <p class="description-text">
+        Use su cuenta de Riot para validar su usuario y de esa forma poder
+        validar sus victorias.
+    </p>
+    <!--<form>-->
+    <form class="form-login" method="post">
+        <input type="text" class="input-login" placeholder="Username" name="user"/>
+        <input type="password" class="input-login" placeholder="Password" name="password"/>
+        <div class="button-borders">
+            <button class="primary-button primary-background" id="login">
+                Login
+            </button>
+        </div>
+    </form>
+</div>
+
+<video autoplay muted loop class="login-user-video">
+    <source src="~/imgs/app/login-user.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+</video>

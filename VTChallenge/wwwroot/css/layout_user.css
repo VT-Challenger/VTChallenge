@@ -1,0 +1,23 @@
+.back-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+.content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0px 60px;
+    display: flex;
+    flex-direction: column;
+}
+.active {
+    color: var(--color-primary-val);
+}
+
+.content a:hover {
+    color: #00ffb3;
+    cursor: pointer;
+}

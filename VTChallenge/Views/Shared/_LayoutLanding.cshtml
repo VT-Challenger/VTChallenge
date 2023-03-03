@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/logo.ico" />
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- PERSONAL -->
+    <link rel="stylesheet" href="~/css/customs/button.css" />
+    <link rel="stylesheet" href="~/css/customs/carousel.css" />
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/landing.css" />
+    <title>VT Challenge</title>
+</head>
+<body>
+    <div class="background-filter">
+        <div class="menu">
+            <div class="menu-logo">
+                <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
+                <h3 class="text-logo">Vt challenger</h3>
+            </div>
+            <div class="button-borders">
+                <a asp-controller="Managed" asp-action="Login" class="primary-button primary-background">
+                    Login
+                </a>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div class="hero-text">
+                <h1 class="main-title">By Players <br />For competitors</h1>
+                <p class="description-text">
+                    Welcome to VT Challenger, the website that gives you the
+                    chance to play and create Valorant tournaments
+                </p>
+                <div class="button-container">
+                    <div class="button-borders">
+                        <a asp-controller="Managed" asp-action="Register" class="secondary-button secondary-background" >
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-img cartel-img"></div>
+        </div>
+
+        <div class="tournament-format mt-5">
+            <div class="tournament-format-text">
+                <h1 class="main-title text-center">Tournament Formats</h1>
+                <p class="description-text text-center mt-3">
+                    A sporting event in which two knights (or two groups of
+                    knights) jousted on horseback with blunted weapons, each
+                    trying to knock the other off, the winner receiving a
+                    prize.
+                </p>
+            </div>
+            <div class="container__slider">
+                <div class="container-custom">
+                    <input type="radio" name="slider" id="item-1" checked />
+                    <input type="radio" name="slider" id="item-2" />
+                    <input type="radio" name="slider" id="item-3" />
+
+                    <div class="cards-custom">
+                        <label class="card-custom"
+                               for="item-1"
+                               id="selector-1">
+                            <h1 class="card-title">LIGUE</h1>
+                            <img src="~/imgs/app/t-fade.svg" />
+                        </label>
+                        <label class="card-custom"
+                               for="item-2"
+                               id="selector-2">
+                            <h1 class="card-title">GROUP STAGE</h1>
+                            <img src="~/imgs/app/t-playoff.svg" />
+                        </label>
+                        <label class="card-custom"
+                               for="item-3"
+                               id="selector-3">
+                            <h1 class="card-title">PLAY OFF</h1>
+                            <img src="~/imgs/app/t-bracket.svg" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tournament-rank mt-5">
+            <div class="tournament-rank-text">
+                <h1 class="secondary-title">Tournament by Rank</h1>
+                <p class="description-secondary-text">
+                    Tournaments are organized in such a way that they are as
+                    competitive as posible.
+                </p>
+            </div>
+            <div class="tournament-rank-imgs">
+                <img src="~/imgs/app/rank-g.png" class="image image1" />
+                <img src="~/imgs/app/rank-p.png" class="image image2" />
+                <img src="~/imgs/app/rank-d.png" class="image image3" />
+                <img src="~/imgs/app/rank-i.png" class="image image4" />
+            </div>
+        </div>
+
+        <div class="create-tournament mt-5">
+            <h1 class="main-title text-center">Create Tournaments</h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+        @RenderBody()
+    </div>
+</body>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

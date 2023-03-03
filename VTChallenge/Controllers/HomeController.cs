@@ -2,17 +2,23 @@
 using System.Diagnostics;
 
 using VTChallenge.Models;
+using VTChallenge.Repositories;
+using VTChallenge.Services;
 
 namespace VTChallenge.Controllers {
     public class HomeController : Controller {
 
-  
-        public HomeController() {
-         
+        IServiceValorant api;
+        IRepositoryUsers repo;
+
+        public HomeController(IServiceValorant api, IRepositoryUsers repo) {
+            this.api = api;
+            this.repo = repo;
         }
 
         public IActionResult Index() {
-            return View();
+            List<Users> users = this.repo.getUser();
+            return View(users);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

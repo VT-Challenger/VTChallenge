@@ -1,0 +1,16 @@
+body {
+    background-image: url(../imgs/backplaytorunament.jpg);
+    background-size: 100%;
+    user-select: none;
+}
+.background-filter {
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: auto;
+}
+
+.container-button {
+    display: flex;
+    justify-content: center;
+    padding-block: 10px;
+}
