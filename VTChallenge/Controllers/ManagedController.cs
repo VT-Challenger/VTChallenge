@@ -35,8 +35,8 @@ namespace VTChallenge.Controllers {
                 user.ImageSmall = data.Card.Small;
             }
             if (data != null) {
-                this.repo.RegisterUserAsync(user.Uid, user.Name, user.Tag, user.Email, user.Password, user.ImageLarge, user.ImageLarge, user.Rank);
-                return RedirectToAction("Login");
+                await this.repo.RegisterUserAsync(user.Uid, user.Name, user.Tag, user.Email, user.Password, user.ImageLarge, user.ImageLarge, user.Rank);
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }

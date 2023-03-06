@@ -28,16 +28,18 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string iamgelarge, string rank) {
-            Users user = new Users() {
-                Uid = uid,
-                Name = name,
-                Tag = tag,
-                Email = email,
-                Password = password,
-                ImageSmall = imagesmall,
-                ImageLarge = iamgelarge,
-                Rank = rank
-            };
+            Users user = new Users();
+
+            user.Uid = uid;
+            user.Name = name;
+            user.Tag = tag;
+            user.Email = email;
+            user.Password = password;
+            user.ImageSmall = imagesmall;
+            user.ImageLarge = iamgelarge;
+            user.Rank = rank;
+
+
             this.context.Users.Add(user);
             await this.context.SaveChangesAsync();
         }
