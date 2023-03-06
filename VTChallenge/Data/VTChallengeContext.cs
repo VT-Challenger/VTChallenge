@@ -6,5 +6,6 @@ namespace VTChallenge.Data {
         public VTChallengeContext(DbContextOptions<VTChallengeContext> options) : base(options) { }
 
         public DbSet<Users> Users { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
     }
 }

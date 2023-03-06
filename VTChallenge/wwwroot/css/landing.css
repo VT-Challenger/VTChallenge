@@ -1,13 +1,8 @@
 body {
-    background-image: url("../imgs/app/background-sin-jett.png");
+    background-image: url("../imgs/app/background.png");
     background-position: center;
     background-size: 100%;
     user-select: none;
-}
-.background-filter {
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: auto;
 }
 
 .hero {
@@ -37,59 +32,6 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-}
-
-.login-user-video {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 55%;
-    height: 100vh;
-    object-fit: cover;
-    object-position: 100% 100%;
-}
-
-.form-login, .form-register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.input-login, .input-register {
-    width: 90%;
-    font-family: var(--font-calibri);
-    font-size: 25px;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: solid 2px var(--color-primary-val);
-    background-color: transparent;
-    color: white;
-    height: 80px;
-    outline: none;
-}
-
-.group-register {
-    width: 90%;
-    margin-top: 20px;
-    height: 80px;
-    display: flex;
-}
-
-    .group-register .input-register {
-        margin-top: 0 !important;
-    }
-
-.input-login:nth-child(2) {
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-.input-register:nth-last-child() {
-    margin-bottom: 30px;
-}
-
-input::placeholder {
-    color: white;
 }
 
 .button-container {

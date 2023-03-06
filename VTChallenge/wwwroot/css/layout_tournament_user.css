@@ -1,12 +1,7 @@
 body {
-    background-image: url(../imgs/backplaytorunament.jpg);
+    background-image: url("../imgs/app/backplaytorunament.png");
     background-size: 100%;
     user-select: none;
-}
-.background-filter {
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: auto;
 }
 
 .search {

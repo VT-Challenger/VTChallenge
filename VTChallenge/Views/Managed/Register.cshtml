@@ -2,42 +2,54 @@
     Layout = "_LayoutFormsAuth";
 }
 
-<div class="hero-text">
-    <h1 class="main-title">Registro</h1>
-    <!--<form>-->
-    <form class="form-register" method="post">
-        <div class="group-register">
-            <input type="text"
-                   class="input-register"
-                   placeholder="Username"
-                   name="name" />
-            <input type="text"
-                   class="input-register"
-                   placeholder="Tag"
-                   name="tag" />
-        </div>
-        <input type="email"
-               class="input-register"
-               placeholder="Email"
-               name="email" />
-        <input type="password"
-               class="input-register"
-               placeholder="Password"
-               name="password" />
-        <input type="password"
-               class="input-register"
-               placeholder="Repeat Password" />
-        <br />
-        <br />
-        <div class="button-borders">
-            <button class="primary-button primary-background">
-                Register
-            </button>
-        </div>
-    </form>
+<div class="container-hero">
+    <div class="hero">
+        <h1 class="main-title">Registro</h1>
+        <!--<form>-->
+        <form class="form-register" method="post">
+            @Html.AntiForgeryToken()
+            <div class="group-register">
+                <input
+                    type="text"
+                    class="input-register"
+                    placeholder="Username"
+                    name="name"
+                />
+                <input
+                    type="text"
+                    class="input-register"
+                    placeholder="Tag"
+                    name="tag"
+                />
+            </div>
+            <input
+                type="email"
+                class="input-register"
+                placeholder="Email"
+                name="email"
+            />
+            <input
+                type="password"
+                class="input-register"
+                placeholder="Password"
+                name="password"
+            />
+            <input
+                type="password"
+                class="input-register"
+                placeholder="Repeat Password"
+            />
+         
+            <div class="button-borders">
+                <button class="primary-button primary-background">
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<video autoplay muted loop class="login-user-video">
+<video autoplay muted loop class="register-user-video">
     <source src="~/imgs/app/register_user.mp4" type="video/mp4" />
     Your browser does not support HTML5 video.
 </video>

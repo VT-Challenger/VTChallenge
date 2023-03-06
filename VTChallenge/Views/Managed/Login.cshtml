@@ -1,22 +1,34 @@
 ﻿@{
     Layout = "_LayoutFormsAuth";
 }
-<div class="hero-text">
-    <h1 class="main-title">Iniciar Sesión</h1>
-    <p class="description-text">
-        Use su cuenta de Riot para validar su usuario y de esa forma poder
-        validar sus victorias.
-    </p>
-    <!--<form>-->
-    <form class="form-login" method="post">
-        <input type="text" class="input-login" placeholder="Username" name="user"/>
-        <input type="password" class="input-login" placeholder="Password" name="password"/>
-        <div class="button-borders">
-            <button class="primary-button primary-background" id="login">
-                Login
-            </button>
-        </div>
-    </form>
+<div class="container-hero">
+    <div class="hero">
+        <h1 class="main-title">Iniciar Sesión</h1>
+        <p class="description-text">
+            Use su cuenta de Riot para validar su usuario
+        </p>
+        <form class="form-login" method="post">
+            @Html.AntiForgeryToken()
+            <input
+                type="text"
+                class="input-login"
+                placeholder="Username"
+                name="username"
+            />
+            <input
+                type="password"
+                class="input-login"
+                placeholder="Password"
+                name="password"
+            />
+            <div class="button-borders">
+                <button class="primary-button primary-background">
+                    Login
+                </button>
+            </div>
+        </form>
+        <p class="message">@ViewData["MENSAJE"]</p>
+    </div>
 </div>
 
 <video autoplay muted loop class="login-user-video">

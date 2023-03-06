@@ -1,0 +1,76 @@
+﻿@model List<Tournament>
+@{
+    Layout = "_LayoutListTournament";
+}
+@section scriptHeight{
+    <script type="text/javascript">
+        function GetHeight() {
+            var height = $(window).height() - 140;
+            var menu = $("#menu").height();
+            var content = $("#content").height();
+
+            var total = height - (menu + content);
+            console.log(height);
+
+            $("#content-torneos").height(total);
+        }
+
+        $(document).ready(function () {
+            GetHeight();
+            $(window).resize(function () {
+                GetHeight();
+            });
+        });
+    </script>
+}
+
+
+<div id="content">
+    <h1 class="main-title-valo text-center">Torneos</h1>
+    <form class="search">
+        <input type="text" class="search__input" />
+        <button class="search__button">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="25"
+                 height="25"
+                 fill="white"
+                 class="bi bi-search"
+                 viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+        </button>
+    </form>
+</div>
+
+<div class="container-cards mt-5" id="content-torneos">
+    @if (Model != null) {
+        @foreach(Tournament tournament in Model) {
+            <div class="card">
+                <div class="card-header">
+                    <img src="~/imgs/tournaments/@tournament.Image"
+                         class="card-img"
+                         alt="..." />
+                    <p class="player-count">9/@tournament.Players</p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@tournament.Name</h5>
+                    <p class="card-text">Plataforma: @tournament.Platform</p>
+                    <p class="card-text">rango requerido: @tournament.Rank</p>
+                    <p class="card-text">5 vs 5</p>
+                    <div class="icons-container">
+                        <img class="icon-img" src="~/imgs/icons/discord.png" />
+                        <img class="icon-img" src="~/imgs/icons/diamante2.png" />
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p class="card-footer-text">@tournament.DateInit</p>
+                    <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>
+                </div>
+            </div>
+        }
+
+        
+    }
+    
+</div>
+

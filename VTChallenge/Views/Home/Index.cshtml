@@ -1,11 +1,15 @@
-﻿@model List<Users>
+﻿@{
+    Layout = "_LayoutHome";
+}
 
-
-<div class="text-center">
-   
-    <ul>
-        @foreach(Users user in Model) {
-            <li>@user.Name</li>
-        }
-    </ul>
+<div class="content">
+    <a asp-controller="Tournaments" asp-action="ListTournaments" class="main-title-valo active">
+        jugar
+    </a>
+    <a asp-controller="" asp-action="" class="main-title-valo"> 
+        trayectoria 
+    </a>
+    <a asp-controller="" asp-action="" class="main-title-valo">
+        crear torneo
+    </a>
 </div>

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Users user = Context.Session.GetObject<Users>("USUARIO");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -9,26 +13,32 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- PERSONAL -->
     <link rel="stylesheet" href="~/css/customs/button.css" />
+    <link rel="stylesheet" href="~/css/customs/card.css" />
     <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/layout_froms_auth.css" />
+    <link rel="stylesheet" href="~/css/layout_tournament_user.css" />
     <title>VT Challenge</title>
 </head>
 <body>
-    <div class="menu">
+    <div class="menu" id="menu">
         <div class="menu-logo">
             <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
             <h3 class="text-logo">
-                <a asp-controller="Landing" asp-action="Index">Vt challenger</a>
+                <a asp-controller="Home" asp-action="Index">Atras</a>
             </h3>
         </div>
+        <a asp-controller="" asp-action="" class="menu-profile">
+            <img src="@user.ImageSmall" />
+        </a>
     </div>
 
     
-     @RenderBody()
-      
+    @RenderBody()
+
 
 </body>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@await RenderSectionAsync("scriptHeight", required: false)
 </html>
+

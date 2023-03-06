@@ -6,11 +6,7 @@ using VTChallenge.Models;
 namespace VTChallenge.Repositories {
 
     #region PROCEDURES
-    //CREATE PROCEDURE SP_REGISTER_USER
-    //(@UID NVARCHAR(250),@NAME NVARCHAR(50), @TAG NVARCHAR(50), @EMAIL NVARCHAR(250), @PASSWORD NVARCHAR(20), @IMAGESMALL NVARCHAR(250), @IMAGELARGE NVARCHAR(250), @RANK NVARCHAR(25))
-    //AS
-    //    INSERT INTO USERS VALUES(@UID, @NAME, @TAG, @EMAIL, @PASSWORD, @IMAGESMALL, @IMAGELARGE, @RANK);
-    //GO
+    
     #endregion
 
     public class RepositoryUsers : IRepositoryUsers {
@@ -27,6 +23,13 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
+        public Users LoginNamePassword(string name, string password) {
+            var consulta = from data in this.context.Users
+                           where data.Name == name && data.Password == password
+                           select data;
+            return consulta.FirstOrDefault();
+        }
+
         public async Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string iamgelarge, string rank) {
             Users user = new Users();
 
@@ -38,6 +41,7 @@ namespace VTChallenge.Repositories {
             user.ImageSmall = imagesmall;
             user.ImageLarge = iamgelarge;
             user.Rank = rank;
+            user.Rol = "player";
 
 
             this.context.Users.Add(user);

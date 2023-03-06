@@ -12,53 +12,115 @@
     font-weight: bold;
     color: white;
     text-decoration: none;
+
     border: 1px solid transparent;
     padding: 10px 50px;
+
     background-color: var(--color-primary-val);
     background-size: 200%;
     background-position: 200%;
     background-repeat: no-repeat;
+
     transition: 0.3s ease-in-out;
     transition-property: background-position, border, color;
+
     position: relative;
     cursor: pointer;
     z-index: 2;
 }
 
-    .primary-button:hover {
-        color: white;
-        background-position: 40%;
-    }
+.primary-button:hover {
+    color: white;
+    background-position: 40%;
+}
 
-    .primary-button:before {
-        content: "";
-        position: absolute;
-        background-color: var(--color-primary-val);
-        width: 0.2rem;
-        height: 0.2rem;
-        top: -1px;
-        left: -1px;
-        transition: background-color 0.15s ease-in-out;
-    }
+.primary-button:before {
+    content: "";
+    position: absolute;
+    background-color: var(--color-primary-val);
+    width: 0.2rem;
+    height: 0.2rem;
+    top: -1px;
+    left: -1px;
+    transition: background-color 0.15s ease-in-out;
+}
 
-    .primary-button:hover:before {
-        background-color: white;
-    }
+.primary-button:hover:before {
+    background-color: white;
+}
 
-    .primary-button:hover:after {
-        background-color: white;
-    }
+.primary-button:hover:after {
+    background-color: white;
+}
 
-    .primary-button:after {
-        content: "";
-        position: absolute;
-        background-color: var(--color-secondary-val);
-        width: 0.3rem;
-        height: 0.3rem;
-        bottom: -1px;
-        right: -1px;
-        transition: background-color 0.15s ease-in-out;
-    }
+.primary-button:after {
+    content: "";
+    position: absolute;
+    background-color: var(--color-secondary-val);
+    width: 0.3rem;
+    height: 0.3rem;
+    bottom: -1px;
+    right: -1px;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.secondary-button {
+    font-family: var(--font-val);
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid transparent;
+    padding: 10px 50px;
+
+    background-color: var(--color-secondary-val);
+    background-size: 200%;
+    background-position: 200%;
+    background-repeat: no-repeat;
+
+    transition: 0.3s ease-in-out;
+    transition-property: background-position, border, color;
+
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.secondary-button:hover {
+    color: white;
+    background-position: 40%;
+}
+
+.secondary-button:before {
+    content: "";
+    position: absolute;
+    background-color: var(--color-secondary-val);
+    width: 0.2rem;
+    height: 0.2rem;
+    top: -1px;
+    left: -1px;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.secondary-button:hover:before {
+    background-color: white;
+}
+
+.secondary-button:hover:after {
+    background-color: white;
+}
+
+.secondary-button:after {
+    content: "";
+    position: absolute;
+    background-color: var(--color-primary-val);
+    width: 0.3rem;
+    height: 0.3rem;
+    bottom: -1px;
+    right: -1px;
+    transition: background-color 0.15s ease-in-out;
+}
 
 .button-borders {
     position: relative;
@@ -66,81 +128,58 @@
     height: fit-content;
 }
 
-    .button-borders:before {
-        content: "";
-        position: absolute;
-        width: calc(100% + 0.5em);
-        height: 70%;
-        left: -0.3em;
-        top: -0.6em;
-        border: 1px solid white;
-        border-bottom: 0px;
-        /* opacity: 0.3; */
-    }
-
-    .button-borders:after {
-        content: "";
-        position: absolute;
-        width: calc(100% + 0.5em);
-        height: 70%;
-        left: -0.3em;
-        bottom: -0.8em;
-        border: 1px solid white;
-        border-top: 0px;
-        /* opacity: 0.3; */
-        z-index: 0;
-    }
-
-.secondary-button {
-    font-family: var(--font-val);
-    font-size: 15px;
-    font-weight: bold;
-    text-decoration: none;
-    color: white;
-    border: 1px solid transparent;
-    padding: 10px 50px;
-    background-color: var(--color-secondary-val);
-    background-size: 200%;
-    background-position: 200%;
-    background-repeat: no-repeat;
-    transition: 0.3s ease-in-out;
-    transition-property: background-position, border, color;
-    position: relative;
-    cursor: pointer;
-    z-index: 1;
+.button-borders:before {
+    content: "";
+    position: absolute;
+    width: calc(100% + 0.5em);
+    height: 50%;
+    left: -0.3em;
+    top: -0.3em;
+    border: 1px solid white;
+    border-bottom: 0px;
+    /* opacity: 0.3; */
 }
 
-    .secondary-button:hover {
-        color: white;
-        background-position: 40%;
-    }
+.button-borders:after {
+    content: "";
+    position: absolute;
+    width: calc(100% + 0.5em);
+    height: 50%;
+    left: -0.3em;
+    bottom: -0.3em;
+    border: 1px solid white;
+    border-top: 0px;
+    /* opacity: 0.3; */
+    z-index: 0;
+}
 
-    .secondary-button:before {
-        content: "";
-        position: absolute;
-        background-color: var(--color-secondary-val);
-        width: 0.2rem;
-        height: 0.2rem;
-        top: -1px;
-        left: -1px;
-        transition: background-color 0.15s ease-in-out;
-    }
+/*SOLO PARA ETIQUETAS A*/
+.a-borders {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+}
+.a-borders:before {
+    content: "";
+    position: absolute;
+    width: calc(100% + 0.5em);
+    height: 70%;
+    left: -0.3em;
+    top: -0.6em;
+    border: 1px solid white;
+    border-bottom: 0px;
+    /* opacity: 0.3; */
+}
 
-    .secondary-button:hover:before {
-        background-color: white;
-    }
-
-    .secondary-button:hover:after {
-        background-color: white;
-    }
-
-    .secondary-button:after {
-        content: "";
-        position: absolute;
-        background-color: var(--color-primary-val);
-        width: 0.3rem;
-        height: 0.3rem;
-        bottom: -1px;
-        right: -1px;
-        transition: background-color 0.15s ease-in-out;
-    }
+.a-borders:after {
+    content: "";
+    position: absolute;
+    width: calc(100% + 0.5em);
+    height: 70%;
+    left: -0.3em;
+    bottom: -0.8em;
+    border: 1px solid white;
+    border-top: 0px;
+    /* opacity: 0.3; */
+    z-index: 0;
+}

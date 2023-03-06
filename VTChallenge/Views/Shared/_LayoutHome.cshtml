@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Users user = Context.Session.GetObject<Users>("USUARIO");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -10,7 +14,7 @@
     <!-- PERSONAL -->
     <link rel="stylesheet" href="~/css/customs/button.css" />
     <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/layout_froms_auth.css" />
+    <link rel="stylesheet" href="~/css/index_user.css" />
     <title>VT Challenge</title>
 </head>
 <body>
@@ -18,14 +22,22 @@
         <div class="menu-logo">
             <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
             <h3 class="text-logo">
-                <a asp-controller="Landing" asp-action="Index">Vt challenger</a>
+                <a asp-controller="Home" asp-action="Index">Vt challenger</a>
             </h3>
         </div>
+        <a asp-controller="" asp-action="" class="menu-profile">
+            <img src="@user.ImageSmall" />
+        </a>
     </div>
 
-    
-     @RenderBody()
-      
+    <video autoplay muted loop class="back-video">
+        <source src="~/imgs/app/homeScreen.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+    </video>
+
+
+    @RenderBody()
+
 
 </body>
 
