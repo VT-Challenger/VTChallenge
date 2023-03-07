@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Security.Policy;
-using VTChallenge.Models;
+using VTChallenge.Models.Api;
 
-namespace VTChallenge.Services {
+namespace VTChallenge.Services
+{
     public class ServiceValorant : IServiceValorant {
 
         private HttpClient httpClient;

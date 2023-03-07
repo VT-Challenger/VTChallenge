@@ -50,7 +50,7 @@
                     <img src="~/imgs/tournaments/@tournament.Image"
                          class="card-img"
                          alt="..." />
-                    <p class="player-count">9/@tournament.Players</p>
+                    <p class="player-count">@tournament.Inscriptions/@tournament.LimitPlayers</p>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">@tournament.Name</h5>
@@ -58,7 +58,7 @@
                     <p class="card-text">rango requerido: @tournament.Rank</p>
                     <p class="card-text">5 vs 5</p>
                     <div class="icons-container">
-                        <img class="icon-img" src="~/imgs/icons/discord.png" />
+                        <img class="icon-img" src="~/imgs/icons/@tournament.PlatformImage" />
                         <img class="icon-img" src="~/imgs/icons/diamante2.png" />
                     </div>
                 </div>
@@ -68,8 +68,9 @@
                 </div>
             </div>
         }
+   
 
-        
+
     }
     
 </div>

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VTChallenge.Extensions;
 using VTChallenge.Models;
+using VTChallenge.Models.Api;
 using VTChallenge.Repositories;
 using VTChallenge.Services;
 
-namespace VTChallenge.Controllers {
+namespace VTChallenge.Controllers
+{
     public class ManagedController : Controller {
 
         IRepositoryUsers repo;

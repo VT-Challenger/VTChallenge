@@ -28,14 +28,5 @@ namespace VTChallenge.Repositories {
 
             return consulta.ToList();
         }
-
-        public int GetInscription(int tid) {
-            string sql = "SP_GET_INSCRIPTION @TID";
-            SqlParameter pamTid = new SqlParameter("@TID", tid);
-
-            var consulta = this.context.Tournaments.FromSqlRaw(sql, pamTid);
-
-            return consulta.FirstOrDefault();
-        }
     }
 }

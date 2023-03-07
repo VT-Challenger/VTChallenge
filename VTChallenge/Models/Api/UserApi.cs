@@ -1,16 +1,20 @@
-﻿namespace VTChallenge.Models {
-    public class UserApi {
+﻿namespace VTChallenge.Models.Api
+{
+    public class UserApi
+    {
 
         public DataApi Data { get; set; }
     }
-    public class Card {
+    public class Card
+    {
         public string Small { get; set; }
         public string Large { get; set; }
         public string Wide { get; set; }
         public string Id { get; set; }
     }
 
-    public class DataApi {
+    public class DataApi
+    {
         public string Puuid { get; set; }
         public string Region { get; set; }
         public int AccountLevel { get; set; }

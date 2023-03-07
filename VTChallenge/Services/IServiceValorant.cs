@@ -1,6 +1,7 @@
-﻿using VTChallenge.Models;
+﻿using VTChallenge.Models.Api;
 
-namespace VTChallenge.Services {
+namespace VTChallenge.Services
+{
     public interface IServiceValorant {
 
         Task<UserApi> GetAccountAsync(string username, string tagline);
