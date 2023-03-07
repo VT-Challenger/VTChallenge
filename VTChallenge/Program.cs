@@ -14,7 +14,7 @@ builder.Services.AddSession(options => {
 builder.Services.AddAntiforgery();
 builder.Services.AddControllersWithViews();
 
-string connectionString = builder.Configuration.GetConnectionString("SqlVtChallengeHome");
+string connectionString = builder.Configuration.GetConnectionString("SqlVtChallengeTaj");
 
 builder.Services.AddTransient<HttpClient>();
 builder.Services.AddTransient<IRepositoryUsers, RepositoryUsers>();
