@@ -63,7 +63,9 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <p class="card-footer-text">@tournament.DateInit</p>
+                    <p class="card-footer-text">
+                        @tournament.DateInit.Date.ToString("dd MMM yyyy | HH:mm")
+                    </p>
                     <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>
                 </div>
             </div>
