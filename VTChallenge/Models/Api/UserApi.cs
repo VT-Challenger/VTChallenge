@@ -2,7 +2,6 @@
 {
     public class UserApi
     {
-
         public DataApi Data { get; set; }
     }
     public class Card

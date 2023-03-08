@@ -25,14 +25,14 @@ namespace VTChallenge.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password) {
             username= "Popolas";
-            password = "1234";
+            password = "P@ssw0rd";
             Users user = this.repo.LoginNamePassword(username, password);
             if(user != null) {
                 //ALMACENAR USUARIO EN SESION
                 HttpContext.Session.SetObject("USUARIO", user);
                 return RedirectToAction("Index", "Home");
             } else {
-                ViewData["MENSAJE"] = "Usuario/Password incorrectos";
+                ViewData["MENSAJE"] = "Credenciales incorrectas";
                 return View();
             }
         }
@@ -54,7 +54,8 @@ namespace VTChallenge.Controllers
                 user.ImageSmall = data.Card.Small;
             }
             if (data != null) {
-                await this.repo.RegisterUserAsync(user.Uid, user.Name, user.Tag, user.Email, user.Password, user.ImageLarge, user.ImageLarge, user.Rank);
+                user.Password = "P@ssw0rd";
+                await this.repo.RegisterUserAsync(user.Uid, user.Name, user.Tag, user.Email, user.Password, user.ImageLarge, user.ImageLarge);
                 return RedirectToAction("Login");
             }
             return View();

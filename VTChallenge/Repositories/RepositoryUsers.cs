@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 using VTChallenge.Data;
+using VTChallenge.Helpers;
 using VTChallenge.Models;
+using VTChallenge.Services;
 
 namespace VTChallenge.Repositories {
 
@@ -11,10 +13,12 @@ namespace VTChallenge.Repositories {
 
     public class RepositoryUsers : IRepositoryUsers {
 
-        VTChallengeContext context;
-
-        public RepositoryUsers(VTChallengeContext context) {
+        private VTChallengeContext context;
+        private IServiceValorant api;
+    
+        public RepositoryUsers(VTChallengeContext context, IServiceValorant api) {
             this.context = context;
+            this.api = api;
         }
 
         public List<Users> getUser() {
@@ -23,14 +27,26 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
-        public Users LoginNamePassword(string name, string password) {
-            var consulta = from data in this.context.Users
-                           where data.Name == name && data.Password == password
-                           select data;
-            return consulta.FirstOrDefault();
+        public Users LoginNamePassword(string username, string password) {
+            Users user = this.context.Users.FirstOrDefault(u => u.Name == username);
+            if(user == null) {
+                return null;
+            } else {
+                byte[] passUsuario = user.PassEncript;
+                string salt = user.Salt;
+
+                byte[] temp = HelperCryptography.EncryptPassword(password, salt);
+                bool respuesta = HelperCryptography.CompareArrays(passUsuario, temp);
+
+                if (respuesta == true) {
+                    return user;
+                } else {
+                    return null;
+                }
+            }
         }
 
-        public async Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string iamgelarge, string rank) {
+        public async Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string imagelarge) {
             Users user = new Users();
 
             user.Uid = uid;
@@ -39,10 +55,11 @@ namespace VTChallenge.Repositories {
             user.Email = email;
             user.Password = password;
             user.ImageSmall = imagesmall;
-            user.ImageLarge = iamgelarge;
-            user.Rank = rank;
+            user.ImageLarge = imagelarge;
+            user.Rank = await this.api.GetRankAsync(name, tag);
             user.Rol = "player";
-
+            user.Salt = HelperCryptography.GenerateSalt();
+            user.PassEncript = HelperCryptography.EncryptPassword(password, user.Salt);
 
             this.context.Users.Add(user);
             await this.context.SaveChangesAsync();

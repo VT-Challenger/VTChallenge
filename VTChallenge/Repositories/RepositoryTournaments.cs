@@ -22,8 +22,8 @@ namespace VTChallenge.Repositories {
         }
 
 
-        public List<Tournament> GetTournaments() {
-            var consulta = from data in this.context.Tournaments
+        public List<TournamentComplete> GetTournaments() {
+            var consulta = from data in this.context.TournamentCompletes
                            select data;
 
             return consulta.ToList();

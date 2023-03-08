@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Security.Policy;
+using Newtonsoft.Json.Linq;
 using VTChallenge.Models.Api;
 
 namespace VTChallenge.Services
@@ -26,6 +26,33 @@ namespace VTChallenge.Services
                 return null;
             } else {
                 return JsonConvert.DeserializeObject<UserApi>(jsonReponse);
+            }
+        }
+
+        public async Task<string> GetRankAsync(string username, string tag) {
+            string request = "valorant/v1/mmr-history/eu/" + username + "/" + tag;
+            string url = this.url + request;
+
+            var response = await httpClient.GetAsync(url);
+
+            string jsonReponse = await response.Content.ReadAsStringAsync();
+
+            if (jsonReponse == null) {
+                return "";
+            } else {
+                // Parse JSON string to a JObject
+                JObject jsonObj = JObject.Parse(jsonReponse);
+
+                // Get the "data" array
+                JArray dataArray = (JArray)jsonObj["data"];
+
+                // Get the first object in the "data" array
+                JObject dataObj = (JObject)dataArray[0];
+
+                // Get the value of the "currenttier_patched" property
+                string currentTierPatched = dataObj.GetValue("currenttierpatched").Value<string>();
+
+                return currentTierPatched;
             }
         }
     }

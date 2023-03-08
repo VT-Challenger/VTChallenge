@@ -37,6 +37,12 @@ namespace VTChallenge.Models {
         [Column("ROL")]
         public string? Rol { get; set; }
 
+        [Column("SALT")]
+        public string Salt { get; set; }
+
+        [Column("PASSENCRIPT")]
+        public byte[] PassEncript { get; set; }
+
         public Users() { }
 
     }

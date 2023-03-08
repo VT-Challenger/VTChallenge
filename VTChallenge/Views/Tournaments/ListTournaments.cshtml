@@ -1,4 +1,4 @@
-﻿@model List<Tournament>
+﻿@model List<TournamentComplete>
 @{
     Layout = "_LayoutListTournament";
 }
@@ -44,7 +44,7 @@
 
 <div class="container-cards mt-5" id="content-torneos">
     @if (Model != null) {
-        @foreach(Tournament tournament in Model) {
+        @foreach(TournamentComplete tournament in Model) {
             <div class="card">
                 <div class="card-header">
                     <img src="~/imgs/tournaments/@tournament.Image"
@@ -64,7 +64,11 @@
                 </div>
                 <div class="card-footer">
                     <p class="card-footer-text">
-                        @tournament.DateInit.Date.ToString("dd MMM yyyy | HH:mm")
+                        @{
+                           
+                            var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
+                        }
+                        @fechaFormateada
                     </p>
                     <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>
                 </div>

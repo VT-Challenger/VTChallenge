@@ -2,6 +2,6 @@
 
 namespace VTChallenge.Repositories {
     public interface IRepositoryTournaments {
-        List<Tournament> GetTournaments();
+        List<TournamentComplete> GetTournaments();
     }
 }

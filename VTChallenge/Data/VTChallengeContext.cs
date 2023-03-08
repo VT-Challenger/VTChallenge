@@ -7,7 +7,7 @@ namespace VTChallenge.Data {
 
         public DbSet<Users> Users { get; set; }
         
-        public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<TournamentComplete> TournamentCompletes { get; set; }
         public DbSet<PlayersTournament> VPlayersTournaments { get; set; }
     }
 }

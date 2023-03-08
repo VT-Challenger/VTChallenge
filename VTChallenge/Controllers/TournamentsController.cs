@@ -12,7 +12,7 @@ namespace VTChallenge.Controllers {
         }
 
         public IActionResult ListTournaments() {
-            List<Tournament> tournaments = this.repo.GetTournaments();
+            List<TournamentComplete> tournaments = this.repo.GetTournaments();
             return View(tournaments);
         }
     }

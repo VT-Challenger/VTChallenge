@@ -20,7 +20,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace VTChallenge.Models {
 
     [Table("V_TOURNAMENT_COMPLETE")]
-    public class Tournament {
+    public class TournamentComplete {
         [Key]
         [Column("TID")]
         public int Tid { get; set; }
