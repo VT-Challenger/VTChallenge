@@ -1,0 +1,129 @@
+﻿@model TournamentComplete
+@section scriptWinner{
+    <script type="text/javascript">
+        const divWinner = document.getElementById("winner");
+        var list = document.getElementById("list-winner");
+        divWinner.addEventListener("click", function (e) {
+            e.preventDefault();
+            party.confetti(e);
+            list.classList.add("animation-winner");
+            list.addEventListener("animationend", function () {
+                list.classList.remove("animation-winner");
+            });
+        });
+    </script>
+}
+@{
+    Layout = "_LayoutDetailsTournament";
+    List<TournamentPlayers> playersTournament = TempData["PLAYERSTOURNAMENT"] as List<TournamentPlayers>;
+
+    var teams = (Model.LimitPlayers / 5);
+    var fecha = Model.DateInit.ToString("dd MMM yyyy");
+    Users user = Context.Session.GetObject<Users>("USUARIO");
+}
+
+<img src="~/imgs/tournaments/@Model.Image" class="image-background" />
+<div class="header">
+    <div class="header-content">
+        <img
+            src="~/imgs/icons/@Model.Icon"
+            class="header-icon"
+        />
+        <div class="">
+            <h1 class="secondary-title">Neon Cup</h1>
+            <ul class="header-description">
+                <li>
+                    <img
+                        src="~/imgs/icons/t-group-icon.svg"
+                        class="ico"
+                    />
+                    @teams Teams (5vs5)
+                </li>
+                <li>
+                    <img
+                        src="~/imgs/icons/t-cup-icon.svg"
+                        class="ico"
+                    />
+                    Cuartos de final (Partido único)
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="tabs">
+    <input type="radio" id="description" name="tab-control" checked />
+    <input type="radio" id="participantes" name="tab-control" />
+    <input type="radio" id="clasificacion" name="tab-control" />
+    <input type="radio" id="calendario" name="tab-control" />
+    <ul class="tabs-header">
+        <li>
+            <label for="description" role="button">
+                <span>Descripcion</span>
+            </label>
+        </li>
+        <li>
+            <label for="participantes" role="button">
+                <span>Participantes</span>
+            </label>
+        </li>
+        <li>
+            <label for="clasificacion" role="button">
+                <span>Clasificacion</span>
+            </label>
+        </li>
+        <li>
+            <label for="calendario" role="button">
+                <span>Calendario</span>
+            </label>
+        </li>
+    </ul>
+
+    <div class="content">
+        <!-- TAB => DESCRIPTION TOURNAMENT -->
+        <section>
+            <div class="description">
+                <h1>Descripcion</h1>
+                <p>@Model.Description</p>
+            </div>
+            <div class="description">
+                <div class="content">
+                    <h1>Rango</h1>
+                    <h3>@Model.Rank</h3>
+                    <h1>Plataforma</h1>
+                    <h3><a href="">@Model.Platform</a></h3>
+                    <h1>Fecha</h1>
+                    <h3>@fecha</h3>
+                    <h1>Organizador</h1>
+                    <h3>@Model.Organizator</h3>
+                </div>
+                <div class="card-organizator">
+                    <span class="title-organizator">@Model.Organizator</span>
+                    <img src="~/imgs/app/template-card.png"
+                         class="template" />
+                    <img src="@Model.ImageOrganization"
+                         class="image-organizator" />
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB => PARTICIPANTES -->
+        <section>
+            @foreach (TournamentPlayers player in playersTournament) {
+                <div class="container-participante ">
+                    <div class="team @(user.Name == player.Name ? "user":"active")">
+                        <h3>T-@player.Team</h3>
+                    </div>
+                    <div class="data">
+                        <img
+                            src="@player.ImageSmall"
+                            class="img-participante"
+                        />
+                        <h3>@player.Name</h3>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+

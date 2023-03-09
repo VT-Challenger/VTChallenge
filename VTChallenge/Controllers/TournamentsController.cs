@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VTChallenge.Extensions;
 using VTChallenge.Models;
 using VTChallenge.Repositories;
 
@@ -12,8 +13,18 @@ namespace VTChallenge.Controllers {
         }
 
         public IActionResult ListTournaments() {
-            List<TournamentComplete> tournaments = this.repo.GetTournaments();
-            return View(tournaments);
+            if (HttpContext.Session.GetObject<Users>("USUARIO") == null) {
+                return RedirectToAction("AccesoDenegado", "Managed");
+            } else {
+                List<TournamentComplete> tournaments = this.repo.GetTournaments();
+                return View(tournaments);
+            }
+        }
+
+        public IActionResult TournamentDetails(int tid) {
+            TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
+            TempData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
+            return View(tournament);
         }
     }
 }

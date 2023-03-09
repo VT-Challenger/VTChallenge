@@ -21,6 +21,16 @@ namespace VTChallenge.Repositories {
             this.context = context;
         }
 
+        public List<TournamentPlayers> GetPlayersTournament(int tid) {
+            var consulta = from data in this.context.TournamentPlayers
+                           where data.Tid == tid
+                           select data;
+            return consulta.OrderBy(x => x.Team).ToList();
+        }
+
+        public TournamentComplete GetTournamentComplete(int tid) {
+            return this.context.TournamentCompletes.FirstOrDefault(z=> z.Tid == tid);
+        }
 
         public List<TournamentComplete> GetTournaments() {
             var consulta = from data in this.context.TournamentCompletes
