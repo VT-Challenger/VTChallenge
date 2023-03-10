@@ -6,9 +6,9 @@ using VTChallenge.Repositories;
 namespace VTChallenge.Controllers {
     public class TournamentsController : Controller {
 
-        public IRepositoryTournaments repo;
+        public IRepositoryVtChallenge repo;
 
-        public TournamentsController(IRepositoryTournaments repo) {
+        public TournamentsController(IRepositoryVtChallenge repo) {
             this.repo = repo;
         }
 
@@ -24,6 +24,8 @@ namespace VTChallenge.Controllers {
         public IActionResult TournamentDetails(int tid) {
             TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
             TempData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
+            TempData["ROUNDSNAME"] = this.repo.GetNameRounds(tid);
+            TempData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
             return View(tournament);
         }
     }
