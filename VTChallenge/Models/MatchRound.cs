@@ -10,6 +10,10 @@ namespace VTChallenge.Models {
 
         public int Tred { get; set; }
 
+        public int Rblue { get; set; }
+
+        public int Rred { get; set; }
+
         public DateTime Date { get; set; }
 
         public string Fase { get; set; }

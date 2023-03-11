@@ -13,13 +13,60 @@
         });
     </script>
 }
+@section scriptClassWinner{
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtener todos los elementos ul con la clase "bracket"
+            const brackets = document.querySelectorAll(".bracket");
+
+            // Iterar sobre cada elemento ul
+            for (let i = 0; i < brackets.length; i++) {
+                const bracket = brackets[i];
+                const teamItems = bracket.querySelectorAll(".team-item");
+
+                for (let j = 0; j < teamItems.length; j++) {
+                    const teamItem = teamItems[j];
+
+                    const team1Name =
+                        teamItem.querySelector(".team span").textContent;
+
+                    const team1Result =
+                        teamItem.querySelector(".team .result").textContent;
+
+                    const team2Name = teamItem.querySelector(
+                        ".team:last-child span"
+                    ).textContent;
+
+                    const team2Result = teamItem.querySelector(
+                        ".team:last-child .result"
+                    ).textContent;
+
+                    if (team1Result > team2Result) {
+                        teamItem
+                            .querySelector(".team .result")
+                            .classList.add("winner");
+                    } else {
+                        teamItem
+                            .querySelector(".team:last-child .result")
+                            .classList.add("winner");
+                    }
+                }
+            }
+        });
+    </script>
+}
 @{
     Layout = "_LayoutDetailsTournament";
+
+    Users user = Context.Session.GetObject<Users>("USUARIO");
     List<TournamentPlayers> playersTournament = TempData["PLAYERSTOURNAMENT"] as List<TournamentPlayers>;
+    List<Round> nameRounds = TempData["ROUNDSNAME"] as List<Round>;
+    List<MatchRound> matchesTournament = TempData["MATCHESTOURNAMENT"] as List<MatchRound>;
+    List<TournamentPlayers> winners = TempData["TOURNAMENTWINNER"] as List<TournamentPlayers>;
 
     var teams = (Model.LimitPlayers / 5);
     var fecha = Model.DateInit.ToString("dd MMM yyyy");
-    Users user = Context.Session.GetObject<Users>("USUARIO");
+    
 }
 
 <img src="~/imgs/tournaments/@Model.Image" class="image-background" />
@@ -29,7 +76,7 @@
             src="~/imgs/icons/@Model.Icon"
             class="header-icon"
         />
-        <div class="">
+        <div>
             <h1 class="secondary-title">Neon Cup</h1>
             <ul class="header-description">
                 <li>
@@ -44,7 +91,10 @@
                         src="~/imgs/icons/t-cup-icon.svg"
                         class="ico"
                     />
-                    Cuartos de final (Partido único)
+                    @nameRounds[0].Name (Partido único)
+                </li>
+                <li>
+                    <a onclick="AlertUnion('@Model.Tid')" class="button-glitch">Unirse</a>
                 </li>
             </ul>
         </div>
@@ -124,6 +174,105 @@
                 </div>
             }
         </section>
+
+        <!-- TAB => CLASIFICACION -->
+        <section>
+            <div class="tournament-container">
+                <div class="tournament-headers">
+                    @foreach(Round round in nameRounds){
+                        <h3>@round.Name</h3>
+                    }
+                    <h3>Winner</h3>
+                </div>
+
+                <div class="tournament-brackets">
+                    @for(int i=0; i<nameRounds.Count; i++) {
+                        <ul class="bracket @(i==nameRounds.Count-1 ? "bracket-4":"bracket-" + (i+1))">
+                            @foreach (MatchRound match in matchesTournament) {
+                                @if (match.Fase == nameRounds[i].Name) {
+                                    <li class="team-item">
+                                        <time>@match.Date.ToString("HH:mm")</time>
+                                        <div class="team">
+                                            <span>Team @match.Tblue</span>
+                                            <span class="result">@match.Rblue</span>
+                                        </div>
+                                        <div class="team">
+                                            <span>Team @match.Tred</span>
+                                            <span class="result">@match.Rred</span>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
+
+                    <ul class="bracket bracket-5">
+                        <li class="team-item-winner" id="winner">
+                            <span class="title-winner">Team @winners[0].Team</span>
+                            <ul id="list-winner">
+                                @foreach (TournamentPlayers winner in winners) {
+                                    <li>
+                                        <img src="@winner.ImageSmall" width="50px" height="50px"/>
+                                        @winner.Name
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB => CALENDAR-->
+        <!-- TAB => CALENDAR -->
+        <section>
+            @for (int i= 0; i < nameRounds.Count; i++){
+                <div class="calendar-header">
+                    <h1>@nameRounds[i].Name</h1>
+                    <h3>@nameRounds[i].Date.ToString("dd MMM yyyy")</h3>
+                </div>
+                <div class="content-calendar">
+                    @foreach (MatchRound match in matchesTournament) {
+                        @if (match.Fase == nameRounds[i].Name) {
+                            <div class="match">
+                                <time>@match.Date.ToString("HH:mm")</time>
+                                <div class="team">
+                                    <span>Team @match.Tred</span>
+                                    <span class="result">@match.Rred</span>
+                                </div>
+                                <div class="team">
+                                    <span>Team @match.Tblue</span>
+                                    <span class="result">@match.Rblue</span>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </section>
     </div>
 </div>
+
+
+<script>
+    function AlertUnion(tid){
+        Swal.fire({
+            title: 'Confirmación de inscripción',
+            text: 'Esta acción no podrá revertirse',
+            icon: 'success',
+            showCancelButton: true,
+        }).then((result)=>{
+            if(result.isConfirmed){
+                $.ajax({
+                    url: "/Tournaments/InscriptionPlayer?tid=" + tid,
+                    success: (r)=>{
+                        window.location = "/Home/Index";
+                    }
+                });
+            }
+            return false;
+        });
+    }
+</script>
+
 

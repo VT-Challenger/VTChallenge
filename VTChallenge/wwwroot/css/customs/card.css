@@ -103,3 +103,15 @@
     color: white;
     background-color: var(--color-secondary-val);
 }
+
+.card-complete {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: var(--font-val);
+    text-decoration: none;
+    color: white;
+    background-color: var(--color-secondary-val);
+    padding: 5px 20px 0px 20px;
+    border-radius: 5px;
+}
+

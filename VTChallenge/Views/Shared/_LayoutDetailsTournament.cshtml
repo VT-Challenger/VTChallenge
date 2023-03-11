@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- PERSONAL -->
     <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/customs/button_glitch.css" />
     <link rel="stylesheet" href="~/css/customs/tabs.css" />
     <link rel="stylesheet" href="~/css/layout_tournament_details_user.css" />
     <title>VT Challenge</title>
@@ -27,8 +28,10 @@
 </body>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+<script src="~/js/sweetalert2.all.min.js"></script>
 @await RenderSectionAsync("scriptWinner", required: false)
+@await RenderSectionAsync("scriptClassWinner", required: false)
 </html>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 

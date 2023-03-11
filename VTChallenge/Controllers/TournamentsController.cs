@@ -24,9 +24,16 @@ namespace VTChallenge.Controllers {
         public IActionResult TournamentDetails(int tid) {
             TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
             TempData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
-            TempData["ROUNDSNAME"] = this.repo.GetNameRounds(tid);
+            TempData["ROUNDSNAME"] = this.repo.GetRounds(tid);
             TempData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
+            TempData["TOURNAMENTWINNER"] = this.repo.GetTournamentWinner(tid);
             return View(tournament);
+        }
+
+        public IActionResult InscriptionPlayer(int tid) {
+            Users user = HttpContext.Session.GetObject<Users>("USUARIO");
+            this.repo.InscriptionPlayerTeamAleASync(tid, user.Uid);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -14,11 +14,11 @@ namespace VTChallenge.Models {
         [Column("TRED")]
         public int Tred { get; set; }
 
-        [Column("TBLUEKDA")]
-        public float TblueKDA { get; set; }
+        [Column("RBLUE")]
+        public int Rblue { get; set; }
 
-        [Column("TREDKDA")]
-        public float TredKDA { get; set; }
+        [Column("RRED")]
+        public int Rred { get; set; }
 
         [Column("DATE")]
         public DateTime Date { get; set; }

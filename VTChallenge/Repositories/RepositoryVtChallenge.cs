@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.Metrics;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Metrics;
 using System.Xml.Linq;
 using VTChallenge.Data;
 using VTChallenge.Helpers;
@@ -84,10 +86,10 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
-        public List<string> GetNameRounds(int tid) {
+        public List<Round> GetRounds(int tid) {
             var consulta = from data in this.context.Rounds
                            where data.Tid == tid
-                           select data.Name;
+                           select data;
             return consulta.ToList();
         }
 
@@ -98,11 +100,31 @@ namespace VTChallenge.Repositories {
                            select new MatchRound {
                                Mid = match.Mid,
                                Tblue = match.Tblue,
+                               Rblue = match.Rblue,
                                Tred = match.Tred,
+                               Rred= match.Rred,
                                Date = match.Date,
                                Fase = round.Name
                            };
             return consulta.ToList();
+        }
+
+        public List<TournamentPlayers> GetTournamentWinner(int tid) {
+            string sql = "SP_GETGANADOR_TOURNAMENT @TID";
+            SqlParameter pamTid = new SqlParameter("@TID", tid);
+
+            var consulta = this.context.TournamentPlayers.FromSqlRaw(sql, pamTid);
+            return consulta.AsEnumerable().ToList();
+        }
+
+        public void InscriptionPlayerTeamAleASync(int tid, string uid) {
+            string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
+            SqlParameter[] pams = new SqlParameter[] {
+                new SqlParameter("@TID", tid),
+                new SqlParameter("@UID", uid)
+            };
+
+            this.context.Database.ExecuteSqlRaw(sql, pams);
         }
         #endregion
     }
