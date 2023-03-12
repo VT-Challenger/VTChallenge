@@ -1,32 +1,12 @@
-﻿@model List<TournamentComplete>
-@{
+﻿@{
     Layout = "_LayoutListTournament";
-}
-@section scriptHeight{
-    <script type="text/javascript">
-        function GetHeight() {
-            var height = $(window).height() - 140;
-            var menu = $("#menu").height();
-            var content = $("#content").height();
-
-            var total = height - (menu + content);
-            console.log(height);
-
-            $("#content-torneos").height(total);
-        }
-
-        $(document).ready(function () {
-            GetHeight();
-            $(window).resize(function () {
-                GetHeight();
-            });
-        });
-    </script>
+    Users user = Context.Session.GetObject<Users>("USUARIO");
+    List<TournamentComplete> tournaments = TempData["LISTTOURNAMENTS"] as List<TournamentComplete>;
 }
 
 
 <div id="content">
-    <h1 class="main-title-valo text-center">Torneos</h1>
+    <h1 class="secondary-title-valo text-center">Buscar Torneo</h1>
     <form class="search">
         <input type="text" class="search__input" />
         <button class="search__button">
@@ -41,47 +21,49 @@
         </button>
     </form>
 </div>
+<a class="primary-button primary-background" id="buttonUp">
+    <img src="~/imgs/icons/buttonUp.svg" style="width: 35px; height: 35px" />
+</a>
 
-<div class="container-cards mt-5" id="content-torneos">
-    @if (Model != null) {
-        @foreach(TournamentComplete tournament in Model) {
-            <div class="card">
-                 @{
-                    string rankFormat = $"{tournament.Rank.Replace(" ", "_")}_Rank.png";
-                    var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
-                }
-                <div class="card-header">
-                    <img src="~/imgs/tournaments/@tournament.Image"
-                         class="card-img"
-                         alt="..." />
-                    <p class="player-count">@tournament.Inscriptions/@tournament.LimitPlayers</p>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">@tournament.Name</h5>
-                    <p class="card-text">Plataforma: @tournament.Platform</p>
-                    <p class="card-text">rango requerido: @tournament.Rank</p>
-                    <p class="card-text">5 vs 5</p>
-                    <div class="icons-container">
-                        <img class="icon-img" src="~/imgs/icons/@tournament.PlatformImage" />
-                        <img class="icon-img" src="~/imgs/icons/@rankFormat" />
+<div class="container">
+<div class="container-cards" id="content-torneos">
+        @if (tournaments != null) {
+            @foreach (TournamentComplete tournament in tournaments) {
+                <div class="card">
+                     @{
+                        string rankFormat = $"{tournament.Rank.Replace(" ", "_")}_Rank.png";
+                        var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
+                    }
+                    <div class="card-header">
+                        <img src="~/imgs/tournaments/@tournament.Image"
+                             class="card-img"
+                             alt="..." />
+                        <p class="player-count">@tournament.Inscriptions/@tournament.LimitPlayers</p>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@tournament.Name</h5>
+                        <p class="card-text">Plataforma: @tournament.Platform</p>
+                        <p class="card-text">rango requerido: @tournament.Rank</p>
+                        <p class="card-text">5 vs 5</p>
+                        <div class="icons-container">
+                            <img class="icon-img" src="~/imgs/icons/@tournament.PlatformImage" />
+                            <img class="icon-img" src="~/imgs/icons/@rankFormat" />
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="card-footer-text">
+                            @fechaFormateada
+                        </p>
+                        @if (repo.ValidateInscription(tournament.Tid, user.Uid)) {
+                            <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Detalles</a>
+                        }else if(tournament.Inscriptions != tournament.LimitPlayers) {
+                            <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>
+                        }else{
+                            <p class="card-complete">Completo</p>
+                        }
                     </div>
                 </div>
-                <div class="card-footer">
-                    <p class="card-footer-text">
-                        @fechaFormateada
-                    </p>
-                    @if(tournament.Inscriptions != tournament.LimitPlayers) {
-                        <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>
-                    }else{
-                        <p class="card-complete">Completo</p>
-                    }
-                </div>
-            </div>
+            }
         }
-   
-
-
-    }
-    
+    </div>
 </div>
-

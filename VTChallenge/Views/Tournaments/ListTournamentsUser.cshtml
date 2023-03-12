@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "_LayoutListTournamentsUser";
+    Users user = Context.Session.GetObject<Users>("USUARIO");
+    List<TournamentComplete> tournamentsUser = TempData["LISTTOURNAMENTSUSER"] as List<TournamentComplete>;
+}
+
+
+@if(tournamentsUser != null) {
+<div class="mt-4">
+    <h1 class="secondary-title-valo text-center">Buscar Torneo</h1>
+    <form class="search">
+        <input type="text" class="search__input" />
+        <button class="search__button">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="25"
+                 height="25"
+                 fill="white"
+                 class="bi bi-search"
+                 viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+        </button>
+    </form>
+</div>
+}
+
+<a class="primary-button primary-background" id="buttonUp">
+    <img src="~/imgs/icons/buttonUp.svg" style="width: 35px; height: 35px" />
+</a>
+
+<div class="container">
+    <div class="container-cards" id="content-torneos">
+        @if (tournamentsUser != null) {
+            @foreach (TournamentComplete tournament in tournamentsUser) {
+                <div class="card" style="background-image: url('../imgs/tournaments/@tournament.Image')">
+                    @{
+                        var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
+                    }
+                    <div class="card-filter">
+                        <div class="card-body">
+                            <h5 class="card-title">@tournament.Name</h5>
+                            <p class="card-footer-text">@fechaFormateada</p>
+                        </div>
+                        <div class="card-footer">
+                            <a
+                                asp-controller="Tournaments" asp-action="EditTournament" asp-route-tid="@tournament.Tid" 
+                                class="card-button"
+                            >
+                                Editar
+                            </a>
+                            <a asp-controller="Tournaments" asp-action="DeleteTournament" asp-route-tid="@tournament.Tid" class="card-button"> Eliminar </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

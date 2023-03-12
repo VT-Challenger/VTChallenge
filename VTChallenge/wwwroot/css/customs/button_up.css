@@ -1,0 +1,21 @@
+#buttonUp {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
+    opacity: 1;
+    visibility: hidden;
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#buttonUp.show {
+    opacity: 1;
+    visibility: visible;
+}

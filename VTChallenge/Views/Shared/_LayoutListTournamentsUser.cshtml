@@ -12,11 +12,11 @@
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- PERSONAL -->
+    <link rel="stylesheet" href="~/css/global.css" />
     <link rel="stylesheet" href="~/css/customs/button.css" />
     <link rel="stylesheet" href="~/css/customs/button_up.css" />
     <link rel="stylesheet" href="~/css/customs/card.css" />
-    <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/layout_tournament_user.css" />
+    <link rel="stylesheet" href="~/css/layout_create_tournament.css" />
     <title>VT Challenge</title>
 </head>
 <body>
@@ -27,12 +27,19 @@
                 <a asp-controller="Home" asp-action="Index">Atras</a>
             </h3>
         </div>
+        <div class="container-button">
+            <div class="a-borders" id="btnCreate">
+                <a asp-controller="Tournaments" asp-action="ListTournamentsUser" class="primary-button primary-background">
+                    Crear Torneo
+                </a>
+            </div>
+        </div>
         <a asp-controller="" asp-action="" class="menu-profile">
             <img src="@user.ImageSmall" />
         </a>
     </div>
 
-    
+
     @RenderBody()
 
 
@@ -43,4 +50,3 @@
 <script src="~/js/button-up.js"></script>
 
 </html>
-

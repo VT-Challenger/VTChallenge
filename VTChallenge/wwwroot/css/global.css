@@ -85,6 +85,13 @@ p {
     color: white;
 }
 
+.secondary-title-valo {
+    text-decoration: none;
+    font-family: var(--font-val);
+    font-size: 3.5em;
+    color: white;
+}
+
 .secondary-title {
     font-family: var(--font-calibri);
     font-size: 4em;

@@ -1,5 +1,4 @@
-﻿@model TournamentComplete
-@section scriptWinner{
+﻿@section scriptWinner{
     <script type="text/javascript">
         const divWinner = document.getElementById("winner");
         var list = document.getElementById("list-winner");
@@ -59,21 +58,23 @@
     Layout = "_LayoutDetailsTournament";
 
     Users user = Context.Session.GetObject<Users>("USUARIO");
+    TournamentComplete tournament = (TournamentComplete)TempData["TOURNAMENT"];
     List<TournamentPlayers> playersTournament = TempData["PLAYERSTOURNAMENT"] as List<TournamentPlayers>;
     List<Round> nameRounds = TempData["ROUNDSNAME"] as List<Round>;
     List<MatchRound> matchesTournament = TempData["MATCHESTOURNAMENT"] as List<MatchRound>;
     List<TournamentPlayers> winners = TempData["TOURNAMENTWINNER"] as List<TournamentPlayers>;
+    bool val = (bool)TempData["VALIDATEINSCRIPTION"];
 
-    var teams = (Model.LimitPlayers / 5);
-    var fecha = Model.DateInit.ToString("dd MMM yyyy");
+    var teams = (tournament.LimitPlayers / 5);
+    var fecha = tournament.DateInit.ToString("dd MMM yyyy");
     
 }
 
-<img src="~/imgs/tournaments/@Model.Image" class="image-background" />
+<img src="~/imgs/tournaments/@tournament.Image" class="image-background" />
 <div class="header">
     <div class="header-content">
         <img
-            src="~/imgs/icons/@Model.Icon"
+            src="~/imgs/icons/@tournament.Icon"
             class="header-icon"
         />
         <div>
@@ -94,7 +95,9 @@
                     @nameRounds[0].Name (Partido único)
                 </li>
                 <li>
-                    <a onclick="AlertUnion('@Model.Tid')" class="button-glitch">Unirse</a>
+                    @if (!val) {
+                        <a onclick="AlertUnion('@tournament.Tid')" class="button-glitch">Unirse</a>
+                    }
                 </li>
             </ul>
         </div>
@@ -134,24 +137,24 @@
         <section>
             <div class="description">
                 <h1>Descripcion</h1>
-                <p>@Model.Description</p>
+                <p>@tournament.Description</p>
             </div>
             <div class="description">
                 <div class="content">
                     <h1>Rango</h1>
-                    <h3>@Model.Rank</h3>
+                    <h3>@tournament.Rank</h3>
                     <h1>Plataforma</h1>
-                    <h3><a href="">@Model.Platform</a></h3>
+                    <h3><a href="">@tournament.Platform</a></h3>
                     <h1>Fecha</h1>
                     <h3>@fecha</h3>
                     <h1>Organizador</h1>
-                    <h3>@Model.Organizator</h3>
+                    <h3>@tournament.Organizator</h3>
                 </div>
                 <div class="card-organizator">
-                    <span class="title-organizator">@Model.Organizator</span>
+                    <span class="title-organizator">@tournament.Organizator</span>
                     <img src="~/imgs/app/template-card.png"
                          class="template" />
-                    <img src="@Model.ImageOrganization"
+                    <img src="@tournament.ImageOrganization"
                          class="image-organizator" />
                 </div>
             </div>
@@ -223,7 +226,6 @@
             </div>
         </section>
 
-        <!-- TAB => CALENDAR-->
         <!-- TAB => CALENDAR -->
         <section>
             @for (int i= 0; i < nameRounds.Count; i++){
@@ -254,25 +256,38 @@
 </div>
 
 
+
 <script>
-    function AlertUnion(tid){
+    function AlertUnion(tid) {
         Swal.fire({
-            title: 'Confirmación de inscripción',
-            text: 'Esta acción no podrá revertirse',
-            icon: 'success',
-            showCancelButton: true,
-        }).then((result)=>{
-            if(result.isConfirmed){
+            title: "Confirmacion de inscripcion",
+            imageUrl: "@user.ImageSmall",
+            html: `
+                    <p>Al confirmar su inscripción confirma que: </p>
+                    <ul class='swal2-list-rules'>
+                        <li>No tendrá comportamientos irrespetuosos durante el periodo de duración del torneo</li>
+                        <li>Jugará todas las partidas que se le asignen</li>
+                        <li>Se adaptará al rol que le toque dentro del equipo formado</li>
+                    </ul>
+                    <p class='swal2-text-advisor'>Si incumple alguna de las normas recitadas o si el organizador tiene razones para expulsarle del torneo se le podrá expulsar</p>
+                `,
+            imageWidth: 150,
+            imageHeight: 150,
+            confirmButtonText: "Confirmar",
+        }).then((result) => {
+            if (result.isConfirmed) {
                 $.ajax({
                     url: "/Tournaments/InscriptionPlayer?tid=" + tid,
-                    success: (r)=>{
-                        window.location = "/Home/Index";
-                    }
+                    success: (r) => {
+                        window.location =
+                            "/Tournaments/TournamentDetails?tid=" + tid;
+                    },
                 });
             }
             return false;
         });
     }
 </script>
+
 
 

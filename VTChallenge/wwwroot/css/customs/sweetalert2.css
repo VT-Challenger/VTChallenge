@@ -1,0 +1,43 @@
+.swal2-popup {
+    background-image: url(../../imgs/fade.png) !important;
+    background-color: #1c1c1f !important;
+    background-position: 150% bottom !important;
+    background-size: 52% !important;
+    background-repeat: no-repeat !important;
+    color: white !important;
+}
+.swal2-image {
+    border-radius: 50% !important;
+}
+.swal2-title {
+    font-family: var(--font-val);
+}
+.swal2-confirm {
+    font-family: var(--font-val) !important;
+    background-color: var(--color-primary-val) !important;
+}
+.swal2-cancel {
+    font-family: var(--font-val) !important;
+    background-color: var(--color-secondary-val) !important;
+}
+
+.swal2-html-container {
+    font-family: var(--font-calibri) !important;
+}
+
+.swal2-list-rules {
+    text-align: left;
+    margin: 10px 20px;
+}
+
+.swal2-list-rules li {
+    margin-top: 10px;
+    color: #757575;
+}
+
+.swal2-text-advisor {
+    font-style: italic;
+    font-size: 15px;
+    color: red;
+    margin-top: 15px;
+}

@@ -13,27 +13,47 @@ namespace VTChallenge.Controllers {
         }
 
         public IActionResult ListTournaments() {
-            if (HttpContext.Session.GetObject<Users>("USUARIO") == null) {
+            Users user = HttpContext.Session.GetObject<Users>("USUARIO");
+            if (user == null) {
                 return RedirectToAction("AccesoDenegado", "Managed");
             } else {
-                List<TournamentComplete> tournaments = this.repo.GetTournaments();
-                return View(tournaments);
+                TempData["LISTTOURNAMENTS"] = this.repo.GetTournaments();
+                return View();
             }
         }
 
         public IActionResult TournamentDetails(int tid) {
-            TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
+            Users user = HttpContext.Session.GetObject<Users>("USUARIO");
+   
+            TempData["TOURNAMENT"] = this.repo.GetTournamentComplete(tid);
             TempData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
             TempData["ROUNDSNAME"] = this.repo.GetRounds(tid);
             TempData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
             TempData["TOURNAMENTWINNER"] = this.repo.GetTournamentWinner(tid);
-            return View(tournament);
+            TempData["VALIDATEINSCRIPTION"] = this.repo.ValidateInscription(tid, user.Uid);
+            return View();
         }
 
         public IActionResult InscriptionPlayer(int tid) {
             Users user = HttpContext.Session.GetObject<Users>("USUARIO");
-            this.repo.InscriptionPlayerTeamAleASync(tid, user.Uid);
-            return RedirectToAction("Index", "Home");
+            this.repo.InscriptionPlayerTeamAle(tid, user.Uid);
+        
+            return RedirectToAction("TournamentDetails", "Tournaments", new {tid=tid});
+        }
+
+        public IActionResult ListTournamentsUser() {
+            Users user = HttpContext.Session.GetObject<Users>("USUARIO");
+            if (user == null) {
+                return RedirectToAction("AccesoDenegado", "Managed");
+            } else {
+                TempData["LISTTOURNAMENTSUSER"] = this.repo.GetTournamentsUser(user.Name);
+                return View();
+            }
+        }
+
+        public IActionResult DeleteTournament(int tid) {
+            this.repo.DeleteTournament(tid);
+            return RedirectToAction("ListTournamentsUser", "Tournaments");
         }
     }
 }

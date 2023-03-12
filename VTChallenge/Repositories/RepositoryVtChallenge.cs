@@ -117,7 +117,7 @@ namespace VTChallenge.Repositories {
             return consulta.AsEnumerable().ToList();
         }
 
-        public void InscriptionPlayerTeamAleASync(int tid, string uid) {
+        public void InscriptionPlayerTeamAle(int tid, string uid) {
             string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
             SqlParameter[] pams = new SqlParameter[] {
                 new SqlParameter("@TID", tid),
@@ -125,6 +125,30 @@ namespace VTChallenge.Repositories {
             };
 
             this.context.Database.ExecuteSqlRaw(sql, pams);
+        }
+
+        public bool ValidateInscription(int tid, string uid) {
+            var consulta = this.context.TournamentPlayers.FirstOrDefault(z => z.Tid == tid && z.Uid == uid);
+
+            if (consulta != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public List<TournamentComplete> GetTournamentsUser(string name) {
+            var consulta = from data in this.context.TournamentCompletes
+                           where data.Organizator == name
+                           select data;
+            return consulta.ToList();
+        }
+
+        public void DeleteTournament(int tid) {
+            string sql = "SP_DELETE_TOURNAMENT @TID";
+            SqlParameter pamTid = new SqlParameter("@TID", tid);
+
+            this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
         #endregion
     }

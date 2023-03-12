@@ -1,16 +1,47 @@
 body {
-    background-image: url(../imgs/backplaytorunament.png);
+    background-image: url(../imgs/app/background.png);
     background-size: 100%;
     user-select: none;
 }
-.background-filter {
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: auto;
+
+.search {
+    width: 30%;
+    margin: auto;
+    position: relative;
 }
 
-.container-button {
-    display: flex;
-    justify-content: center;
-    padding-block: 10px;
+.search__input {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 0.7rem 1rem;
+
+    transition: all ease-in-out 0.5s;
+    width: 100%;
+    border-radius: 10px;
+    color: white;
+    font-family: var(--font-calibri);
+    font-size: 20px;
+}
+
+.search__input:focus {
+    outline: none;
+    background-color: #f0eeee;
+    color: var(--color-secondary-val);
+}
+.search__input:focus + button svg {
+    fill: var(--color-secondary-val);
+}
+
+.search__button {
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 10px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.container-cards {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
 }

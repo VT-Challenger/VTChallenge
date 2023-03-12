@@ -11,6 +11,10 @@ namespace VTChallenge.Repositories {
         List<Round> GetRounds(int tid);
         List<MatchRound> GetMatchesTournament(int tid);
         List<TournamentPlayers> GetTournamentWinner(int tid);
-        void InscriptionPlayerTeamAleASync(int tid, string uid);
+        void InscriptionPlayerTeamAle(int tid, string uid);
+        bool ValidateInscription(int tid, string uid);
+        List<TournamentComplete> GetTournamentsUser(string name);
+        void DeleteTournament(int tid);
+
     }
 }

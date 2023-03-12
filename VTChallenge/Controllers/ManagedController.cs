@@ -24,7 +24,7 @@ namespace VTChallenge.Controllers {
         [ValidateAntiForgeryToken]
         [HttpPost]
         public IActionResult Login(string username, string password) {
-            username = "Popolas";
+            //username = "Popolas";
             password = "P@ssw0rd";
             Users user = this.repo.LoginNamePassword(username, password);
             if (user != null) {
