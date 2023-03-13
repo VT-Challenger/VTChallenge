@@ -188,7 +188,8 @@
                     <h3>Winner</h3>
                 </div>
 
-                <div class="tournament-brackets">
+                @if(matchesTournament.Count!=0) {
+                    <div class="tournament-brackets">
                     @for(int i=0; i<nameRounds.Count; i++) {
                         <ul class="bracket @(i==nameRounds.Count-1 ? "bracket-4":"bracket-" + (i+1))">
                             @foreach (MatchRound match in matchesTournament) {
@@ -208,21 +209,23 @@
                             }
                         </ul>
                     }
-
-                    <ul class="bracket bracket-5">
-                        <li class="team-item-winner" id="winner">
-                            <span class="title-winner">Team @winners[0].Team</span>
-                            <ul id="list-winner">
-                                @foreach (TournamentPlayers winner in winners) {
-                                    <li>
-                                        <img src="@winner.ImageSmall" width="50px" height="50px"/>
-                                        @winner.Name
-                                    </li>
-                                }
+                        @if(winners.Count != 0) {
+                            <ul class="bracket bracket-5">
+                                <li class="team-item-winner" id="winner">
+                                    <span class="title-winner">Team @winners[0].Team</span>
+                                    <ul id="list-winner">
+                                        @foreach (TournamentPlayers winner in winners) {
+                                            <li>
+                                                <img src="@winner.ImageSmall" width="50px" height="50px" />
+                                                @winner.Name
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
                             </ul>
-                        </li>
-                    </ul>
-                </div>
+                        }
+                    </div>
+                }
             </div>
         </section>
 

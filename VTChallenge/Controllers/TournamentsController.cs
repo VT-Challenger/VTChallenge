@@ -24,7 +24,7 @@ namespace VTChallenge.Controllers {
 
         public IActionResult TournamentDetails(int tid) {
             Users user = HttpContext.Session.GetObject<Users>("USUARIO");
-   
+
             TempData["TOURNAMENT"] = this.repo.GetTournamentComplete(tid);
             TempData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
             TempData["ROUNDSNAME"] = this.repo.GetRounds(tid);
