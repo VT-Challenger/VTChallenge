@@ -55,5 +55,7 @@ namespace VTChallenge.Controllers {
             this.repo.DeleteTournament(tid);
             return RedirectToAction("ListTournamentsUser", "Tournaments");
         }
+
+        public IActionResult CreateTournament() { return View(); }
     }
 }
