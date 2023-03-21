@@ -24,7 +24,7 @@ namespace VTChallenge.Controllers {
         public async Task<IActionResult> UpdateProfile(string uid) {
             //HAY QUE ACTUALIZAR LOS CLAIMS TAMBIEN
             await this.repo.UpdateProfileAsync(uid);
-            return RedirectToAction("ProfileUser", "Users");
+            return RedirectToAction("LogOut", "Managed");
         }
     }
 }
