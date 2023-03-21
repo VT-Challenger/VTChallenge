@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.Metrics;
-using System.Xml.Linq;
+using System.Data;
 using VTChallenge.Data;
 using VTChallenge.Helpers;
 using VTChallenge.Models;
@@ -74,8 +73,15 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task<int> GetTotalWinsAsync(string uid) {
-            int total = 0;  
-            return total;
+            string sql = "SP_GETTOTAL_TOURNAMENTS_WON @UID, @TOTALWINS OUT";
+            SqlParameter pamuid = new SqlParameter("@UID", uid);
+            SqlParameter pamTotalWins = new SqlParameter("@TOTALWINS",-1);
+            pamTotalWins.Direction = ParameterDirection.Output;
+
+            //await this.context.Database
+
+            //return (int)returnValue.Value;
+            return 0;
         }
 
         public async Task UpdateProfileAsync(string uid) {
