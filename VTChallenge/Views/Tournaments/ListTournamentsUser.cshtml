@@ -1,11 +1,42 @@
 ﻿@{
     Layout = "_LayoutListTournamentsUser";
-    Users user = Context.Session.GetObject<Users>("USUARIO");
-    List<TournamentComplete> tournamentsUser = TempData["LISTTOURNAMENTSUSER"] as List<TournamentComplete>;
+    List<TournamentComplete> tournamentsUser = ViewData["LISTTOURNAMENTSUSER"] as List<TournamentComplete>;
+}
+
+@section scriptDelete{
+    <script>
+        function AlertDelete(tid) {
+            Swal.fire({
+                title: "¿Estas seguro?",
+                text: "No se podrá revertir dicha acción",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/Tournaments/DeleteTournament?tid=" + tid,
+                        success: (r) => {
+                            window.location =
+                                "/Tournaments/DeleteTournament?tid=" + tid;
+                        },
+                    });
+                    Swal.fire(
+                        "¡Eliminado!",
+                        "El torneo fue eliminado.",
+                        "success"
+                    );
+                }
+            });
+        }
+    </script>
 }
 
 
-@if(tournamentsUser != null) {
+@if(tournamentsUser.Count != 0) {
 <div class="mt-4">
     <h1 class="secondary-title-valo text-center">Buscar Torneo</h1>
     <form class="search">
@@ -22,37 +53,45 @@
         </button>
     </form>
 </div>
-}
+    <a class="primary-button primary-background" id="buttonUp">
+        <img src="~/imgs/icons/buttonUp.svg" style="width: 35px; height: 35px" />
+    </a>
 
-<a class="primary-button primary-background" id="buttonUp">
-    <img src="~/imgs/icons/buttonUp.svg" style="width: 35px; height: 35px" />
-</a>
-
-<div class="container">
-    <div class="container-cards" id="content-torneos">
-        @if (tournamentsUser != null) {
-            @foreach (TournamentComplete tournament in tournamentsUser) {
-                <div class="card" style="background-image: url('../imgs/tournaments/@tournament.Image')">
-                    @{
-                        var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
-                    }
-                    <div class="card-filter">
-                        <div class="card-body">
-                            <h5 class="card-title">@tournament.Name</h5>
-                            <p class="card-footer-text">@fechaFormateada</p>
-                        </div>
-                        <div class="card-footer">
-                            <a
-                                asp-controller="Tournaments" asp-action="EditTournament" asp-route-tid="@tournament.Tid" 
-                                class="card-button"
-                            >
-                                Editar
-                            </a>
-                            <a asp-controller="Tournaments" asp-action="DeleteTournament" asp-route-tid="@tournament.Tid" class="card-button"> Eliminar </a>
+    <div class="container">
+        <div class="container-cards" id="content-torneos">
+            <div class="card card-create">
+                <h5 class="card-title">
+                    <a asp-controller="Tournaments" asp-action="CreateTournament" class="primary-button primary-background">
+                        Crear Torneo
+                    </a>
+                </h5>
+            </div>
+            @if (tournamentsUser != null) {
+                @foreach (TournamentComplete tournament in tournamentsUser) {
+                    <div class="card" style="background-image: url('../imgs/tournaments/@tournament.Image')">
+                        @{
+                            var fechaFormateada = tournament.DateInit.ToString("dd MMM yyyy HH:mm");
+                        }
+                        <div class="card-filter">
+                            <div class="card-body">
+                                <h5 class="card-title">@tournament.Name</h5>
+                                <p class="card-footer-text">@fechaFormateada</p>
+                            </div>
+                            <div class="card-footer">
+                                <a asp-controller="Tournaments" asp-action="EditTournament" asp-route-tid="@tournament.Tid"
+                                   class="card-button">
+                                    Editar
+                                </a>
+                                <a onclick="AlertDelete(@tournament.Tid)" class="card-button"> Eliminar </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             }
-        }
+        </div>
     </div>
-</div>
+} else {
+    <h1 class="secondary-title-valo text-center mt-4">Empieza a crear tus propios torneos!!</h1>
+}
+
+

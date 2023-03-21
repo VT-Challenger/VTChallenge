@@ -1,8 +1,4 @@
-﻿@{
-    Users user = Context.Session.GetObject<Users>("USUARIO");
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -16,28 +12,12 @@
     <link rel="stylesheet" href="~/css/customs/button.css" />
     <link rel="stylesheet" href="~/css/customs/button_up.css" />
     <link rel="stylesheet" href="~/css/customs/card.css" />
+    <link rel="stylesheet" href="~/css/customs/sweetalert2.css" />
     <link rel="stylesheet" href="~/css/layout_create_tournament.css" />
     <title>VT Challenge</title>
 </head>
 <body>
-    <div class="menu" id="menu">
-        <div class="menu-logo">
-            <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
-            <h3 class="text-logo">
-                <a asp-controller="Home" asp-action="Index">Atras</a>
-            </h3>
-        </div>
-        <div class="container-button">
-            <div class="a-borders" id="btnCreate">
-                <a asp-controller="Tournaments" asp-action="ListTournamentsUser" class="primary-button primary-background">
-                    Crear Torneo
-                </a>
-            </div>
-        </div>
-        <a asp-controller="" asp-action="" class="menu-profile">
-            <img src="@user.ImageSmall" />
-        </a>
-    </div>
+    <partial name="_MenuUsuario" />
 
 
     @RenderBody()
@@ -48,5 +28,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/button-up.js"></script>
+<script src="~/js/sweetalert2.all.min.js"></script>
+@await RenderSectionAsync("scriptDelete", required:false);
 
 </html>

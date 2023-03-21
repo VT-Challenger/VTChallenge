@@ -3,8 +3,11 @@
 namespace VTChallenge.Repositories {
     public interface IRepositoryVtChallenge {
         List<Users> getUser();
+        Task<Users> FindUserAsync(string uid);
         Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string imagelarge, string rango);
-        Users LoginNamePassword(string name, string password);
+        Task<Users> LoginNamePasswordAsync(string name, string password);
+        Task UpdateProfileAsync(string uid);
+        Task<int> GetTotalWinsAsync(string uid);
         List<TournamentComplete> GetTournaments();
         TournamentComplete GetTournamentComplete(int tid);
         List<TournamentPlayers> GetPlayersTournament(int tid);

@@ -2,7 +2,6 @@ body {
     user-select: none;
     background-color: #0b0c10;
 }
-
 .menu {
     background-color: rgba(11, 12, 16, 0.4026824421965318);
 }
@@ -24,7 +23,12 @@ body {
     align-items: center;
     flex-direction: row;
     padding: 20px 40px 30px 40px;
-    background: linear-gradient( 180deg, rgba(11, 12, 16, 0.4026824421965318) 0%, rgba(11, 12, 16, 0.5) 40%, rgb(16, 11, 11) 100% );
+    background: linear-gradient(
+        180deg,
+        rgba(11, 12, 16, 0.4026824421965318) 0%,
+        rgba(11, 12, 16, 0.5) 40%,
+        rgb(16, 11, 11) 100%
+    );
 }
 
 .header-content {
@@ -59,7 +63,6 @@ body {
     align-items: flex-end;
     flex-direction: row;
 }
-
 .ico {
     width: 30px;
     height: 30px;
@@ -71,11 +74,9 @@ body {
     font-family: var(--font-calibri);
     font-size: 1.5em;
 }
-
 .text-autor span {
     color: white;
 }
-
 .organizator-img {
     width: 50px;
     height: 50px;

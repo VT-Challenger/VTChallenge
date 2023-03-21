@@ -1,0 +1,12 @@
+body {
+    background-image: url(../imgs/background.png);
+    background-size: 100%;
+    user-select: none;
+}
+
+.menu {
+    background-position: center;
+    background-size: cover;
+    height: 15vh;
+    align-items: flex-start;
+}

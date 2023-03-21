@@ -1,8 +1,4 @@
-﻿@{
-    Users user = Context.Session.GetObject<Users>("USUARIO");
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -18,15 +14,15 @@
     <title>VT Challenge</title>
 </head>
 <body>
-    <div class="menu">
+    <div class="menu" id="menu">
         <div class="menu-logo">
             <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
             <h3 class="text-logo">
-                <a asp-controller="Home" asp-action="Index">Vt challenger</a>
+                <a asp-controller="Home" asp-action="Index">VTCHALLENGE</a>
             </h3>
         </div>
-        <a asp-controller="" asp-action="" class="menu-profile">
-            <img src="@user.ImageSmall" />
+        <a asp-controller="Users" asp-action="ProfileUser" class="menu-profile">
+            <img src="@Context.User.FindFirst("IMAGESMALL").Value" />
         </a>
     </div>
 

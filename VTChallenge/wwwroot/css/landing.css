@@ -1,3 +1,12 @@
+* {
+    font-family: Valorant !important;
+}
+
+a {
+    color: initial;
+    text-decoration: none;
+}
+
 body {
     background-image: url("../imgs/app/background.png");
     background-position: center;
@@ -11,12 +20,21 @@ body {
 }
 
 .hero-text {
-    width: 45%;
-    height: inherit;
+    width: 100%;
+    height: 100vh;
+
+    margin-top: -87px;
+    padding: 100px 60px;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 100px 60px;
+
+    z-index: 95;
+
+    /* background-color: #070a0f57; */ /* MÁS OSCURO */
+    background-color: #070a0f57;
+    border-radius: 0px 0px 0px 300px;
 }
 
 .hero-img {
@@ -32,6 +50,11 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+
+    transform: scaleX(-1);
+
+    width: 100%;
+    border-radius: 0px 0px 300px 0px;
 }
 
 .button-container {
@@ -42,13 +65,26 @@ body {
     width: 90%;
 }
 
+.desc_land {
+    width: 45%;
+
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold;
+
+    color: #fff;
+}
+
+.cont_tourn {
+    width: 85%;
+}
+
 .tournament-format-text {
     width: 70%;
     margin: auto;
 }
 
 .tournament-rank {
-    width: 80%;
+    width: 100%;
     margin: auto;
     border-radius: 20px;
     background-image: url("../imgs/app/landig-back-2.jpg");
@@ -58,6 +94,10 @@ body {
     flex-direction: row;
     justify-content: space-between;
     padding: 20px 60px;
+
+    margin-top: 35px;
+    margin-bottom: 50px;
+    border: 2px solid white;
 }
 
 .tournament-rank-text {
@@ -139,5 +179,667 @@ body {
     }
     100% {
         transform: translateY(-30px);
+    }
+}
+
+/* NOVEDADES */
+.cont_nov {
+    width: 100%;
+    /* height: 300px; */
+
+    margin-top: 150px;
+    margin-bottom: 100px;
+
+    /* background-color: rgb(109, 109, 109); */
+}
+
+.tlt_novedades {
+    margin-left: 85px;
+    margin-bottom: -25px;
+
+    /* font-family: var(--font-calibri); */
+    font-weight: bold;
+    font-size: 8rem;
+
+    letter-spacing: -10px;
+    text-transform: uppercase;
+
+    /* TEXTO NORMAL */
+    /* color: var(--color-primary-val); */
+
+    /* TEXTO CON LINEAS */
+    -webkit-text-stroke: 2px var(--color-primary-val);
+    color: #07080d57;
+}
+
+/* card */
+.card_novedades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    justify-content: center;
+    padding: 15px;
+}
+
+.div_novedades {
+    color: white;
+    margin-top: 20px;
+
+    width: 450px;
+    height: 280px;
+}
+
+.img_novedades {
+    position: relative;
+    height: 280px;
+    border-radius: 15px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    box-shadow: 3.4px 3.2px 2.7px rgba(0, 0, 0, 0.7),
+        8.7px 8.2px 6.9px rgba(0, 0, 0, 0.08),
+        17.7px 16.7px 14.2px rgba(0, 0, 0, 0.059),
+        36.5px 34.3px 29.2px rgba(0, 0, 0, 0.083),
+        100px 94px 80px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease-in-out;
+
+    user-select: none;
+
+    border: 2px solid white;
+    overflow: hidden;
+}
+
+.img_novedades:hover {
+    box-shadow: none;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.img_novedades:hover .hover_rojo {
+    transform: translateX(0px);
+}
+
+.hover_rojo {
+    width: 100%;
+    height: 100%;
+    line-height: 25vh;
+
+    text-align: center;
+    border-radius: 15px;
+
+    transform: translateX(-500px) skewY(20deg);
+    opacity: 0.5;
+
+    z-index: 99;
+    background-color: var(--color-primary-val);
+    transition: all 0.6s ease-in-out;
+}
+
+.hover_rojo h1 {
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+
+    font-size: 100px;
+    opacity: 1;
+    color: white;
+}
+
+.rank_nov {
+    width: 15%;
+
+    padding: 5px;
+    padding-bottom: 12px;
+
+    margin-left: 15px;
+
+    border-radius: 0px 0px 15px 15px;
+
+    /* background-color: #222529; */
+    /* background-color: rgb(226, 226, 226); */
+
+    background: hsla(0, 0%, 100%, 1);
+
+    background: radial-gradient(
+        circle,
+        hsla(0, 0%, 100%, 1) 46%,
+        hsla(0, 0%, 71%, 1) 100%
+    );
+
+    background: -moz-radial-gradient(
+        circle,
+        hsla(0, 0%, 100%, 1) 46%,
+        hsla(0, 0%, 71%, 1) 100%
+    );
+
+    background: -webkit-radial-gradient(
+        circle,
+        hsla(0, 0%, 100%, 1) 46%,
+        hsla(0, 0%, 71%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFFFFF", endColorstr="#B6B6B6", GradientType=1 );
+}
+
+.person_nov {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    height: 45px;
+
+    text-align: right;
+    overflow: hidden;
+}
+
+.person_nov > img {
+    width: 15%;
+}
+
+.person_nov > span {
+    font-weight: bold;
+    justify-content: center;
+    padding-top: 5px;
+
+    font-size: 20px;
+
+    -webkit-text-stroke: 0.6px black;
+}
+
+/* TEXTOS */
+
+.txt_novedades {
+    margin-top: 10px;
+
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.txt_novedades > span {
+    float: left;
+    width: 50%;
+
+    font-size: 15px;
+}
+
+.txt_fecha {
+    color: var(--color-primary-val);
+    text-align: right;
+}
+
+.txt_nombre {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/* EXPLICACION TORNEO */
+.tlt_torneo {
+    /* margin-top: 150px;
+    margin-left: 85px;
+    margin-right: 85px;
+    margin-bottom: -25px; */
+
+    /* font-family: var(--font-calibri); */
+    font-weight: bold;
+    font-size: 75px;
+
+    letter-spacing: -3px;
+    text-transform: uppercase;
+
+    color: var(--color-primary-val);
+
+    /* -webkit-text-stroke: 2px var(--color-primary-val);
+    color: #07080d57;  */
+}
+
+.container_torneo {
+    margin-bottom: 130px;
+    overflow: hidden;
+}
+
+.desc_torneo {
+    float: left;
+    width: 45%;
+    margin-top: 80px;
+    margin-left: 75px;
+
+    font-size: 18px;
+    color: white;
+
+    overflow: hidden;
+}
+
+.img_torneo {
+    float: right;
+    width: 50%;
+
+    overflow: hidden;
+}
+
+.img_torneo > img {
+    width: 80%;
+    margin-top: 40px;
+    margin-left: 80px;
+}
+
+/* OPCION 2 */
+:root {
+    --font-family-primary: "Vollkorn", serif;
+    --font-family-secondary: "PT Sans", sans-serif;
+    --font-size-title: 32px;
+    --line-height-title: 1.4;
+    --font-size-caption: 14px;
+    --line-height-caption: 1.2;
+    --color-text: #222022;
+    --color-highlight-primary: #fd5574;
+    --color-highlight-secondary: #c1343f;
+    --border-radius-primary: 32px;
+}
+
+@media (min-width: 576px) {
+    :root {
+        --font-size-title: 40px;
+    }
+}
+
+.card {
+    display: flex;
+    max-width: 1395px;
+
+    margin: auto;
+    padding: 20px 20px 28px 20px;
+
+    border-radius: var(--border-radius-primary);
+    box-shadow: 24px 24px 80px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    flex-direction: column;
+
+    /* background: #ece7e1; */
+}
+
+@media (min-width: 576px) {
+    .card {
+        flex-direction: row;
+        align-items: center;
+        /* margin: 40px; */
+        padding: 32px;
+    }
+}
+
+.card__image {
+    width: 100%;
+    max-height: 300px;
+    border-radius: var(--border-radius-primary);
+    object-fit: cover;
+    margin-bottom: 18px;
+}
+
+@media (min-width: 576px) {
+    .card__image {
+        width: 45%;
+        max-height: none;
+        min-height: 400px;
+        margin-bottom: 0;
+    }
+}
+
+@media (min-width: 576px) {
+    .card__content {
+        width: 55%;
+        padding-left: 40px;
+    }
+}
+.card__date {
+    display: block;
+    font-family: var(--font-family-secondary);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 6px;
+}
+
+@media (min-width: 576px) {
+    .card__date {
+        margin-bottom: 8px;
+    }
+}
+
+.card__title {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-title);
+    line-height: var(--line-height-title);
+    color: var(--color-text);
+    box-decoration-break: clone;
+    background-image: linear-gradient(
+        90deg,
+        var(--color-highlight-primary),
+        var(--color-highlight-secondary)
+    );
+    background-size: 100% 42%;
+    background-repeat: no-repeat;
+    background-position: 0 85%;
+    padding: 0 4px;
+    margin-left: -4px;
+}
+
+.card_button {
+    position: absolute;
+    width: 45%;
+    height: 100%;
+    margin-left: 0%;
+
+    background-color: transparent;
+}
+
+.card_button img {
+    width: 15%;
+    margin-right: 35px;
+}
+
+/* PATNERS */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 7));
+    }
+}
+
+.tlt_patners {
+    margin-top: 150px;
+    margin-bottom: 0px;
+
+    text-align: center;
+    letter-spacing: -1px;
+    font-size: 40px;
+
+    color: var(--color-primary-val);
+}
+
+.slider {
+    overflow: hidden;
+    width: 100%;
+    height: 100px;
+    margin-top: 150px;
+
+    background: transparent;
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.125);
+
+    position: relative;
+}
+.slider::before,
+.slider::after {
+    background: linear-gradient(
+        to right,
+        rgba(7, 10, 15, 1) 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    content: "";
+    height: 100px;
+    position: absolute;
+    width: 200px;
+    z-index: 2;
+}
+.slider::after {
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+}
+.slider::before {
+    left: 0;
+    top: 0;
+}
+.slider .slide-track {
+    animation: scroll 40s linear infinite;
+    display: flex;
+    width: calc(250px * 14);
+}
+.slider .slide {
+    height: 100px;
+    width: 250px;
+}
+
+/* FOOTER */
+footer {
+    /* height: 35vh; */
+
+    margin-top: 180px;
+    overflow: hidden;
+
+    background-color: #c1343f;
+}
+
+footer > div {
+    width: 100%;
+    padding: 20px;
+
+    color: white;
+
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+}
+
+footer > div > h1 {
+    font-size: 45px;
+    letter-spacing: 1px;
+    text-decoration: underline;
+}
+
+footer > div > a > h5 {
+    font-size: 15px;
+    background-color: #070a0f;
+    padding: 10px 15px 5px 15px;
+    border-radius: 50px;
+}
+
+footer > div > a > h5 {
+    display: inline-block;
+    margin: 15px;
+    cursor: pointer;
+
+    color: white;
+}
+
+footer > div > a > h5:hover {
+    color: #c1343f;
+}
+
+/* RESPONSIVE */
+
+/* PC */
+@media (min-width: 770px) and (max-width: 1025px) {
+    .tournament-rank-imgs .image {
+        width: 80px;
+        height: 80px;
+        margin-inline: 15px;
+    }
+
+    .card {
+        width: 95%;
+    }
+}
+
+/* TABLET */
+@media (min-width: 577px) and (max-width: 769px) {
+    .cartel-img,
+    .hero-text {
+        border-radius: 0 0 30px 30px;
+    }
+
+    .main-title {
+        width: auto;
+        margin-bottom: 28px;
+
+        font-size: 45px;
+        text-align: center;
+    }
+
+    .description-text {
+        width: auto;
+        margin-top: 20px;
+
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .button-container {
+        margin-top: 50px;
+        width: auto;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .tlt_novedades {
+        margin-left: 0px;
+        text-align: center;
+        font-size: 7rem;
+    }
+
+    .cont_tourn {
+        width: 100%;
+    }
+
+    .tournament-rank {
+        display: block;
+        padding: 20px;
+    }
+
+    .tournament-rank-text {
+        width: 100%;
+    }
+
+    .tournament-rank-imgs {
+        text-align: center;
+        margin: auto;
+        justify-content: center;
+    }
+
+    .tournament-rank-imgs .image {
+        width: 85px;
+        height: 85px;
+
+        margin-top: 75px;
+        margin-inline: 35px;
+    }
+
+    .tlt_rank_tour {
+        width: auto;
+        margin-top: 20px;
+
+        text-align: center;
+        font-size: 55px;
+    }
+
+    .description-secondary-text {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .card {
+        width: 95%;
+        margin: auto;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .slider {
+        margin-top: 50px;
+    }
+}
+
+/* MOVIL */
+@media (max-width: 576px) {
+    .menu {
+        padding: 10px;
+    }
+
+    .cartel-img,
+    .hero-text {
+        border-radius: 0 0 30px 30px;
+    }
+
+    .hero-text {
+        margin-top: -110px;
+        height: 116%;
+    }
+
+    .main-title {
+        width: auto;
+        margin-bottom: 28px;
+
+        font-size: 35px;
+        text-align: center;
+    }
+
+    .secondary-title,
+    .description-text {
+        width: auto;
+        margin-top: 20px;
+
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .button-container {
+        margin-top: 50px;
+        width: auto;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .tlt_novedades {
+        margin-left: 0px;
+        font-size: 45px;
+        text-align: center;
+        letter-spacing: 0px;
+    }
+
+    .cont_tourn {
+        width: 100%;
+    }
+
+    .tournament-rank {
+        display: block;
+        padding: 20px;
+    }
+
+    .tournament-rank-text {
+        width: 100%;
+    }
+
+    .tournament-rank-imgs {
+        text-align: center;
+        margin: auto;
+        justify-content: center;
+    }
+
+    .tournament-rank-imgs .image {
+        width: 65px;
+        height: 65px;
+
+        margin-top: 75px;
+        margin-inline: 5px;
+    }
+
+    .cont_nov {
+        margin-top: 70px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        width: 92%;
+    }
+
+    .slider {
+        margin-top: 50px;
     }
 }

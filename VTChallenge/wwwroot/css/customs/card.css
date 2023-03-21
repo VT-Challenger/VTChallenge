@@ -23,7 +23,10 @@
     height: auto;
     border-radius: 20px;
 }
-
+.card-create {
+    align-items: center;
+    justify-content: center;
+}
 .card-header {
     padding: 0;
     position: relative;

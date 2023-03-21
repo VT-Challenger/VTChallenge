@@ -15,13 +15,15 @@
     <title>VT Challenge</title>
 </head>
 <body>
-    <div class="menu">
+
+    <!-- LOGIN -->
+    <div class="menu" style="z-index: 99;">
         <div class="menu-logo">
             <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
             <h3 class="text-logo">Vt challenger</h3>
         </div>
         <div class="a-borders">
-            <a asp-controller="Managed" asp-action="Login" class="primary-button primary-background">
+            <a asp-controller="Home" asp-action="Index" class="primary-button primary-background">
                 Login
             </a>
         </div>
@@ -29,15 +31,17 @@
 
     <div class="hero">
         <div class="hero-text">
-            <h1 class="main-title">By Players <br />For competitors</h1>
-            <p class="description-text">
-                Welcome to VT Challenger, the website that gives you the
-                chance to play and create Valorant tournaments
+            <!-- <h1 class="main-title" style="color: var(--color-primary-val);">By Players <br />For competitors</h1> -->
+            <h1 class="main-title" style="color: var(--color-primary-val);">By Players <br />For competitors</h1>
+            <p class="description-text desc_land">
+                <!-- Welcome to VT Challenger, the website that gives you the
+                chance to play and create Valorant tournaments -->
+                Bienvenidos a <b style="color: var(--color-primary-val);">VT Challenger</b>, el sitio web que te brinda la oportunidad de jugar y crear torneos Valorant
             </p>
             <div class="button-container">
                 <div class="a-borders">
                     <a asp-controller="Managed" asp-action="Register" class="secondary-button secondary-background">
-                        Register
+                        Unete ahora
                     </a>
                 </div>
             </div>
@@ -45,32 +49,153 @@
         <div class="hero-img cartel-img"></div>
     </div>
 
-    <div class="tournament-rank mt-5">
-        <div class="tournament-rank-text">
-            <h1 class="secondary-title">Tournament by Rank</h1>
-            <p class="description-secondary-text">
-                Tournaments are organized in such a way that they are as
-                competitive as posible.
-            </p>
+    <!-- NOVEDADES -->
+    <!-- Mostrar los últimos torneos -->
+    <div class="cont_nov">
+
+        <h1 class="tlt_novedades">Novedades</h1>
+
+        <div class="card_novedades">
+
+            @*SACARLOS DE LA BBDD*@
+            <div class="div_novedades">
+
+                <div class="img_novedades" style='background-image: url("../imgs/neon_card.jpeg");'>
+                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
+                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
+
+                    <div class="person_nov">
+                        <span>15/80</span>
+                        <img src="" alt="">
+                    </div>
+                </div>
+
+                <div class="txt_novedades">
+                    <span class="txt_nombre">Neon Cup</span>
+                    <span class="txt_fecha">13 Mar 2023</span>
+                </div>
+
+            </div>
+
+            <div class="div_novedades">
+                <div class="img_novedades" style='background-image: url("../imgs/banner_Agua.jpg");'>
+                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
+                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
+
+                    <div class="person_nov">
+                        <span>0/80</span>
+                        <img src="../imgs/person.png" alt="">
+                    </div>
+                </div>
+
+                <div class="txt_novedades">
+                    <span class="txt_nombre">Harbor Cup</span>
+                    <span class="txt_fecha">31 Jul 2023</span>
+                </div>
+
+            </div>
+
+            <div class="div_novedades">
+                <div class="img_novedades" style='background-image: url("../imgs/neon_card.jpeg");'>
+                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
+                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
+
+                    <div class="person_nov">
+                        <span>78/80</span>
+                        <img src="../imgs/person.png" alt="">
+                    </div>
+                </div>
+
+                <div class="txt_novedades">
+                    <span class="txt_nombre">Neon Cup</span>
+                    <span class="txt_fecha">9 Ene 2023</span>
+                </div>
+
+            </div>
+
+            <div class="cont_tourn">
+                <div class="tournament-rank">
+                    <div class="tournament-rank-text">
+                        <h1 class="secondary-title tlt_rank_tour">Tournament by Rank</h1>
+                        <p class="description-secondary-text">
+                            Tournaments are organized in such a way that they are as
+                            competitive as posible.
+                        </p>
+                    </div>
+                    <div class="tournament-rank-imgs">
+                        <img src="~/imgs/app/rank-g.png" class="image image1" draggable="false" />
+                        <img src="~/imgs/app/rank-p.png" class="image image2" draggable="false" />
+                        <img src="~/imgs/app/rank-d.png" class="image image3" draggable="false" />
+                        <img src="~/imgs/app/rank-i.png" class="image image4" draggable="false" />
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
-        <div class="tournament-rank-imgs">
-            <img src="~/imgs/app/rank-g.png" class="image image1" />
-            <img src="~/imgs/app/rank-p.png" class="image image2" />
-            <img src="~/imgs/app/rank-d.png" class="image image3" />
-            <img src="~/imgs/app/rank-i.png" class="image image4" />
+
+    </div>
+
+
+    <!-- CARD VIDEO -->
+    <div class="card">
+        <video loop autoplay muted id="myVideo" class="card__image" src="~/imgs/app/landing-video.mp4" poster="~/imgs/app/landing-poster.png"></video>
+
+        <!-- <img src="https://images.unsplash.com/photo-1615147342761-9238e15d8b96?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1001&q=80" class="card__image" alt="brown couch" /> -->
+        <div class="card__content">
+            <time datetime="2021-03-30" class="card__date">Torneos</time>
+            <span class="card__title">Alistate y unete a torneos de tu nivel, <br> <span style="font-size: 22px;">¡no olvides que puedes jugar solo o con tus amigos!</span> <span>
         </div>
     </div>
 
-    <div class="create-tournament mt-5">
-        <h1 class="main-title text-center">Create Tournaments</h1>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+
+    <!-- PATNERS -->
+    <!-- <h1 class="tlt_patners">Nuestros socios</h1> -->
+
+    <div class="slider">
+        <div class="slide-track">
+            @for(int i=0; i<=10; i++) {
+                <div class="slide">
+                    <img src="~/imgs/icons/riot-logo-white.png" height="150" width="250" alt="" />
+                </div>
+                <div class="slide">
+                    <img src="~/imgs/icons/discord-white.png" height="150" width="250" alt="" />
+                </div>
+            }
+        </div>
     </div>
-        @RenderBody()
+
+
+    <footer>
+
+        <div>
+            <h1>VT Challenge</h1>
+        </div>
+
+        <div>
+            <a href="https://www.riotgames.com/es/privacy-notice-ES?_ga=2.157907066.1155825326.1678979655-636026127.1678725813" target="_blank" rel="noopener noreferrer"><h5>Politica de privacidad</h5></a>
+            <a href="https://www.riotgames.com/es/terms-of-service-ES?_ga=2.195280748.1155825326.1678979655-636026127.1678725813" target="_blank" rel="noopener noreferrer"><h5>Termino de uso</h5></a>
+            <a href="https://www.leagueoflegends.com/es-es/news/riot-games/riot-games-europe-company-information/" target="_blank" rel="noopener noreferrer"><h5>Informacion de la empresa</h5></a>
+            <a href="#" target="_blank" rel="noopener noreferrer"><h5>Preferencia de cookies</h5></a>
+        </div>
+
+        <div>
+            <a href="https://pegi.info/" target="_blank" rel="noopener noreferrer">
+                <img src="~/imgs/app/pegi.jpg" alt="Pegi 16">
+                <img src="~/imgs/app/violencia.jpg" alt="Violencia">
+                <img src="~/imgs/app/compras.jpg" alt="Incluye Compras">
+                <img src="~/imgs/app/usk.png" alt="USK">
+            </a>
+        </div>
+
+        <div>
+            <span>&copy2023 VT Challenge</span>
+        </div>
+
+    </footer>
+    @RenderBody()
+
 </body>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

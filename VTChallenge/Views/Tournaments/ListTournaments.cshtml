@@ -1,7 +1,7 @@
 ﻿@{
     Layout = "_LayoutListTournament";
-    Users user = Context.Session.GetObject<Users>("USUARIO");
-    List<TournamentComplete> tournaments = TempData["LISTTOURNAMENTS"] as List<TournamentComplete>;
+    string uid = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    List<TournamentComplete> tournaments = ViewData["LISTTOURNAMENTS"] as List<TournamentComplete>;
 }
 
 
@@ -47,14 +47,14 @@
                         <p class="card-text">5 vs 5</p>
                         <div class="icons-container">
                             <img class="icon-img" src="~/imgs/icons/@tournament.PlatformImage" />
-                            <img class="icon-img" src="~/imgs/icons/@rankFormat" />
+                            <img class="icon-img" src="~/imgs/rangos/@rankFormat" />
                         </div>
                     </div>
                     <div class="card-footer">
                         <p class="card-footer-text">
                             @fechaFormateada
                         </p>
-                        @if (repo.ValidateInscription(tournament.Tid, user.Uid)) {
+                        @if (repo.ValidateInscription(tournament.Tid, uid)) {
                             <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Detalles</a>
                         }else if(tournament.Inscriptions < tournament.LimitPlayers) {
                             <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>

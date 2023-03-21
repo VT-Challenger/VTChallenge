@@ -57,13 +57,12 @@
 @{
     Layout = "_LayoutDetailsTournament";
 
-    Users user = Context.Session.GetObject<Users>("USUARIO");
-    TournamentComplete tournament = (TournamentComplete)TempData["TOURNAMENT"];
-    List<TournamentPlayers> playersTournament = TempData["PLAYERSTOURNAMENT"] as List<TournamentPlayers>;
-    List<Round> nameRounds = TempData["ROUNDSNAME"] as List<Round>;
-    List<MatchRound> matchesTournament = TempData["MATCHESTOURNAMENT"] as List<MatchRound>;
-    List<TournamentPlayers> winners = TempData["TOURNAMENTWINNER"] as List<TournamentPlayers>;
-    bool val = (bool)TempData["VALIDATEINSCRIPTION"];
+    TournamentComplete tournament = (TournamentComplete)ViewData["TOURNAMENT"];
+    List<TournamentPlayers> playersTournament = ViewData["PLAYERSTOURNAMENT"] as List<TournamentPlayers>;
+    List<Round> nameRounds = ViewData["ROUNDSNAME"] as List<Round>;
+    List<MatchRound> matchesTournament = ViewData["MATCHESTOURNAMENT"] as List<MatchRound>;
+    List<TournamentPlayers> winners = ViewData["TOURNAMENTWINNER"] as List<TournamentPlayers>;
+    bool val = (bool)ViewData["VALIDATEINSCRIPTION"];
 
     var teams = (tournament.LimitPlayers / 5);
     var fecha = tournament.DateInit.ToString("dd MMM yyyy");
@@ -164,7 +163,7 @@
         <section>
             @foreach (TournamentPlayers player in playersTournament) {
                 <div class="container-participante ">
-                    <div class="team @(user.Name == player.Name ? "user":"active")">
+                    <div class="team @(Context.User.Identity.Name == player.Name ? "user":"active")">
                         <h3>T-@player.Team</h3>
                     </div>
                     <div class="data">
@@ -264,7 +263,7 @@
     function AlertUnion(tid) {
         Swal.fire({
             title: "Confirmacion de inscripcion",
-            imageUrl: "@user.ImageSmall",
+            imageUrl: "@Context.User.FindFirst("IMAGESMALL").Value",
             html: `
                     <p>Al confirmar su inscripción confirma que: </p>
                     <ul class='swal2-list-rules'>

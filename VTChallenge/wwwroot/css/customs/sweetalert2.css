@@ -1,9 +1,5 @@
 .swal2-popup {
-    background-image: url(../../imgs/fade.png) !important;
     background-color: #1c1c1f !important;
-    background-position: 150% bottom !important;
-    background-size: 52% !important;
-    background-repeat: no-repeat !important;
     color: white !important;
 }
 .swal2-image {

@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using VTChallenge.Data;
 using VTChallenge.Helpers;
 using VTChallenge.Models;
+using VTChallenge.Models.Api;
 using VTChallenge.Services;
 
 namespace VTChallenge.Repositories {
@@ -16,9 +17,11 @@ namespace VTChallenge.Repositories {
     public class RepositoryVtChallenge : IRepositoryVtChallenge {
 
         private VTChallengeContext context;
+        private IServiceValorant api;
 
-        public RepositoryVtChallenge(VTChallengeContext context) {
+        public RepositoryVtChallenge(VTChallengeContext context, IServiceValorant api) {
             this.context = context;
+            this.api = api;
         }
 
         #region METHODS USERS
@@ -28,8 +31,12 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
-        public Users LoginNamePassword(string username, string password) {
-            Users user = this.context.Users.FirstOrDefault(u => u.Name == username);
+        public async Task<Users> FindUserAsync(string uid) {
+            return await this.context.Users.FirstOrDefaultAsync(x=> x.Uid == uid);
+        }
+
+        public async Task<Users> LoginNamePasswordAsync(string username, string password) {
+            Users user = await this.context.Users.FirstOrDefaultAsync(u => u.Name == username);
             if (user == null) {
                 return null;
             } else {
@@ -63,6 +70,25 @@ namespace VTChallenge.Repositories {
             user.PassEncript = HelperCryptography.EncryptPassword(password, user.Salt);
 
             this.context.Users.Add(user);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetTotalWinsAsync(string uid) {
+            int total = 0;  
+            return total;
+        }
+
+        public async Task UpdateProfileAsync(string uid) {
+            DataApi data = null;
+            UserApi userapi = await this.api.GetAccountUidAsync(uid);
+            Users user = await this.FindUserAsync(uid);
+
+            if(userapi != null) {
+                data = userapi.Data;
+                user.ImageLarge = data.Card.Large;
+                user.ImageSmall = data.Card.Small;
+                user.Rank = await this.api.GetRankAsync(user.Name, user.Tag);
+            }
             await this.context.SaveChangesAsync();
         }
         #endregion
@@ -150,6 +176,8 @@ namespace VTChallenge.Repositories {
 
             this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
+
+    
         #endregion
     }
 }

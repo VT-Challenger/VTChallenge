@@ -1,0 +1,43 @@
+body {
+    background-image: url("../imgs/app/background.png");
+    background-size: 100%;
+    user-select: none;
+}
+
+.title-profile {
+    color: var(--color-primary-val);
+    font-weight: bold;
+    font-family: var(--font-calibri);
+}
+
+.text-profile {
+    color: white;
+    font-family: var(--font-val);
+    text-transform: uppercase;
+}
+.container-rank {
+    display: flex;
+    align-items: flex-end;
+}
+
+.container-rank h3 {
+    margin-bottom: 0px;
+    margin-right: 20px;
+}
+
+.button-password {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: var(--font-val);
+    text-decoration: none;
+    color: white;
+    background-color: var(--color-secondary-val);
+    padding: 10px 25px;
+    border-radius: 5px;
+}
+
+.button-password:hover {
+    color: white;
+    background-color: var(--color-primary-val);
+    cursor: pointer;
+}

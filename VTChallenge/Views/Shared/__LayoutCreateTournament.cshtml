@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/logo.ico" />
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- PERSONAL -->
+    <link rel="stylesheet" href="~/css/global.css" />
+    <link rel="stylesheet" href="~/css/customs/button_glitch.css" />
+    <link rel="stylesheet" href="~/css/customs/sweetalert2.css" />
+    <link rel="stylesheet" href="~/css/customs/tabs.css" />
+    <link rel="stylesheet" href="~/css/layout_tournament_details_user.css" />
+    <title>VT Challenge</title>
+</head>
+<body>
+    <partial name="_MenuUsuario" />
+
+    @RenderBody()
+</body>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+<script src="~/js/sweetalert2.all.min.js"></script>
+@await RenderSectionAsync("scriptWinner", required: false)
+@await RenderSectionAsync("scriptClassWinner", required: false)
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</html>

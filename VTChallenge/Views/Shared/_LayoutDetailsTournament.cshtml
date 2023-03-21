@@ -16,14 +16,7 @@
     <title>VT Challenge</title>
 </head>
 <body>
-    <div class="menu">
-        <div class="menu-logo">
-            <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
-            <h3 class="text-logo">
-                <a asp-controller="Tournaments" asp-action="ListTournaments">Atras</a>
-            </h3>
-        </div>
-    </div>
+    <partial name="_MenuUsuario" />
 
     @RenderBody()
 </body>
@@ -33,6 +26,6 @@
 <script src="~/js/sweetalert2.all.min.js"></script>
 @await RenderSectionAsync("scriptWinner", required: false)
 @await RenderSectionAsync("scriptClassWinner", required: false)
-</html>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</html>
 

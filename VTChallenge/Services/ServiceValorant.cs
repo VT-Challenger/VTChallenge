@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using VTChallenge.Models.Api;
 
 namespace VTChallenge.Services
@@ -16,6 +17,21 @@ namespace VTChallenge.Services
 
         public async Task<UserApi> GetAccountAsync(string username, string tagline) {
             string request = "valorant/v1/account/" + username + "/" + tagline;
+            string url = this.url + request;
+
+            var response = await httpClient.GetAsync(url);
+
+            string jsonReponse = await response.Content.ReadAsStringAsync();
+
+            if (jsonReponse == null) {
+                return null;
+            } else {
+                return JsonConvert.DeserializeObject<UserApi>(jsonReponse);
+            }
+        }
+
+        public async Task<UserApi> GetAccountUidAsync(string uid) {
+            string request = "valorant/v1/by-puuid/account/" + uid;
             string url = this.url + request;
 
             var response = await httpClient.GetAsync(url);

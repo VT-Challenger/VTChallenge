@@ -1,0 +1,37 @@
+.box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.box {
+    background-color: #222124;
+    text-align: center;
+    color: white;
+    font-family: var(--font-val);
+    font-size: 20px;
+
+    border: 3px solid #666;
+    border-radius: 0.5em;
+    padding: 10px;
+    cursor: move;
+    width: 25%;
+    margin-inline: 20px;
+}
+
+.box.over {
+    border: 3px solid var(--color-primary-val);
+    background-color: var(--color-primary-val);
+}
+
+.box-text {
+    text-decoration: none;
+    font-family: var(--font-val);
+    font-size: 2em;
+    color: var(--color-primary-val);
+}
+
+.box-container .multisteps-form__input {
+    width: 25%;
+}
