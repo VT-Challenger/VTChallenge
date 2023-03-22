@@ -31,15 +31,9 @@ body {
     object-position: 100% 100%;
 }
 
-.form-login,
-.form-register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
 .input-login,
 .input-register {
-    width: 90%;
+    width: 100%;
     font-family: var(--font-calibri);
     font-size: 25px;
     margin-top: 20px;
@@ -51,25 +45,82 @@ body {
     outline: none;
 }
 
-.group-register {
-    width: 90%;
-    margin-top: 20px;
-    height: 80px;
-    display: flex;
-}
-.group-register .input-register {
-    margin-top: 0 !important;
-}
-
-.input-login:nth-child(2) {
-    margin-top: 50px;
-    margin-bottom: 50px;
-}
-
-input[type="password"].input-register:last-of-type {
-    margin-bottom: 30px;
-}
-
 input::placeholder {
     color: white;
+}
+
+/*MEDIAS QUERYS*/
+/* PC */
+@media (min-width: 770px) and (max-width: 1025px) {
+    .login-user-video,
+    .register-user-video {
+        object-position: 60% 100%;
+    }
+}
+/* TABLET */
+@media (min-width: 577px) and (max-width: 769px) {
+    .login-user-video,
+    .register-user-video {
+        position: relative;
+        top: 65%;
+        right: 0;
+        width: 100%;
+        height: 35vh;
+    }
+
+    .container-hero {
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0%, 0%);
+        width: 100%;
+        padding: 40px;
+    }
+
+    .hero {
+        align-items: center;
+    }
+
+    .description-text {
+        text-align: center;
+    }
+}
+/*MOVIL*/
+@media (max-width: 576px) {
+    .register-user-video {
+        display: none;
+    }
+
+    .login-user-video {
+        position: relative;
+        top: 65%;
+        right: 0;
+        width: 100%;
+        height: 35vh;
+    }
+
+    .container-hero {
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0%, 0%);
+        width: 100%;
+        padding: 40px;
+    }
+
+    .hero {
+        align-items: center;
+    }
+
+    .input-login,
+    .input-register {
+        font-size: 20px;
+        height: 70px;
+    }
+
+    .description-text {
+        text-align: center;
+    }
 }

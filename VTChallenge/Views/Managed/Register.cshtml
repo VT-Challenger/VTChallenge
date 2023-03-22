@@ -1,49 +1,76 @@
-﻿@{
+﻿@model Users
+@{
     Layout = "_LayoutFormsAuth";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
 <div class="container-hero">
     <div class="hero">
         <h1 class="main-title">Registro</h1>
         <!--<form>-->
-        <form class="form-register" method="post">
+        <form class="form-register" method="post" novalidate>
             @Html.AntiForgeryToken()
-            <div class="group-register">
-                <input
-                    type="text"
-                    class="input-register"
-                    placeholder="Username"
-                    name="name"
-                />
-                <input
-                    type="text"
-                    class="input-register"
-                    placeholder="Tag"
-                    name="tag"
-                />
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <input type="text"
+                           class="input-register"
+                           placeholder="Nombre de usuario Valorant"
+                           asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger">
+                    </span>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <input type="text"
+                           class="input-register"
+                           placeholder="Tag"
+                           asp-for="Tag" />
+                    <span asp-validation-for="Tag" class="text-danger">
+                    </span>
+                </div>
             </div>
-            <input
-                type="email"
-                class="input-register"
-                placeholder="Email"
-                name="email"
-            />
-            <input
-                type="password"
-                class="input-register"
-                placeholder="Password"
-                name="password"
-            />
-            <input
-                type="password"
-                class="input-register"
-                placeholder="Repeat Password"
-            />
-         
-            <div class="button-borders">
-                <button class="primary-button primary-background">
-                    Register
-                </button>
+
+            <div class="row">
+                <div class="col-12">
+                    <input type="email"
+                           class="input-register"
+                           placeholder="Email"
+                           asp-for="Email" />
+                    <span asp-validation-for="Email"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <input type="password"
+                           class="input-register"
+                           placeholder="Contraseña"
+                           asp-for="Password" />
+                    <span asp-validation-for="Password"
+                          class="text-danger"></span>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <input type="password"
+                           class="input-register"
+                           placeholder="Repetir Contraseña"
+                           asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="button-borders mt-5">
+                        <button class="primary-button primary-background">
+                            Register
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -53,3 +80,5 @@
     <source src="~/imgs/app/register_user.mp4" type="video/mp4" />
     Your browser does not support HTML5 video.
 </video>
+
+
