@@ -146,7 +146,7 @@ p {
 /*MOVIL*/
 @media (max-width: 576px) {
     .main-title-valo {
-        font-size: 3em;
+        font-size: 2.5em;
     }
 
     .menu {

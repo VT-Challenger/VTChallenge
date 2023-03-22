@@ -16,7 +16,7 @@ namespace VTChallenge.Controllers {
         [AuthorizeUsers]
         public async Task<IActionResult> ProfileUser() {
             Users user = await this.repo.FindUserAsync(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            ViewData["TORNEOSGANADOS"] = this.repo.GetTotalWinsAsync(user.Uid);
+            ViewData["TORNEOSGANADOS"] = await this.repo.GetTotalWinsAsync(user.Uid);
             return View(user);
         }
 

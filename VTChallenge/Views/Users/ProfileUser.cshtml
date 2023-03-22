@@ -4,7 +4,7 @@
 }
 @{
     string rankFormat = $"{Model.Rank.Replace(" ", "_")}_Rank.png";
-    //int torneosGanados = (int)ViewData["TORNEOSGANADOS"];
+    int torneosGanados = (int)ViewData["TORNEOSGANADOS"];
 }
 @section scriptUpdate{
 <script>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-6">
                     <h4 class="title-profile">Torneos ganados</h4>
-                    <h3 class="text-profile">0</h3>
+                    <h3 class="text-profile">@torneosGanados</h3>
                 </div>
             </div>
             <div class="row mt-4">

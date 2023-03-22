@@ -21,3 +21,28 @@
     color: #00ffb3;
     cursor: pointer;
 }
+
+/*MEDIAS QUERYS*/
+/* PC */
+@media (min-width: 770px) and (max-width: 1025px) {
+}
+/* TABLET */
+@media (min-width: 577px) and (max-width: 769px) {
+    .content {
+        padding: 0px 30px;
+    }
+
+    .content a:nth-child(2) {
+        margin: 10px 0px;
+    }
+}
+/*MOVIL*/
+@media (max-width: 576px) {
+    .content {
+        padding: 0px 30px;
+    }
+
+    .content a:nth-child(2) {
+        margin: 10px 0px;
+    }
+}

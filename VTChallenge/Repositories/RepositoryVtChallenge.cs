@@ -73,15 +73,14 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task<int> GetTotalWinsAsync(string uid) {
-            string sql = "SP_GETTOTAL_TOURNAMENTS_WON @UID, @TOTALWINS OUT";
-            SqlParameter pamuid = new SqlParameter("@UID", uid);
-            SqlParameter pamTotalWins = new SqlParameter("@TOTALWINS",-1);
-            pamTotalWins.Direction = ParameterDirection.Output;
-
-            //await this.context.Database
-
-            //return (int)returnValue.Value;
-            return 0;
+            var totalWins = (from m in this.context.Matches
+                            join r in this.context.Rounds on m.Rid equals r.Rid
+                            join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
+                            where r.Name == "Final" &&
+                            ((m.Tred == tp.Tid && m.Rred > m.Rblue) || (m.Tblue == tp.Tid && m.Rblue > m.Rred)) &&
+                            tp.Uid == uid
+                            select m).Count();
+            return (int)totalWins;
         }
 
         public async Task UpdateProfileAsync(string uid) {

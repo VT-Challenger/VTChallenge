@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using VTChallenge.Data;
+using VTChallenge.Helpers;
 using VTChallenge.Repositories;
 using VTChallenge.Services;
 
@@ -25,6 +26,7 @@ string connectionString = builder.Configuration.GetConnectionString("SqlVtChalle
 builder.Services.AddTransient<HttpClient>();
 builder.Services.AddTransient<IRepositoryVtChallenge, RepositoryVtChallenge>();
 builder.Services.AddTransient<IServiceValorant, ServiceValorant>();
+builder.Services.AddSingleton<HelperMails>();
 builder.Services.AddDbContext<VTChallengeContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false);

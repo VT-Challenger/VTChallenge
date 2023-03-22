@@ -2,16 +2,19 @@
 using System.Security.Claims;
 using VTChallenge.Extensions;
 using VTChallenge.Filters;
+using VTChallenge.Helpers;
 using VTChallenge.Models;
 using VTChallenge.Repositories;
 
 namespace VTChallenge.Controllers {
     public class TournamentsController : Controller {
 
-        public IRepositoryVtChallenge repo;
+        private IRepositoryVtChallenge repo;
+        private HelperMails helperMails;
 
-        public TournamentsController(IRepositoryVtChallenge repo) {
+        public TournamentsController(IRepositoryVtChallenge repo, HelperMails helperMails) {
             this.repo = repo;
+            this.helperMails = helperMails;
         }
 
         [AuthorizeUsers]
@@ -32,9 +35,22 @@ namespace VTChallenge.Controllers {
             return View();
         }
 
-        public IActionResult InscriptionPlayer(int tid) {
+        public async Task<IActionResult> InscriptionPlayer(int tid) {
             this.repo.InscriptionPlayerTeamAle(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-        
+
+            //DATA CORREOS
+            TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
+            string user = HttpContext.User.Identity.Name;
+            int espacios = tournament.LimitPlayers - tournament.Inscriptions;
+            string contenidoOrg = this.helperMails.PlantillaInscriptionOrg(user, espacios);
+            string contenidoPlayer = this.helperMails.PlantillaInscriptionPlayer(user, tournament.Name, tournament.DateInit.ToString(), tournament.Platform, tournament.Organizator);
+
+            //CORREO AL USUARIO
+            await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoPlayer);
+
+            //CORREO AL ORGANIZADOR
+            await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoOrg);
+
             return RedirectToAction("TournamentDetails", "Tournaments", new {tid=tid});
         }
 
