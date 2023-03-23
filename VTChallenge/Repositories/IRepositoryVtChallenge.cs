@@ -4,6 +4,7 @@ namespace VTChallenge.Repositories {
     public interface IRepositoryVtChallenge {
         List<Users> getUser();
         Task<Users> FindUserAsync(string uid);
+        Task<Users> FindUserByNameAsync(string name);
         Task RegisterUserAsync(string uid, string name, string tag, string email, string password, string imagesmall, string imagelarge, string rango);
         Task<Users> LoginNamePasswordAsync(string name, string password);
         Task UpdateProfileAsync(string uid);
@@ -19,6 +20,7 @@ namespace VTChallenge.Repositories {
         bool ValidateInscription(int tid, string uid);
         List<TournamentComplete> GetTournamentsUser(string name);
         void DeleteTournament(int tid);
+        Task DeteleUserTournamentAsync(int tid, string uid);
 
     }
 }

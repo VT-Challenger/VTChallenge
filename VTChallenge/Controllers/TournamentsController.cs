@@ -38,6 +38,7 @@ namespace VTChallenge.Controllers {
             return View();
         }
 
+        [AuthorizeUsers]
         public async Task<IActionResult> InscriptionPlayer(int tid) {
             this.repo.InscriptionPlayerTeamAle(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -52,7 +53,8 @@ namespace VTChallenge.Controllers {
             await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoPlayer);
 
             //CORREO AL ORGANIZADOR (PONER CORREO DE ORGANIZADOR)
-            await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoOrg);
+            Users organizador = await this.repo.FindUserByNameAsync(tournament.Organizator);
+            await this.helperMails.SendMailAsync(organizador.Email, "INSCRIPCION", contenidoOrg);
 
             return RedirectToAction("TournamentDetails", "Tournaments", new { tid = tid });
         }
@@ -63,6 +65,7 @@ namespace VTChallenge.Controllers {
             return View();
         }
 
+        [AuthorizeUsers]
         public IActionResult DeleteTournament(int tid) {
             this.repo.DeleteTournament(tid);
             return RedirectToAction("ListTournamentsUser", "Tournaments");
@@ -70,5 +73,23 @@ namespace VTChallenge.Controllers {
 
         [AuthorizeUsers]
         public IActionResult CreateTournament() { return View(); }
+
+        [AuthorizeUsers]
+        public IActionResult EditTournament(int tid) {
+            TournamentComplete tournamentComplete = this.repo.GetTournamentComplete(tid);
+            ViewData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
+            ViewData["ROUNDSNAME"] = this.repo.GetRounds(tid);
+            ViewData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
+            return View(tournamentComplete); 
+        }
+
+        [AuthorizeUsers]
+        public async Task<IActionResult> DeleteUserTournament(int tid, string uid) {
+            await this.repo.DeteleUserTournamentAsync(tid, uid);
+            Users player = await this.repo.FindUserAsync(uid);
+            string contenido = this.helperMails.PlantillaRemoveUserTournament();
+            await this.helperMails.SendMailAsync(player.Email, "HAS SIDO EXPULSADO DEL TORNEO", contenido);
+            return RedirectToAction("EditTournament", "Tournaments", new { tid = tid});
+        }
     }
 }

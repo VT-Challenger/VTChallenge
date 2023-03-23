@@ -11,10 +11,10 @@
     --color-dark-secondary-val: #2e3137;
     --color-light-val: #515661;
     --color-light-text: #aaaaaa;
-
     --font-val: "Valorant", Arial, sans-serif;
     --font-calibri: "Calibri", Helvetica, sans-serif;
 }
+
 p {
     margin-bottom: 0;
 }
@@ -30,6 +30,17 @@ p {
     background: var(--color-light-text);
     border-radius: 10px;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 
 * {
     margin: 0;
@@ -40,6 +51,7 @@ p {
     vertical-align: baseline;
     user-select: none;
 }
+
 .menu {
     display: flex;
     flex-direction: row;
@@ -54,6 +66,7 @@ p {
     display: flex;
     flex-direction: row;
 }
+
 .menu-logo h3 {
     margin-top: 15px;
     margin-left: 10px;
@@ -66,11 +79,11 @@ p {
     overflow: hidden;
 }
 
-.menu-profile img {
-    object-fit: contain;
-    object-position: 100% 10%;
-    width: 100%;
-}
+    .menu-profile img {
+        object-fit: contain;
+        object-position: 100% 10%;
+        width: 100%;
+    }
 /*TEXTO*/
 .main-title {
     font-family: var(--font-calibri);
@@ -78,6 +91,7 @@ p {
     font-weight: bold;
     color: white;
 }
+
 .main-title-valo {
     text-decoration: none;
     font-family: var(--font-val);
@@ -115,7 +129,7 @@ p {
 
 .description-secondary-text {
     font-family: var(--font-calibri);
-    font-size: 1em;
+    font-size: 1.5em;
     font-weight: lighter;
     color: var(--color-light-text);
 }
@@ -124,11 +138,13 @@ p {
     font-family: var(--font-val);
     color: var(--color-primary-val);
 }
-.text-logo a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
+
+    .text-logo a {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+    }
+
 /*MEDIAS QUERYS*/
 /* PC */
 @media (min-width: 770px) and (max-width: 1025px) {
@@ -142,9 +158,21 @@ p {
     .menu {
         padding: 15px;
     }
+
+    .secondary-title {
+        font-size: 2em;
+    }
+
+    .description-secondary-text {
+        font-size: 1em;
+    }
 }
 /*MOVIL*/
 @media (max-width: 576px) {
+    .main-title {
+        font-size: 2.5em;
+    }
+
     .main-title-valo {
         font-size: 2.5em;
     }
@@ -162,5 +190,12 @@ p {
     .text-logo {
         font-size: 1.3em;
     }
-}
 
+    .secondary-title {
+        font-size: 2em;
+    }
+
+    .description-secondary-text {
+        font-size: 1em;
+    }
+}

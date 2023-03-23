@@ -62,5 +62,10 @@ namespace VTChallenge.Helpers {
                           "<p>Quedan " + inscripciones + " inscripciones</p>"; 
             return html;
         }
+
+        public string PlantillaRemoveUserTournament() {
+            string html = "Por decisión del organizador fuiste expulsado";
+            return html;
+        }
     }
 }

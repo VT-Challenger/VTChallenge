@@ -34,6 +34,11 @@ namespace VTChallenge.Repositories {
             return await this.context.Users.FirstOrDefaultAsync(x => x.Uid == uid);
         }
 
+        public async Task<Users> FindUserByNameAsync(string name) {
+             return await this.context.Users.FirstOrDefaultAsync(x => x.Name == name);
+        }
+
+
         public async Task<Users> LoginNamePasswordAsync(string username, string password) {
             Users user = await this.context.Users.FirstOrDefaultAsync(u => u.Name == username);
             if (user == null) {
@@ -190,6 +195,14 @@ namespace VTChallenge.Repositories {
             this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
 
+    
+        public async Task DeteleUserTournamentAsync(int tid, string uid) {
+            string sql = "SP_DELETE_PLAYER_TOURNAMENT @TID, @UID";
+            SqlParameter pamTid = new SqlParameter("@TID", tid);
+            SqlParameter pamUid = new SqlParameter("@TID", uid);
+
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamTid, pamUid);
+        }
 
         #endregion
     }
