@@ -18,7 +18,10 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
-        public IActionResult ListTournaments() {
+        public async Task<IActionResult> ListTournaments() {
+            string rank = "Diamond";
+            List<TournamentComplete> tournamentsUser = await this.repo.GetTournamentsByRankAsync(rank);
+
             ViewData["LISTTOURNAMENTS"] = this.repo.GetTournaments();
             return View();
         }
@@ -48,10 +51,10 @@ namespace VTChallenge.Controllers {
             //CORREO AL USUARIO
             await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoPlayer);
 
-            //CORREO AL ORGANIZADOR
+            //CORREO AL ORGANIZADOR (PONER CORREO DE ORGANIZADOR)
             await this.helperMails.SendMailAsync(HttpContext.User.FindFirst("EMAIL").Value.ToString(), "INSCRIPCION", contenidoOrg);
 
-            return RedirectToAction("TournamentDetails", "Tournaments", new {tid=tid});
+            return RedirectToAction("TournamentDetails", "Tournaments", new { tid = tid });
         }
 
         [AuthorizeUsers]

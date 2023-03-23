@@ -31,7 +31,7 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task<Users> FindUserAsync(string uid) {
-            return await this.context.Users.FirstOrDefaultAsync(x=> x.Uid == uid);
+            return await this.context.Users.FirstOrDefaultAsync(x => x.Uid == uid);
         }
 
         public async Task<Users> LoginNamePasswordAsync(string username, string password) {
@@ -74,12 +74,12 @@ namespace VTChallenge.Repositories {
 
         public async Task<int> GetTotalWinsAsync(string uid) {
             var totalWins = (from m in this.context.Matches
-                            join r in this.context.Rounds on m.Rid equals r.Rid
-                            join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
-                            where r.Name == "Final" &&
-                            ((m.Tred == tp.Tid && m.Rred > m.Rblue) || (m.Tblue == tp.Tid && m.Rblue > m.Rred)) &&
-                            tp.Uid == uid
-                            select m).Count();
+                             join r in this.context.Rounds on m.Rid equals r.Rid
+                             join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
+                             where r.Name == "Final" &&
+                             ((m.Tred == tp.Tid && m.Rred > m.Rblue) || (m.Tblue == tp.Tid && m.Rblue > m.Rred)) &&
+                             tp.Uid == uid
+                             select m).Count();
             return (int)totalWins;
         }
 
@@ -88,7 +88,7 @@ namespace VTChallenge.Repositories {
             UserApi userapi = await this.api.GetAccountUidAsync(uid);
             Users user = await this.FindUserAsync(uid);
 
-            if(userapi != null) {
+            if (userapi != null) {
                 data = userapi.Data;
                 user.ImageLarge = data.Card.Large;
                 user.ImageSmall = data.Card.Small;
@@ -117,6 +117,14 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
+        public async Task<List<TournamentComplete>> GetTournamentsByRankAsync(string rank) {
+            var consulta = from data in this.context.TournamentCompletes
+                           where data.Rank.Contains(rank)
+                           select data;
+
+            return await consulta.ToListAsync();
+        }
+
         public List<Round> GetRounds(int tid) {
             var consulta = from data in this.context.Rounds
                            where data.Tid == tid
@@ -133,7 +141,7 @@ namespace VTChallenge.Repositories {
                                Tblue = match.Tblue,
                                Rblue = match.Rblue,
                                Tred = match.Tred,
-                               Rred= match.Rred,
+                               Rred = match.Rred,
                                Date = match.Date,
                                Fase = round.Name
                            };
@@ -182,7 +190,7 @@ namespace VTChallenge.Repositories {
             this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
 
-    
+
         #endregion
     }
 }

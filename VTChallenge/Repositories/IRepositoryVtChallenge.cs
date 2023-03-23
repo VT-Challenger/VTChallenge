@@ -9,6 +9,7 @@ namespace VTChallenge.Repositories {
         Task UpdateProfileAsync(string uid);
         Task<int> GetTotalWinsAsync(string uid);
         List<TournamentComplete> GetTournaments();
+        Task<List<TournamentComplete>> GetTournamentsByRankAsync(string rank);
         TournamentComplete GetTournamentComplete(int tid);
         List<TournamentPlayers> GetPlayersTournament(int tid);
         List<Round> GetRounds(int tid);
