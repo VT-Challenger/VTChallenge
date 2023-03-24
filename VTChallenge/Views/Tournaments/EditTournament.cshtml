@@ -30,7 +30,7 @@
                     });
                     Swal.fire(
                         "¡Eliminado!",
-                        "El torneo fue eliminado.",
+                        "El jugador fue expulsado con existo.",
                         "success"
                     );
                 }
@@ -39,120 +39,178 @@
     </script>
 }
 
-<div class="header">
-    <img src="~/imgs/tournaments/@Model.Image" class="image-background" />
-    <div class="header-content">
-        <img src="~/imgs/icons/t-config-icon.svg"
+@section scriptAdminTournament{
+<script>
+        $(document).ready(function () {
+            $("#formMatches").submit(function (e) {
+                e.preventDefault();
+
+                var partidos = document.querySelectorAll(".match");
+                var data = [];
+
+                partidos.forEach((element) => {
+                    let json = {
+                        Mid: parseInt($(element).find("input").val()),
+                        Tblue: parseInt(
+                            element
+                                .querySelector(".team span")
+                                .textContent.replace("Team", " ")
+                                .trim()
+                        ),
+                        TRed: parseInt(
+                            element
+                                .querySelector(".team:nth-of-type(2) span")
+                                .textContent.replace("Team", " ")
+                                .trim()
+                        ),
+                        Rblue: parseInt($(element).find(".team input").val()), // obtener valor del input del primer equipo
+                        Rred: parseInt($(element).find(".team:nth-of-type(2) input").val()), // obtener valor del input del segundo equipo
+                        Date: element.querySelector("time").textContent,
+                        Rid: parseInt($(element).find("input.roundId").val()),
+                    };
+
+                    data.push(json);
+                });
+
+                console.log(data);
+
+                $.post("/Tournaments/UpdateUserTournament", { tid: @Model.Tid, data: JSON.stringify(data) })
+                  .done(function (data) {
+                        Swal.fire(
+                            "¡Modificacion con exito!",
+                            "Los resultados de su torneo fueron modificados con exito.",
+                            "success"
+                        );
+                });;
+               
+            });
+        });
+</script>
+}
+
+@if (Model != null) {
+    <div class="header">
+        <img src="~/imgs/tournaments/@Model.Image" class="image-background" />
+        <div class="header-content">
+            <img src="~/imgs/icons/t-config-icon.svg"
              class="header-icon animation-loop" />
-        <div class="">
-            <h1 class="secondary-title">Administración @Model.Name</h1>
-            <p class="description-secondary-text">
-                Bienvenido al panel de Administración de su torneo
-            </p>
+            <div class="">
+                <h1 class="secondary-title">Administración @Model.Name</h1>
+                <p class="description-secondary-text">
+                    Bienvenido al panel de Administración de su torneo
+                </p>
+            </div>
         </div>
     </div>
-</div>
-<div class="tabs">
-    <input type="radio" id="partidos" name="tab-control" checked />
-    <input type="radio" id="players" name="tab-control" />
-    <ul class="tabs-header">
-        <li>
-            <label for="partidos" role="button">
-                <span>Partidos</span>
-            </label>
-        </li>
-        <li>
-            <label for="players" role="button">
-                <span>Jugadores</span>
-            </label>
-        </li>
-    </ul>
-    <div class="content">
-        <!--PARTIDOS-->
-        <section class="partidos">
-            @for (int i = 0; i < nameRounds.Count; i++) {
-                <div class="calendar-header">
-                    <h1>@nameRounds[i].Name</h1>
-                    <h3>@nameRounds[i].Date.ToString("dd MMM yyyy")</h3>
-                </div>
-                <div class="content-calendar">
-                    @foreach (MatchRound match in matchesTournament) {
-                        @if (match.Fase == nameRounds[i].Name) {
-                            <div class="match">
-                                <time>@match.Date.ToString("HH:mm")</time>
-                                <div class="team">
-                                    <span>Team @match.Tred</span>
-                                    <input type="number"
-                                           max="3"
-                                           min="0"
-                                           name="result"
-                                           class="result"
-                                           placeholder="0" />
-                                </div>
-                                <div class="team">
-                                    <span>Team @match.Tblue</span>
-                                    <input type="number"
-                                           max="3"
-                                           min="0"
-                                           name="result"
-                                           class="result"
-                                           placeholder="0" />
-                                </div>
-                            </div>
-                        }
-                    }
-                </div>
-                <div class="content-calendar mt-4">
-                    <button class="btn btn-success">Guardar</button>
-                </div>
-            }
-           
-        </section>
+    <div class="tabs">
+        <input type="radio" id="partidos" name="tab-control" checked />
+        <input type="radio" id="players" name="tab-control" />
+        <ul class="tabs-header">
+            <li>
+                <label for="partidos" role="button">
+                    <span>Partidos</span>
+                </label>
+            </li>
+            <li>
+                <label for="players" role="button">
+                    <span>Jugadores</span>
+                </label>
+            </li>
+        </ul>
+        <div class="content">
+            <!--PARTIDOS-->
+            <section class="partidos">
+                <form id="formMatches">
+                    @for (int i = 0; i < nameRounds.Count; i++) {
+                        <div class="calendar-header">
+                            <h1>@nameRounds[i].Name</h1>
+                            <h3>@nameRounds[i].Date.ToString("dd MMM yyyy")</h3>
+                        </div>
 
-        <!-- TAB => PARTICIPANTES -->
-        <section class="participantes">
-            <table class="table">
-                <thead class="text-center">
-                    <tr>
-                        <th><h1>#</h1></th>
-                        <th>
-                            <h1>Jugadores</h1>
-                        </th>
-                        <th>
-                            <h1>Equipo</h1>
-                        </th>
-                        <th>
-                            <h1>Acciones</h1>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @foreach (TournamentPlayers player in playersTournament) {
-                        <tr>
-                            <td><h3>@(count++)</h3></td>
-                            <td>
-                                <div class="container-participante">
-                                    <div class="data">
-                                        <img src="@player.ImageSmall"
-                                             class="img-participante" />
-                                        <h3>@player.Name</h3>
+                        <div class="content-calendar">
+                            @foreach (MatchRound match in matchesTournament) {
+                                @if (match.Fase == nameRounds[i].Name) {
+                                    <div class="match">
+                                        <input name="matchId" type="hidden" value="@match.Mid" />
+                                        <input name="roundId" type="hidden" value="@nameRounds[i].Rid" class="roundId" />
+                                        <time>@match.Date.ToString("HH:mm")</time>
+                                        <div class="team">
+                                            <span>Team @match.Tred</span>
+                                            <input type="number"
+                                                   max="3"
+                                                   min="0"
+                                                   name="result"
+                                                   class="result"
+                                                   value="@match.Rred"
+                                                   placeholder="0" />
+                                        </div>
+                                        <div class="team">
+                                            <span>Team @match.Tblue</span>
+                                            <input type="number"
+                                                   max="3"
+                                                   min="0"
+                                                   name="result"
+                                                   class="result"
+                                                   value="@match.Rblue"
+                                                   placeholder="0" />
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td><h3>@player.Team</h3></td>
-                            <td>
-                                <a onclick="" class="btn btn-light">
-                                    <i class="bi bi-arrow-left-right"></i>
-                                </a>
+                                }
+                            }
 
-                                <a onclick="AlertRemovePlayer('@Model.Tid', '@player.Uid')" class="btn btn-danger">
-                                    <i class="bi bi-person-x"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        </div>
                     }
-                </tbody>
-            </table>
-        </section>
+                    <div class="content-calendar mt-4">
+                        <button class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- TAB => PARTICIPANTES -->
+            <section class="participantes">
+                <table class="table">
+                    <thead class="text-center">
+                        <tr>
+                            <th><h1>#</h1></th>
+                            <th>
+                                <h1>Jugadores</h1>
+                            </th>
+                            <th>
+                                <h1>Equipo</h1>
+                            </th>
+                            <th>
+                                <h1>Acciones</h1>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (TournamentPlayers player in playersTournament) {
+                            <tr>
+                                <td><h3>@(count++)</h3></td>
+                                <td>
+                                    <div class="container-participante">
+                                        <div class="data">
+                                            <img src="@player.ImageSmall"
+                                         class="img-participante" />
+                                            <h3>@player.Name</h3>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><h3>@player.Team</h3></td>
+                                <td>
+                                    <a onclick="" class="btn btn-light">
+                                        <i class="bi bi-arrow-left-right"></i>
+                                    </a>
+
+                                    <a onclick="AlertRemovePlayer('@Model.Tid', '@player.Uid')" class="btn btn-danger">
+                                        <i class="bi bi-person-x"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </div>
     </div>
-</div>
+}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using VTChallenge.Extensions;
 using VTChallenge.Filters;
@@ -11,10 +12,12 @@ namespace VTChallenge.Controllers {
 
         private IRepositoryVtChallenge repo;
         private HelperMails helperMails;
+        private HelperJson helperJson;
 
-        public TournamentsController(IRepositoryVtChallenge repo, HelperMails helperMails) {
+        public TournamentsController(IRepositoryVtChallenge repo, HelperMails helperMails, HelperJson helperJson) {
             this.repo = repo;
             this.helperMails = helperMails;
+            this.helperJson = helperJson;
         }
 
         [AuthorizeUsers]
@@ -80,7 +83,7 @@ namespace VTChallenge.Controllers {
             ViewData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
             ViewData["ROUNDSNAME"] = this.repo.GetRounds(tid);
             ViewData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
-            return View(tournamentComplete); 
+            return View(tournamentComplete);
         }
 
         [AuthorizeUsers]
@@ -89,7 +92,17 @@ namespace VTChallenge.Controllers {
             Users player = await this.repo.FindUserAsync(uid);
             string contenido = this.helperMails.PlantillaRemoveUserTournament();
             await this.helperMails.SendMailAsync(player.Email, "HAS SIDO EXPULSADO DEL TORNEO", contenido);
-            return RedirectToAction("EditTournament", "Tournaments", new { tid = tid});
+            return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });
+        }
+
+        [AuthorizeUsers]
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserTournament(int tid, string data) {
+            List<Match> partidas = JsonConvert.DeserializeObject<List<Match>>(data);
+            foreach (Match match in partidas) {
+                await this.repo.UpdateMatchesTournament(match.Mid, match.Tblue, match.Tred, match.Rblue, match.Rred, match.Date, match.Rid);
+            }
+            return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });
         }
     }
 }

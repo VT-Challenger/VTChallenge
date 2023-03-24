@@ -35,7 +35,7 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task<Users> FindUserByNameAsync(string name) {
-             return await this.context.Users.FirstOrDefaultAsync(x => x.Name == name);
+            return await this.context.Users.FirstOrDefaultAsync(x => x.Name == name);
         }
 
 
@@ -195,13 +195,28 @@ namespace VTChallenge.Repositories {
             this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
 
-    
+
         public async Task DeteleUserTournamentAsync(int tid, string uid) {
             string sql = "SP_DELETE_PLAYER_TOURNAMENT @TID, @UID";
             SqlParameter pamTid = new SqlParameter("@TID", tid);
-            SqlParameter pamUid = new SqlParameter("@TID", uid);
+            SqlParameter pamUid = new SqlParameter("@UID", uid);
 
             await this.context.Database.ExecuteSqlRawAsync(sql, pamTid, pamUid);
+        }
+
+        public async Task UpdateMatchesTournament(int mid, int tblue, int tred, int rblue, int rred, DateTime date, int rid) {
+            string sql = "SP_UPDATE_MATCH @MID, @TBLUE, @TRED, @RBLUE, @RRED, @DATE, @RID";
+            SqlParameter[] pams = new SqlParameter[] {
+                new SqlParameter("@MID", mid),
+                new SqlParameter("@TBLUE", tblue),
+                new SqlParameter("@TRED", tred),
+                new SqlParameter("@RBLUE", rblue),
+                new SqlParameter("@RRED", rred),
+                new SqlParameter("@DATE", date),
+                new SqlParameter("@RID", rid)
+            };
+
+            await this.context.Database.ExecuteSqlRawAsync(sql, pams);
         }
 
         #endregion

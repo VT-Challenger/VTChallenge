@@ -1,5 +1,5 @@
-﻿using System.Net.Mail;
-using System.Net;
+﻿using System.Net;
+using System.Net.Mail;
 
 namespace VTChallenge.Helpers {
     public class HelperMails {
@@ -48,9 +48,9 @@ namespace VTChallenge.Helpers {
         }
 
         public string PlantillaInscriptionPlayer(string name, string nombreTorneo, string fecha, string server, string organizador) {
-            string html = "<p>Estimado" + name  +",</p>" +
+            string html = "<p>Estimado" + name + ",</p>" +
                            "<p>¡Gracias por unirse a nuestro torneo! Nos complace informarle que su registro ha sido confirmado y ahora forma parte del grupo de participantes del torneo <b>" + nombreTorneo + "</b></p>" +
-                            "<p>El torneo se llevará a cabo el día" + fecha  + " y tendrá lugar en el siguiente link: " + server +" .Por favor, asegúrese de estar al menos 30 minutos antes de que comience para completar el proceso de registro.</p>" +
+                            "<p>El torneo se llevará a cabo el día" + fecha + " y tendrá lugar en el siguiente link: " + server + " .Por favor, asegúrese de estar al menos 30 minutos antes de que comience para completar el proceso de registro.</p>" +
                             "<p>Le deseamos la mejor de las suertes en el torneo y esperamos que tenga una experiencia emocionante y satisfactoria. Si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p>" +
                             "<p>¡Gracias de nuevo por unirse a nosotros!</p>" +
                             "<p>Atentamente,<br>" + organizador + "</p>";
@@ -58,8 +58,8 @@ namespace VTChallenge.Helpers {
         }
 
         public string PlantillaInscriptionOrg(string playerName, int inscripciones) {
-            string html = "<p>El jugador: " + playerName + " se ha unido al torneo</p>" + 
-                          "<p>Quedan " + inscripciones + " inscripciones</p>"; 
+            string html = "<p>El jugador: " + playerName + " se ha unido al torneo</p>" +
+                          "<p>Quedan " + inscripciones + " inscripciones</p>";
             return html;
         }
 
