@@ -55,9 +55,6 @@ namespace VTChallenge.Models {
         [Column("IMAGE")]
         public string? Image { get; set; }
 
-        [Column("ICON")]
-        public string? Icon { get; set; }
-
         [Column("INSCRIPTIONS")]
         public int Inscriptions { get; set; }
 

@@ -11,7 +11,7 @@
     <script>
         function AlertRemovePlayer(tid, uid) {
             Swal.fire({
-                title: "¿Estas seguro?",
+                title: "Expulsar jugador",
                 text: "No se podrá revertir dicha acción. Se le enviará un email informando al usuario de que ha sido expulsado del torneo.",
                 icon: "warning",
                 showCancelButton: true,
@@ -72,15 +72,21 @@
                     data.push(json);
                 });
 
-                console.log(data);
 
                 $.post("/Tournaments/UpdateUserTournament", { tid: @Model.Tid, data: JSON.stringify(data) })
-                  .done(function (data) {
-                        Swal.fire(
-                            "¡Modificacion con exito!",
-                            "Los resultados de su torneo fueron modificados con exito.",
-                            "success"
-                        );
+                .done(function (data) {
+                        Swal.fire({
+                            title: "¡Modificacion con exito!",
+                            text: "Los resultados de su torneo fueron modificados con exito.",
+                            icon: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: "#3085d6",
+                            confirmButtonText: "Ok",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = "/Tournaments/EditTournament?tid=" + @Model.Tid;
+                            }
+                        });
                 });;
                
             });

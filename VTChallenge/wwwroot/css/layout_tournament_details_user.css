@@ -83,6 +83,11 @@ body {
     margin-right: 5px;
     border-radius: 5px;
 }
+@media (min-width: 2000px) {
+    .image-background {
+        height: 27.7%;
+    }
+}
 
 @media (min-width: 577px) and (max-width: 769px) {
     .header-icon {

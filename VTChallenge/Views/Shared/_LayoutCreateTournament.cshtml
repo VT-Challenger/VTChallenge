@@ -9,22 +9,28 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- PERSONAL -->
     <link rel="stylesheet" href="~/css/global.css" />
-    <link rel="stylesheet" href="~/css/customs/button_glitch.css" />
+    <link rel="stylesheet" href="~/css/customs/steps.css" />
     <link rel="stylesheet" href="~/css/customs/sweetalert2.css" />
-    <link rel="stylesheet" href="~/css/customs/tabs.css" />
-    <link rel="stylesheet" href="~/css/layout_tournament_details_user.css" />
+    <link rel="stylesheet" href="~/css/customs/button.css" />
+    <link rel="stylesheet" href="~/css/layout_create_tournament_user.css" />
     <title>VT Challenge</title>
 </head>
 <body>
-    <partial name="_MenuUsuario" />
+    <div class="menu">
+        <div class="menu-logo">
+            <!-- <img src="./imgs/logo.svg" width="50px" height="50px" /> -->
+            <h3 class="text-logo">
+                <a asp-controller="Home" asp-action="Index">Atras</a>
+            </h3>
+        </div>
+    </div>
 
     @RenderBody()
 </body>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
 <script src="~/js/sweetalert2.all.min.js"></script>
-@await RenderSectionAsync("scriptWinner", required: false)
-@await RenderSectionAsync("scriptClassWinner", required: false)
+<script src="~/js/steps.js"></script>
+<script src="~/js/createTournament.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </html>

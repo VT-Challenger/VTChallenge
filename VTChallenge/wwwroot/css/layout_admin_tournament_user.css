@@ -68,7 +68,10 @@ body {
     }
 }
 
-@media (min-width: 770px) and (max-width: 1025px) {
+@media (min-width: 2000px) {
+    .image-background {
+        height: 27.7%;
+    }
 }
 /* TABLET */
 @media (min-width: 577px) and (max-width: 769px) {

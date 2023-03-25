@@ -3,7 +3,293 @@
 }
 
 
+<div id="loading">
+    <div id="loading-content">
+        <img src="~/imgs/icons/loading.gif" alt="Cargando..." />
+        <p>Cargando...</p>
+    </div>
+</div>
 
+<h1 class="text-center secondary-title-valo">Crear Torneo</h1>
+<!--PEN CONTENT-->
+<div class="content">
+    <!--content inner-->
+    <div class="content__inner">
+        <div class="container overflow-hidden">
+            <!--multisteps-form-->
+            <div class="multisteps-form">
+                <!--progress bar-->
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+                        <div class="multisteps-form__progress">
+                            <button class="multisteps-form__progress-btn js-active"
+                                    type="button"
+                                    title="User Info">
+                                TORNEO
+                            </button>
+                            <button class="multisteps-form__progress-btn"
+                                    type="button"
+                                    title="Address">
+                                Rondas
+                            </button>
+                            <button class="multisteps-form__progress-btn"
+                                    type="button"
+                                    title="Order Info">
+                                Clasificacion
+                            </button>
+                            <button class="multisteps-form__progress-btn"
+                                    type="button"
+                                    title="Comments">
+                                Confirmacion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--form panels-->
+                <div class="row">
+                    <div class="col-12 col-lg-12 m-auto">
+                        <form class="multisteps-form__form"
+                              id="formulario">
+                            <!--single form panel-->
+                            <div class="multisteps-form__panel shadow p-4 rounded js-active"
+                                 data-animation="scaleIn">
+                                <h3 class="multisteps-form__title">
+                                    Torneo
+                                </h3>
+
+                                <div class="multisteps-form__content">
+                                    <div class="row mt-4">
+                                        <div class="col-12 col-sm-6">
+                                            <input class="multisteps-form__input form-control"
+                                                   type="text"
+                                                   placeholder="Nombre"
+                                                   name="nameTorneo" />
+                                        </div>
+                                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                            <input class="multisteps-form__input form-control"
+                                                   type="datetime-local"
+                                                   name="dateTorneo"
+                                                   min="" />
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-12 col-sm-6">
+                                            <textarea class="form-control multisteps-form__input"
+                                                      rows="6"
+                                                      placeholder="Descripcion"
+                                                      name="descriptionTorneo"></textarea>
+                                        </div>
+                                        <div class="col-12 col-sm-6 mt-4 mt-sm-0">
+                                            <div class="mt-3">
+                                                <label class="multisteps-form__label">
+                                                    Numero de
+                                                    Jugadores
+                                                </label>
+                                                <select class="form-control multisteps-form__input"
+                                                        id="jugadores"
+                                                        name="playersTorneo">
+                                                    <option value="10">
+                                                        10
+                                                    </option>
+                                                    <option value="20">
+                                                        20
+                                                    </option>
+                                                    <option value="40">
+                                                        40
+                                                    </option>
+                                                    <option value="80">
+                                                        80
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <label class="multisteps-form__label">Rango</label>
+                                                <div class="container-select__rank">
+                                                    <select class="form-control multisteps-form__input select-rank"
+                                                            id="selectRank"
+                                                            name="rangoTorneo">
+                                                        <option value="Radiant">Radiant</option>
+                                                        <option value="Immortal 3">Immortal 3</option>
+                                                        <option value="Immortal 2">Immortal 2</option>
+                                                        <option value="Immortal 1">Immortal 1</option>
+                                                        <option value="Ascendant 3">Ascendant 3</option>
+                                                        <option value="Ascendant 2">Ascendant 2</option>
+                                                        <option value="Ascendant 1">Ascendant 1</option>
+                                                        <option value="Diamond 3">Diamond 3</option>
+                                                        <option value="Diamond 2">Diamond 2</option>
+                                                        <option value="Diamond 1">Diamond 1</option>
+                                                        <option value="Platinum 3">Platinum 3</option>
+                                                        <option value="Platinum 2">Platinum 2</option>
+                                                        <option value="Platinum 1">Platinum 1</option>
+                                                        <option value="Gold 3">Gold 3</option>
+                                                        <option value="Gold 2">Gold 2</option>
+                                                        <option value="Gold 1">Gold 1</option>
+                                                        <option value="Silver 3">Silver 3</option>
+                                                        <option value="Silver 2">Silver 2</option>
+                                                        <option value="Silver 1">Silver 1</option>
+                                                        <option value="Bronze 3">Bronze 3</option>
+                                                        <option value="Bronze 2">Bronze 2</option>
+                                                        <option value="Bronze 1">Bronze 1</option>
+                                                        <option value="Iron 3">Iron 3</option>
+                                                        <option value="Iron 2">Iron 2</option>
+                                                        <option value="Iron 1">Iron 1</option>
+                                                        <option value="Unranked">Unranked</option>
+                                                    </select>
+                                                    <div id="imagenRank"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <label class="multisteps-form__label">
+                                                Imagen del
+                                                Torneo
+                                            </label>
+                                            <div class="col-12">
+                                                <input class="multisteps-form__input form-control"
+                                                       type="file"
+                                                       name="imageTournament"
+                                                       accept="image/*" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-row d-flex mt-4">
+                                        <div class="button-borders">
+                                            <button class="secondary-button secondary-background js-btn-next"
+                                                    type="button"
+                                                    title="Next">
+                                                Next
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--single form panel-->
+                            <div class="multisteps-form__panel shadow p-4 rounded"
+                                 data-animation="scaleIn">
+                                <h3 class="multisteps-form__title">
+                                    Rondas
+                                </h3>
+                                <div class="multisteps-form__content"
+                                     id="rondas"></div>
+                            </div>
+                            <!--single form panel-->
+                            <div class="multisteps-form__panel shadow p-4 rounded"
+                                 data-animation="scaleIn">
+                                <h3 class="multisteps-form__title">
+                                    Clasificacion
+                                </h3>
+                                <div class="multisteps-form__content"
+                                     id="clasificacion"></div>
+                            </div>
+                            <!--single form panel-->
+                            <div class="multisteps-form__panel shadow p-4 rounded"
+                                 data-animation="scaleIn">
+                                <h3 class="multisteps-form__title">
+                                    Confirmacion
+                                </h3>
+                                <div class="multisteps-form__content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p>
+                                                Antes de crear su
+                                                torneo, por favor,
+                                                revise cuidadosamente
+                                                todos los datos que va a
+                                                ingresar. Es importante
+                                                que verifique que todo
+                                                esté correcto para
+                                                evitar problemas durante
+                                                el proceso de registro y
+                                                durante el desarrollo
+                                                del torneo.
+                                            </p>
+                                            <p>
+                                                Asegúrese de que la
+                                                información del torneo,
+                                                como el nombre, la fecha
+                                                de inicio, la
+                                                descripción y la
+                                                plataforma sean
+                                                precisos. Verifique que
+                                                ha seleccionado el
+                                                número correcto de
+                                                jugadores y que ha
+                                                ingresado su información
+                                                de contacto
+                                                correctamente.
+                                            </p>
+                                            <p>
+                                                También es importante
+                                                que compruebe los
+                                                detalles de cada ronda y
+                                                cada partido, como los
+                                                nombres de los equipos,
+                                                las fechas, las
+                                                puntuaciones y el número
+                                                de rondas. Asegúrese de
+                                                que todo esté bien
+                                                escrito y que no haya
+                                                errores de formato.
+                                            </p>
+                                            <p>
+                                                Recuerde que una vez que
+                                                haya creado el torneo,
+                                                no podrá modificar los
+                                                datos del torneo o los
+                                                detalles de cada ronda y
+                                                cada partido, por lo que
+                                                es importante que
+                                                verifique todo antes de
+                                                crear el torneo.
+                                            </p>
+                                            <p>
+                                                Le recomendamos que
+                                                solicite a otra persona
+                                                que revise la
+                                                información con usted
+                                                para asegurarse de que
+                                                no se haya pasado por
+                                                alto ningún detalle.
+                                            </p>
+                                            <p>
+                                                ¡Gracias por su atención
+                                                y buen trabajo
+                                                organizando el torneo!
+                                            </p>
+                                        </div>
+                                        <div class="d-flex justify-content-center mt-4">
+                                            <div class="button-borders">
+                                                <button class="primary-button primary-background"
+                                                        type="submit">
+                                                    Crear
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-row d-flex mt-4">
+                                        <div class="button-borders">
+                                            <button class="secondary-button secondary-background js-btn-prev"
+                                                    type="button"
+                                                    title="Prev">
+                                                Prev
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

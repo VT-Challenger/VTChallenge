@@ -24,11 +24,13 @@
     text-indent: -9999px; /*SI LO QUITO APARECE EL TEXTO EN MOBIL*/
     font-family: var(--font-val);
 }
+
 @media (min-width: 500px) {
     .multisteps-form__progress-btn {
         text-indent: 0; /*SI LO QUITO APARECE EL TEXTO EN MOBIL*/
     }
 }
+
 .multisteps-form__progress-btn:before {
     position: absolute;
     top: 0;
@@ -38,14 +40,14 @@
     height: 13px;
     content: "";
     transform: translateX(-50%);
-    transition: all 0.15s linear 0s,
-        transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
+    transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
     border: 2px solid currentColor;
     border-radius: 50%;
     background-color: var(--color-secondary-val);
     box-sizing: border-box;
     z-index: 3;
 }
+
 .multisteps-form__progress-btn:after {
     position: absolute;
     top: 5px;
@@ -61,16 +63,19 @@
     background-color: #222124;
     z-index: 1;
 }
+
 .multisteps-form__progress-btn:first-child:after {
     display: none;
 }
+
 .multisteps-form__progress-btn.js-active {
     color: var(--color-primary-val);
 }
-.multisteps-form__progress-btn.js-active:before {
-    transform: translateX(-50%) scale(1.2);
-    background-color: currentColor;
-}
+
+    .multisteps-form__progress-btn.js-active:before {
+        transform: translateX(-50%) scale(1.2);
+        background-color: currentColor;
+    }
 
 .multisteps-form__form {
     position: relative;
@@ -86,22 +91,24 @@
     visibility: hidden;
     background-color: #242424;
 }
-.multisteps-form__panel.js-active {
-    height: auto;
-    opacity: 1;
-    visibility: visible;
-}
 
-.multisteps-form__panel[data-animation="scaleIn"] {
-    transform: scale(0.9);
-}
-.multisteps-form__panel[data-animation="scaleIn"].js-active {
-    transition-property: all;
-    transition-duration: 0.2s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
-    transform: scale(1);
-}
+    .multisteps-form__panel.js-active {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .multisteps-form__panel[data-animation="scaleIn"] {
+        transform: scale(0.9);
+    }
+
+        .multisteps-form__panel[data-animation="scaleIn"].js-active {
+            transition-property: all;
+            transition-duration: 0.2s;
+            transition-timing-function: linear;
+            transition-delay: 0s;
+            transform: scale(1);
+        }
 
 .multisteps-form__title {
     text-decoration: none;
@@ -110,21 +117,26 @@
     color: var(--color-primary-val);
 }
 
+.multisteps-form__content p {
+    color: white;
+    font-family: var(--font-calibri);
+}
+
 .multisteps-form__input {
     font-family: var(--font-calibri);
     font-size: 25px;
     padding: 10px 20px;
     border: solid 2px var(--color-primary-val);
-    background-color: transparent;
+    background-color: transparent !important;
     color: white;
     outline: none;
     cursor: text;
 }
 
-.multisteps-form__input:focus {
-    background-color: var(--color-primary-val);
-    color: white;
-}
+    .multisteps-form__input:focus {
+        background-color: var(--color-primary-val);
+        color: white;
+    }
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator,
 input[type="date"]::-webkit-calendar-picker-indicator,
@@ -132,6 +144,7 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
     filter: invert(0.8);
 }
+
 input[type="datetime-local"],
 input[type="time"]::-webkit-calendar-picker-indicator,
 input[type="date"] {
@@ -156,6 +169,7 @@ select:hover {
     background-color: var(--color-primary-val);
     cursor: pointer;
 }
+
 .container-select__rank {
     display: flex;
     align-items: center;
@@ -165,4 +179,35 @@ select:hover {
 .select-rank {
     width: 85%;
     margin-right: 10px;
+}
+
+.box-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.box {
+    background-color: #222124;
+    text-align: center;
+    color: white;
+    font-family: var(--font-val);
+    font-size: 20px;
+    border: 3px solid #666;
+    border-radius: 0.5em;
+    padding: 10px;
+    width: 25%;
+    margin-inline: 20px;
+}
+
+.box-text {
+    text-decoration: none;
+    font-family: var(--font-val);
+    font-size: 2em;
+    color: var(--color-primary-val);
+}
+
+.box-container .multisteps-form__input {
+    width: 25%;
 }

@@ -27,7 +27,7 @@ namespace VTChallenge.Controllers {
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password) {
-            username = "Popolas";
+            //username = "Popolas";
             password = "P@ssw0rd";
             Users user = await this.repo.LoginNamePasswordAsync(username, password);
             if (user != null) {

@@ -1,110 +1,51 @@
 $(document).ready(function () {
-  var select = $("#selectRank");
 
-  var rutaImagenes = "../imgs/rangos";
-
-  // creamos un array para almacenar las rutas de las imágenes
-  var imagenes = [];
-
-  // hacemos una petición AJAX para obtener las imágenes
-  $.ajax({
-    url: rutaImagenes,
-    success: function (data) {
-      // buscamos todas las etiquetas <a> que contengan el nombre de archivo de una imagen
-      $(data)
-        .find('a:contains(".png")')
-        .each(function () {
-          // obtenemos la ruta completa de la imagen y la agregamos al array
-          var rutaCompleta = $(this).attr("href");
-          var partes = rutaCompleta.split("/");
-          var rutaRelativa = partes.slice(partes.indexOf("imgs")).join("/");
-
-          imagenes.push("../" + rutaRelativa);
-        });
-
-      // generamos las opciones
-      for (var i = 0; i < imagenes.length; i++) {
-        // creamos la opción y le establecemos el valor y el texto
-        var cadena = imagenes[i];
-
-        // obtenemos el nombre del archivo sin extensión
-        var nombreArchivo = cadena.substring(
-          cadena.lastIndexOf("/") + 1,
-          cadena.lastIndexOf(".")
-        );
-        // extraemos el nombre del rango y lo formateamos
-        var rangoNombre = nombreArchivo
-          .substring(0, nombreArchivo.lastIndexOf("_"))
-          .replace(/_/g, " ");
-
-        var opcion = $("<option>", {
-          value: imagenes[i],
-          text: rangoNombre,
-        });
-
-        // agregamos la opción al select
-        select.append(opcion);
-      }
-
-      $("#imagenRank").html(
-        '<img src="' + imagenes[0] + '" width="60px" height="60px">'
-      );
-    },
-  });
-
-  // cuando se cambie el select
-  select.change(function () {
-    // obtenemos el valor seleccionado
-    var valorSeleccionado = $(this).val();
-
-    // cargamos la imagen asociada
-    $("#imagenRank").html(
-      '<img src="' + valorSeleccionado + '" width="60px" height="60px">'
-    );
-  });
-
-  $("#jugadores").change(function () {
-    generateRounds($(this).val());
-  });
+    //GENERA LAS RONDAS Y LOS PARTIDOS DE LA PRIMERA RONDA DEL TORNEO
+    $("#jugadores").change(function () {
+        generateRounds($(this).val());
+    });
+    $("#formulario").submit(function (e) {
+        e.preventDefault();
+        generateData();
+    });
 });
 
 function generateRounds(teams) {
-  var rounds = $("#rondas");
-  var nombresRondas = [
-    "Octavos de Final",
-    "Cuartos de Final",
-    "Semifinal",
-    "Final",
-  ];
-  var numEquipos = teams / 5;
+    var rounds = $("#rondas");
+    var nombresRondas = [
+        "Octavos de Final",
+        "Cuartos de Final",
+        "Semifinal",
+        "Final",
+    ];
+    var numEquipos = teams / 5;
 
-  switch (numEquipos) {
-    case 2:
-      numRondas = 1;
-      break;
-    case 4:
-      numRondas = 2;
-      break;
-    case 8:
-      numRondas = 3;
-      break;
-    case 16:
-      numRondas = 4;
-      break;
-    default:
-      console.log("Número de equipos no válido");
-  }
-  rounds.empty();
-  // pintar las rondas en la página
-  for (var i = 0; i < numRondas; i++) {
-    rounds.append(`<div class="row mt-4">
+    switch (numEquipos) {
+        case 2:
+            numRondas = 1;
+            break;
+        case 4:
+            numRondas = 2;
+            break;
+        case 8:
+            numRondas = 3;
+            break;
+        case 16:
+            numRondas = 4;
+            break;
+        default:
+            console.log("Número de equipos no válido");
+    }
+    rounds.empty();
+    // pintar las rondas en la página
+    for (var i = 0; i < numRondas; i++) {
+        rounds.append(`<div class="row mt-4">
                             <div class="col-12 col-sm-6">
                                 <input
                                     class="multisteps-form__input form-control"
                                     type="text"
-                                    value="${
-                                      nombresRondas[i + (4 - numRondas)]
-                                    }"
+                                    value="${nombresRondas[i + (4 - numRondas)]
+            }"
                                     name="nameRound"
                                     readonly
                                 />
@@ -120,8 +61,8 @@ function generateRounds(teams) {
                                 />
                             </div>
                         </div>`);
-  }
-  rounds.append(`<div class="button-row d-flex justify-content-between mt-4">
+    }
+    rounds.append(`<div class="button-row d-flex justify-content-between mt-4">
                         <div class="button-borders">
                             <button
                                 class="secondary-button secondary-background js-btn-prev"
@@ -141,45 +82,75 @@ function generateRounds(teams) {
                             </button>
                         </div>
                     </div>`);
-  generateClashes(numEquipos, nombresRondas[0 + (4 - numRondas)]);
-  //generatePartidosRes(numEquipos);
+    generateClashes(numEquipos, nombresRondas[0 + (4 - numRondas)]);
+}
+
+function shuffle(array) {
+    var currentIndex = array.length,
+        temporaryValue,
+        randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
 }
 
 function generateClashes(teams, nombreRonda) {
-  var clasification = $("#clasificacion");
-  clasification.empty();
-  // pintar los equipos en la página
-  var html = `<h1 class="terciary-title-valo mt-4">Partidos de ${nombreRonda}</h1>`;
-  for (var i = 0; i < teams - 1; i += 2) {
-    var equipo1 = `Team ${i + 1}`;
-    var equipo2 = `Team ${i + 2}`;
-    html += `
-        <div class="box-container">
-                <div
-                    draggable="true"
-                    class="box"
-                >
-                    ${equipo1}
-                </div>
-                <span class="box-text">VS</span>
-                <div
-                    draggable="true"
-                    class="box"
-                >
-                    ${equipo2}
-                </div>
-                <input
-                    class="multisteps-form__input form-control"
-                    type="time"
-                    name="time-match"
-                    min=""
-                />
-        </div>
-        `;
-  }
-  html += `<div class="row mt-4" id="partidos"></div>`;
-  clasification.append(html);
-  clasification.append(`<div class="button-row d-flex justify-content-between mt-4">
+    var clasification = $("#clasificacion");
+    clasification.empty();
+    // generar índices de los equipos y mezclarlos
+    var indices = [...Array(teams).keys()]; // [0, 1, 2, ..., teams-1]
+    shuffle(indices);
+
+    // emparejar índices en parejas para generar enfrentamientos
+    var enfrentamientos = [];
+    for (var i = 0; i < teams / 2; i++) {
+        var equipo1 = indices[i];
+        var equipo2 = indices[teams - i - 1];
+        enfrentamientos.push([equipo1, equipo2]);
+    }
+    // pintar los equipos en la página
+    var html = `<h1 class="terciary-title-valo mt-4">Partidos de ${nombreRonda}</h1>`;
+    for (var i = 0; i < enfrentamientos.length; i++) {
+        var equipo1Index = enfrentamientos[i][0];
+        var equipo2Index = enfrentamientos[i][1];
+        var equipo1 = `Team ${equipo1Index + 1}`;
+        var equipo2 = `Team ${equipo2Index + 1}`;
+        html += `
+      <div class="box-container">
+              <div
+                  class="box"
+              >
+                  ${equipo1}
+              </div>
+              <span class="box-text">VS</span>
+              <div
+                  class="box"
+              >
+                  ${equipo2}
+              </div>
+              <input
+                  class="multisteps-form__input form-control"
+                  type="time"
+                  name="time-match"
+                  min=""
+              />
+      </div>
+      `;
+    }
+
+    clasification.append(html);
+    clasification.append(`<div class="button-row d-flex justify-content-between mt-4">
                             <div class="button-borders">
                                 <button
                                     class="secondary-button secondary-background js-btn-prev"
@@ -199,61 +170,110 @@ function generateClashes(teams, nombreRonda) {
                                 </button>
                             </div>
                         </div>`);
-  dragDrop();
 }
 
-function dragDrop() {
-  function handleDragStart(e) {
-    this.style.opacity = "0.4";
+function generateData() {
+    /*DATA JSON TABLA TOURNAMENT */
+    var rango = $('select[name="rangoTorneo"]').val();
 
-    dragSrcEl = this;
+    var nombreArchivo = rango.substring(
+        rango.lastIndexOf("/") + 1,
+        rango.lastIndexOf(".")
+    );
 
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/html", this.innerHTML);
-  }
+    var rangoNombre = nombreArchivo
+        .substring(0, nombreArchivo.lastIndexOf("_"))
+        .replace(/_/g, " ");
 
-  function handleDragEnd(e) {
-    this.style.opacity = "1";
+    let jsonTournament = {
+        Tid: 1,
+        Name: $('input[name="nameTorneo"]').val(),
+        Rank: rangoNombre,
+        DateInit: $('input[name="dateTorneo"]').val(),
+        Description: $('textarea[name="descriptionTorneo"]').val(),
+        Platform: 1,
+        Players: $('select[name="playersTorneo"]').val(),
+        Organizator: "uid123182191239",
+        Image: $('input[name="imageTournament"]').val(),
+    };
 
-    items.forEach(function (item) {
-      item.classList.remove("over");
+    /*DATA JSON TABLA ROUND*/
+    var dataRound = document.querySelectorAll("#rondas .row");
+    var rounds = [];
+
+    dataRound.forEach((element) => {
+        let json = {
+            Rid: 1,
+            Name: $(element).find("input").val(),
+            Date: $(element).find('input[name="dateRound"]').val(),
+            Tid: 1,
+        };
+        rounds.push(json);
     });
-  }
 
-  function handleDragOver(e) {
-    if (e.preventDefault) {
-      e.preventDefault();
+    /*DATA JSON TABLA MATCH */
+    var dataMatches = document.querySelectorAll(
+        "#clasificacion .box-container"
+    );
+
+    var matches = [];
+
+    dataMatches.forEach((element) => {
+        let json = {
+            Mid: 1,
+            Tblue: parseInt(
+                element
+                    .querySelector(".box")
+                    .textContent.replace("Team", " ")
+                    .trim()
+            ),
+            TRed: parseInt(
+                element
+                    .querySelector(".box:nth-of-type(2)")
+                    .textContent.replace("Team", " ")
+                    .trim()
+            ),
+            Rblue: 0,
+            Rred: 0, // obtener valor del input del segundo equipo
+            Date: $(element).find("input").val(),
+            Rid: 1,
+        };
+        matches.push(json);
+    });
+
+    if (rounds.length == 0 || matches.length == 0) {
+        Swal.fire({
+            icon: "error",
+            title: "campos vacíos",
+            text: "Por favor, rellene todos los campos.",
+        });
+    } else {
+        Swal.fire({
+            title: "¿Estas seguro?",
+            text: "Revise todos los datos antes de guardar el nuevo torneo.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si",
+            cancelButtonText: "Cancelar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                showLoading();
+                console.log(jsonTournament);
+                console.log(rounds);
+                console.log(matches);
+                $.ajax({
+                    url: "",
+                    success: (r) => {
+                        window.location =
+                            "";
+                    },
+                });
+            }
+        });
     }
-
-    return false;
-  }
-
-  function handleDragEnter(e) {
-    this.classList.add("over");
-  }
-
-  function handleDragLeave(e) {
-    this.classList.remove("over");
-  }
-
-  function handleDrop(e) {
-    e.stopPropagation();
-
-    if (dragSrcEl !== this) {
-      dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData("text/html");
-    }
-
-    return false;
-  }
-
-  let items = document.querySelectorAll(".box");
-  items.forEach(function (item) {
-    item.addEventListener("dragstart", handleDragStart);
-    item.addEventListener("dragover", handleDragOver);
-    item.addEventListener("dragenter", handleDragEnter);
-    item.addEventListener("dragleave", handleDragLeave);
-    item.addEventListener("dragend", handleDragEnd);
-    item.addEventListener("drop", handleDrop);
-  });
+}
+function showLoading() {
+    document.getElementById("loading").style.display = "block";
 }
