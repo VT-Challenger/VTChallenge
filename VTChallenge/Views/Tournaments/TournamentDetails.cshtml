@@ -78,7 +78,7 @@
             class="header-icon"
         />
         <div>
-            <h1 class="secondary-title">Neon Cup</h1>
+            <h1 class="secondary-title">@tournament.Name</h1>
             <ul class="header-description">
                 <li>
                     <img
@@ -183,32 +183,40 @@
         <section>
             <div class="tournament-container">
                 <div class="tournament-headers">
-                    @foreach(Round round in nameRounds){
-                        <h3>@round.Name</h3>
+                    @foreach(Round round in nameRounds) {
+                        var partidosDeRonda = matchesTournament.Where(partido => partido.Fase.Equals(round.Name)).ToList();
+                        if (partidosDeRonda.Count > 0) {
+                            <h3>@round.Name</h3>
+                        }
                     }
-                    <h3>Winner</h3>
+                    @if (winners.Count != 0) {
+                        <h3>Winner</h3>
+                    }
                 </div>
 
                 @if(matchesTournament.Count!=0) {
                     <div class="tournament-brackets">
                     @for(int i=0; i<nameRounds.Count; i++) {
-                        <ul class="bracket @(i==nameRounds.Count-1 ? "bracket-4":"bracket-" + (i+1))">
-                            @foreach (MatchRound match in matchesTournament) {
-                                @if (match.Fase == nameRounds[i].Name) {
-                                    <li class="team-item">
-                                        <time>@match.Date.ToString("HH:mm")</time>
-                                        <div class="team">
-                                            <span>Team @match.Tblue</span>
-                                            <span class="result">@match.Rblue</span>
-                                        </div>
-                                        <div class="team">
-                                            <span>Team @match.Tred</span>
-                                            <span class="result">@match.Rred</span>
-                                        </div>
-                                    </li>
+                        var partidosDeRonda = matchesTournament.Where(partido => partido.Fase.Equals(nameRounds[i].Name)).ToList();
+                        if(partidosDeRonda.Count > 0) {
+                            <ul class="bracket @(i==nameRounds.Count-1 ? "bracket-4":"bracket-" + (i+1))">
+                                @foreach (MatchRound match in matchesTournament) {
+                                    @if (match.Fase == nameRounds[i].Name) {
+                                        <li class="team-item">
+                                            <time>@match.Date.ToString("HH:mm")</time>
+                                            <div class="team">
+                                                <span>Team @match.Tblue</span>
+                                                <span class="result">@match.Rblue</span>
+                                            </div>
+                                            <div class="team">
+                                                <span>Team @match.Tred</span>
+                                                <span class="result">@match.Rred</span>
+                                            </div>
+                                        </li>
+                                    }
                                 }
-                            }
-                        </ul>
+                            </ul>
+                        }
                     }
                         @if(winners.Count != 0) {
                             <ul class="bracket bracket-5">
@@ -243,12 +251,12 @@
                             <div class="match">
                                 <time>@match.Date.ToString("HH:mm")</time>
                                 <div class="team">
-                                    <span>Team @match.Tred</span>
-                                    <span class="result">@match.Rred</span>
-                                </div>
-                                <div class="team">
                                     <span>Team @match.Tblue</span>
                                     <span class="result">@match.Rblue</span>
+                                </div>
+                                <div class="team">
+                                    <span>Team @match.Tred</span>
+                                    <span class="result">@match.Rred</span>
                                 </div>
                             </div>
                         }

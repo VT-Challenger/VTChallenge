@@ -204,16 +204,12 @@ namespace VTChallenge.Repositories {
             await this.context.Database.ExecuteSqlRawAsync(sql, pamTid, pamUid);
         }
 
-        public async Task UpdateMatchesTournament(int mid, int tblue, int tred, int rblue, int rred, DateTime date, int rid) {
-            string sql = "SP_UPDATE_MATCH @MID, @TBLUE, @TRED, @RBLUE, @RRED, @DATE, @RID";
+        public async Task UpdateMatchesTournamentAsync(int mid, int rblue, int rred) {
+            string sql = "SP_UPDATE_MATCH @MID, @RBLUE, @RRED";
             SqlParameter[] pams = new SqlParameter[] {
                 new SqlParameter("@MID", mid),
-                new SqlParameter("@TBLUE", tblue),
-                new SqlParameter("@TRED", tred),
                 new SqlParameter("@RBLUE", rblue),
                 new SqlParameter("@RRED", rred),
-                new SqlParameter("@DATE", date),
-                new SqlParameter("@RID", rid)
             };
 
             await this.context.Database.ExecuteSqlRawAsync(sql, pams);

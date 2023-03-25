@@ -25,7 +25,7 @@
                         url: "/Tournaments/DeleteUserTournament?tid=" + tid + "&uid=" + uid,
                         success: (r) => {
                             window.location =
-                                "/Tournaments/DeleteUserTournament?tid=" + tid + "&uid=" + uid;
+                                "/Tournaments/EditTournament?tid=" + tid;
                         },
                     });
                     Swal.fire(
@@ -121,44 +121,58 @@
             <!--PARTIDOS-->
             <section class="partidos">
                 <form id="formMatches">
-                    @for (int i = 0; i < nameRounds.Count; i++) {
-                        <div class="calendar-header">
-                            <h1>@nameRounds[i].Name</h1>
-                            <h3>@nameRounds[i].Date.ToString("dd MMM yyyy")</h3>
-                        </div>
+                    @foreach (Round round in nameRounds)
+                    {
+                        var partidosDeRonda = matchesTournament.Where(partido => partido.Fase.Equals(round.Name)).ToList();
+                        var lastRound = nameRounds.LastOrDefault(round => matchesTournament.Any(match => match.Fase == round.Name));
+                        if (partidosDeRonda.Count > 0) {
+                            <div class="calendar-header">
+                                <h1>@round.Name</h1>
+                                <h3>@round.Date.ToString("dd MMM yyyy")</h3>
+                            </div>
 
-                        <div class="content-calendar">
-                            @foreach (MatchRound match in matchesTournament) {
-                                @if (match.Fase == nameRounds[i].Name) {
-                                    <div class="match">
-                                        <input name="matchId" type="hidden" value="@match.Mid" />
-                                        <input name="roundId" type="hidden" value="@nameRounds[i].Rid" class="roundId" />
-                                        <time>@match.Date.ToString("HH:mm")</time>
-                                        <div class="team">
-                                            <span>Team @match.Tred</span>
-                                            <input type="number"
-                                                   max="3"
-                                                   min="0"
-                                                   name="result"
-                                                   class="result"
-                                                   value="@match.Rred"
-                                                   placeholder="0" />
+                            <div class="content-calendar">
+                                @foreach (MatchRound match in matchesTournament) {
+                                    var isEditable = round == lastRound;
+                                    @if (match.Fase == round.Name)
+                                    {
+                                        <div class="match">
+                                            <input name="matchId" type="hidden" value="@match.Mid" />
+                                            <input name="roundId" type="hidden" value="@round.Rid" class="roundId" />
+                                            <time>@match.Date.ToString("HH:mm")</time>
+                                            <div class="team">
+                                                <span>Team @match.Tblue</span>
+                                                <input type="number"
+                                                        max="3"
+                                                        min="0"
+                                                        name="result"
+                                                        class="result"
+                                                        value="@match.Rblue"
+                                                        placeholder="0"  
+                                                        @if (!isEditable) {
+                                                            <text>readonly</text>
+                                                        } 
+                                                />
+                                            </div>
+                                            <div class="team">
+                                                <span>Team @match.Tred</span>
+                                                <input type="number"
+                                                        max="3"
+                                                        min="0"
+                                                        name="result"
+                                                        class="result"
+                                                        value="@match.Rred"
+                                                        placeholder="0"
+                                                        @if (!isEditable) {
+                                                            <text>readonly</text>
+                                                        }    
+                                                />
+                                            </div>
                                         </div>
-                                        <div class="team">
-                                            <span>Team @match.Tblue</span>
-                                            <input type="number"
-                                                   max="3"
-                                                   min="0"
-                                                   name="result"
-                                                   class="result"
-                                                   value="@match.Rblue"
-                                                   placeholder="0" />
-                                        </div>
-                                    </div>
+                                    }
                                 }
-                            }
-
-                        </div>
+                            </div>
+                        }
                     }
                     <div class="content-calendar mt-4">
                         <button class="btn btn-success">Guardar</button>

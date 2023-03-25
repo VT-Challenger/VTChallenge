@@ -100,7 +100,7 @@ namespace VTChallenge.Controllers {
         public async Task<IActionResult> UpdateUserTournament(int tid, string data) {
             List<Match> partidas = JsonConvert.DeserializeObject<List<Match>>(data);
             foreach (Match match in partidas) {
-                await this.repo.UpdateMatchesTournament(match.Mid, match.Tblue, match.Tred, match.Rblue, match.Rred, match.Date, match.Rid);
+                await this.repo.UpdateMatchesTournamentAsync(match.Mid, match.Rblue, match.Rred);
             }
             return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });
         }
