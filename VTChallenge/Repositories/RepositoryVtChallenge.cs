@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using System.Security.Cryptography;
 using VTChallenge.Data;
 using VTChallenge.Helpers;
 using VTChallenge.Models;
@@ -195,6 +196,10 @@ namespace VTChallenge.Repositories {
             this.context.Database.ExecuteSqlRaw(sql, pamTid);
         }
 
+        public async Task<Match> FindMatchAsync(int mid) {
+            return await this.context.Matches.FirstOrDefaultAsync(x => x.Mid == mid);
+        }
+
 
         public async Task DeteleUserTournamentAsync(int tid, string uid) {
             string sql = "SP_DELETE_PLAYER_TOURNAMENT @TID, @UID";
@@ -205,15 +210,30 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task UpdateMatchesTournamentAsync(int mid, int rblue, int rred) {
-            string sql = "SP_UPDATE_MATCH @MID, @RBLUE, @RRED";
-            SqlParameter[] pams = new SqlParameter[] {
-                new SqlParameter("@MID", mid),
-                new SqlParameter("@RBLUE", rblue),
-                new SqlParameter("@RRED", rred),
-            };
-
-            await this.context.Database.ExecuteSqlRawAsync(sql, pams);
+            Match match = await this.FindMatchAsync(mid);
+            match.Rblue = rblue;
+            match.Rred = rred;
+            await this.context.SaveChangesAsync();
         }
+
+        public int TotalMatchesRoundWinner(int rid) {
+            var consulta = this.context.Matches.Where(m => m.Rid == rid && (m.Rblue != null && m.Rred != null && m.Rblue != m.Rred)).Count();
+            return (int)consulta;
+        }
+
+        public int TotalMatchesRound(int rid) {
+            var consulta = this.context.Matches.Where(m => m.Rid == rid).Count();
+            return (int)consulta;
+        }
+
+        public async Task InsertMatchesNextRoundAsync(int rid) {
+            string sql = "SP_INSERT_NEXT_MATCHES @RID";
+            SqlParameter pamrid = new SqlParameter("@RID", rid);
+
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamrid);
+        }
+
+
 
         #endregion
     }

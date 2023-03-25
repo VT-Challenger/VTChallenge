@@ -99,8 +99,13 @@ namespace VTChallenge.Controllers {
         [HttpPost]
         public async Task<IActionResult> UpdateUserTournament(int tid, string data) {
             List<Match> partidas = JsonConvert.DeserializeObject<List<Match>>(data);
+            int rid = partidas[partidas.Count -1].Rid;
             foreach (Match match in partidas) {
                 await this.repo.UpdateMatchesTournamentAsync(match.Mid, match.Rblue, match.Rred);
+            }
+            //CONTROLAR TAMBIEN QUE LA ULTIMA RONDA NO SEA LA FINAL
+            if(this.repo.TotalMatchesRoundWinner(rid) == this.repo.TotalMatchesRound(rid) && this.repo.TotalMatchesRound(rid) != 0) {
+                await this.repo.InsertMatchesNextRoundAsync(rid);
             }
             return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });
         }

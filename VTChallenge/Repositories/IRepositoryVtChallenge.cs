@@ -22,6 +22,10 @@ namespace VTChallenge.Repositories {
         void DeleteTournament(int tid);
         Task DeteleUserTournamentAsync(int tid, string uid);
         Task UpdateMatchesTournamentAsync(int mid, int rblue, int rred);
+        Task<Match> FindMatchAsync(int mid);
+        int TotalMatchesRound(int rid);
+        int TotalMatchesRoundWinner(int rid);
+        Task InsertMatchesNextRoundAsync(int rid);
 
     }
 }
