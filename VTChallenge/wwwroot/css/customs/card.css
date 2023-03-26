@@ -32,6 +32,19 @@
     padding: 0;
     position: relative;
 }
+.btn-create {
+    background-color: var(--color-primary-val);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+}
+.btn-create:hover {
+    color: white;
+    background: var(--color-secondary-val);
+}
+
 
 .card-img {
     border-radius: 0px;

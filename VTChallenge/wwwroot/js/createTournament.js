@@ -44,7 +44,7 @@ function generateRounds(teams) {
                                 <input
                                     class="multisteps-form__input form-control"
                                     type="text"
-                                    value="${nombresRondas[i + (4 - numRondas)] }"
+                                    value="${nombresRondas[i + (4 - numRondas)]}"
                                     name="nameRound"
                                     readonly
                                 />
@@ -138,12 +138,6 @@ function generateClashes(teams, nombreRonda) {
               >
                   ${equipo2}
               </div>
-              <input
-                  class="multisteps-form__input form-control"
-                  type="time"
-                  name="time-match"
-                  min=""
-              />
       </div>
       `;
     }
@@ -172,19 +166,22 @@ function generateClashes(teams, nombreRonda) {
 }
 
 function generateData() {
+    console.log($('#descriptionTorneo').val())
+
     /*DATA JSON TABLA TOURNAMENT */
     let jsonTournament = {
         Tid: 1,
         Name: $('input[name="nameTorneo"]').val(),
         Rank: $('select[name="rangoTorneo"]').val(),
         DateInit: $('input[name="dateTorneo"]').val(),
-        Description: $('textarea[name="descriptionTorneo"]').val(),
+        Description: $('#descriptionTorneo').val(),
         Platform: 1,
         Players: $('select[name="playersTorneo"]').val(),
         Organizator: "uid123182191239",
         Image: $('input[name="imageTournament"]').val(),
-    };
+    }
 
+    console.log(jsonTournament.Description)
     /*DATA JSON TABLA ROUND*/
     var dataRound = document.querySelectorAll("#rondas .row");
     var rounds = [];
@@ -198,6 +195,8 @@ function generateData() {
         };
         rounds.push(json);
     });
+
+    console.log(rounds)
 
     /*DATA JSON TABLA MATCH */
     var dataMatches = document.querySelectorAll(
@@ -222,12 +221,20 @@ function generateData() {
                     .trim()
             ),
             Rblue: 0,
-            Rred: 0, // obtener valor del input del segundo equipo
-            Date: $(element).find("input").val(),
+            Rred: 0, 
+            Date: "2023-03 - 28",
             Rid: 1,
         };
         matches.push(json);
     });
+
+    var formData = new FormData();
+    formData.append("imageTournament", $("#imageInput")[0].files[0]);
+    formData.append("jsonTournament", JSON.stringify(jsonTournament));
+    formData.append("jsonRounds", JSON.stringify(rounds));
+    formData.append("jsonMatches", JSON.stringify(matches));
+
+
 
     if (rounds.length == 0 || matches.length == 0) {
         Swal.fire({
@@ -248,12 +255,16 @@ function generateData() {
         }).then((result) => {
             if (result.isConfirmed) {
                 showLoading();
-                $.post("/Tournaments/CreateTournament", {
-                    jsonTournament: JSON.stringify(jsonTournament),
-                    jsonRounds: JSON.stringify(rounds),
-                    jsonMatches: JSON.stringify(matches)
-                }).done(function (data) {
-                    window.location = "/Tournaments/ListTournamentsUser";
+                // Realizar solicitud POST
+                $.ajax({
+                    type: "POST",
+                    url: "/Tournaments/CreateTournament",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        window.location = "/Tournaments/ListTournamentsUser";
+                    }
                 });
             }
         });

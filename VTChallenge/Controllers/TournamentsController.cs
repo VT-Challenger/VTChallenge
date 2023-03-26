@@ -12,20 +12,32 @@ namespace VTChallenge.Controllers {
 
         private IRepositoryVtChallenge repo;
         private HelperMails helperMails;
-        private HelperJson helperJson;
+        private HelperFiles helperFiles;
 
-        public TournamentsController(IRepositoryVtChallenge repo, HelperMails helperMails, HelperJson helperJson) {
+        public TournamentsController(IRepositoryVtChallenge repo, HelperMails helperMails, HelperFiles helperFiles) {
             this.repo = repo;
             this.helperMails = helperMails;
-            this.helperJson = helperJson;
+            this.helperFiles = helperFiles;
         }
 
         [AuthorizeUsers]
         public async Task<IActionResult> ListTournaments() {
-            string rank = "Diamond";
-            List<TournamentComplete> tournamentsUser = await this.repo.GetTournamentsByRankAsync(rank);
+            string rank = HttpContext.User.FindFirst("RANGO").Value;
 
-            ViewData["LISTTOURNAMENTS"] = this.repo.GetTournaments();
+            ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank);
+            return View();
+        }
+
+        [AuthorizeUsers]
+        [HttpPost]
+        public async Task<IActionResult> ListTournaments(string filtro) {
+            string rank = HttpContext.User.FindFirst("RANGO").Value;
+
+            if(filtro == null) {
+                ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank);
+            } else {
+                ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentCompletesFindAsync(filtro, rank);
+            }
             return View();
         }
 
@@ -69,6 +81,18 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
+        [HttpPost]
+        public async  Task<IActionResult> ListTournamentsUser(string filtro) {
+            if(filtro == null) {
+                ViewData["LISTTOURNAMENTSUSER"] = this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
+            } else {
+                ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUserFindAsync(HttpContext.User.Identity.Name, filtro);
+            }
+  
+            return View();
+        }
+
+        [AuthorizeUsers]
         public IActionResult DeleteTournament(int tid) {
             this.repo.DeleteTournament(tid);
             return RedirectToAction("ListTournamentsUser", "Tournaments");
@@ -79,9 +103,16 @@ namespace VTChallenge.Controllers {
 
         [AuthorizeUsers]
         [HttpPost]
-        public async Task<IActionResult> CreateTournament(string jsonTournament, string jsonRounds, string jsonMatches) {
+        public async Task<IActionResult> CreateTournament(string jsonTournament, string jsonRounds, string jsonMatches, IFormFile imageTournament) {
             int tid = this.repo.GetMaxIdTournament();
             Tournament tournament = JsonConvert.DeserializeObject<Tournament>(jsonTournament);
+            
+            string nameImage = "vtchallenge" + HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value + "-" + tournament.Name.ToString().Replace(" ", "-") + ".jpg";
+
+            string protocol = HttpContext.Request.IsHttps ? "https://" : "http://";
+            string domainName = HttpContext.Request.Host.Value.ToString();
+            string url = protocol + domainName;
+            await this.helperFiles.UploadFileAsync(imageTournament, nameImage , url, Folders.Tournaments);
 
             await this.repo.InsertTournamentAsync(
                 tournament.Tid = tid + 1,
@@ -92,7 +123,7 @@ namespace VTChallenge.Controllers {
                 tournament.Platform,
                 tournament.Players,
                 HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
-                tournament.Image
+                nameImage
             );
 
             List<Round> rounds = JsonConvert.DeserializeObject<List<Round>>(jsonRounds);
@@ -105,12 +136,13 @@ namespace VTChallenge.Controllers {
             }
 
             int roundMatch = this.repo.GetMinIdRoundTournament(tid + 1);
+            Round r = await this.repo.FindRoundAsync(roundMatch);
             List<Match> matches = JsonConvert.DeserializeObject<List<Match>>(jsonMatches);
             foreach (Match match in matches) {
                 await this.repo.InsertMatchAsync(
                     match.Tblue,
                     match.Tred,
-                    match.Date,
+                    r.Date,
                     roundMatch
                 );
             }

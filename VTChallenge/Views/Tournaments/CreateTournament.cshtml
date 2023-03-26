@@ -50,7 +50,7 @@
                 <div class="row">
                     <div class="col-12 col-lg-12 m-auto">
                         <form class="multisteps-form__form"
-                              id="formulario">
+                              id="formulario" enctype="multipart/form-data">
                             <!--single form panel-->
                             <div class="multisteps-form__panel shadow p-4 rounded js-active"
                                  data-animation="scaleIn">
@@ -78,6 +78,7 @@
                                             <textarea class="form-control multisteps-form__input"
                                                       rows="6"
                                                       placeholder="Descripcion"
+                                                      id="descriptionTorneo"
                                                       name="descriptionTorneo"></textarea>
                                         </div>
                                         <div class="col-12 col-sm-6 mt-4 mt-sm-0">
@@ -153,6 +154,7 @@
                                                 <input class="multisteps-form__input form-control"
                                                        type="file"
                                                        name="imageTournament"
+                                                       id="imageInput"
                                                        accept="image/*" />
                                             </div>
                                         </div>

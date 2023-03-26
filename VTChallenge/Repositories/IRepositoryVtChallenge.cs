@@ -11,7 +11,8 @@ namespace VTChallenge.Repositories {
         Task<int> GetTotalWinsAsync(string uid);
         List<TournamentComplete> GetTournaments();
         Task<List<TournamentComplete>> GetTournamentsByRankAsync(string rank);
-        TournamentComplete GetTournamentComplete(int tid);
+        Task<List<TournamentComplete>> GetTournamentCompletesFindAsync(string filtro, string rank);
+       TournamentComplete GetTournamentComplete(int tid);
         List<TournamentPlayers> GetPlayersTournament(int tid);
         List<Round> GetRounds(int tid);
         List<MatchRound> GetMatchesTournament(int tid);
@@ -19,6 +20,7 @@ namespace VTChallenge.Repositories {
         void InscriptionPlayerTeamAle(int tid, string uid);
         bool ValidateInscription(int tid, string uid);
         List<TournamentComplete> GetTournamentsUser(string name);
+        Task<List<TournamentComplete>> GetTournamentsUserFindAsync(string name,string filtro);
         void DeleteTournament(int tid);
         Task DeteleUserTournamentAsync(int tid, string uid);
         Task UpdateMatchesTournamentAsync(int mid, int rblue, int rred);
@@ -31,5 +33,8 @@ namespace VTChallenge.Repositories {
         Task InsertTournamentAsync(int tid, string name, string rank, DateTime dateinit, string description, int pid, int players, string organizator, string image);
         Task InsertRoundAsync(string name, DateTime date, int tid);
         Task InsertMatchAsync(int tblue, int tred, DateTime time, int rid);
+        Task<Round> FindRoundAsync(int rid);
+       
+
     }
 }

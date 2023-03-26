@@ -32,7 +32,7 @@ namespace VTChallenge.Models {
 
         [Required(ErrorMessage = "Complete el campo")]
         [DataType(DataType.Password)]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage ="Las contraseñas introducidas no coinciden")]
         [NotMapped]
         public string ConfirmPassword { get; set; }
 

@@ -28,6 +28,7 @@ builder.Services.AddTransient<IRepositoryVtChallenge, RepositoryVtChallenge>();
 builder.Services.AddTransient<IServiceValorant, ServiceValorant>();
 builder.Services.AddSingleton<HelperMails>();
 builder.Services.AddSingleton<HelperJson>();
+builder.Services.AddSingleton<HelperFiles>();
 builder.Services.AddDbContext<VTChallengeContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews(options => options.EnableEndpointRouting = false);

@@ -39,8 +39,8 @@
 @if(tournamentsUser.Count != 0) {
 <div class="mt-4">
     <h1 class="secondary-title-valo text-center">Buscar Torneo</h1>
-    <form class="search">
-        <input type="text" class="search__input" />
+    <form class="search" method="post">
+        <input type="text" class="search__input" name="filtro"/>
         <button class="search__button">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="25"

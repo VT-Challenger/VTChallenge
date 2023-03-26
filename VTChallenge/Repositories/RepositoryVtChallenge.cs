@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
 using System.Security.Cryptography;
 using VTChallenge.Data;
@@ -123,9 +124,17 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
+        public async Task<List<TournamentComplete>> GetTournamentCompletesFindAsync(string filtro, string rank) {
+            var consulta = from data in this.context.TournamentCompletes
+                           where data.Name.Contains(filtro) && (data.Rank.Contains("Unranked") || data.Rank.Contains(rank))
+                           select data;
+
+            return await consulta.ToListAsync();
+        }
+    
         public async Task<List<TournamentComplete>> GetTournamentsByRankAsync(string rank) {
             var consulta = from data in this.context.TournamentCompletes
-                           where data.Rank.Contains(rank)
+                           where data.Rank.Contains(rank) || data.Rank.Contains("Unranked")
                            select data;
 
             return await consulta.ToListAsync();
@@ -189,6 +198,15 @@ namespace VTChallenge.Repositories {
             return consulta.ToList();
         }
 
+
+        public async Task<List<TournamentComplete>> GetTournamentsUserFindAsync(string name, string filtro) {
+            var consulta = from data in this.context.TournamentCompletes
+                           where data.Name.Contains(filtro) && data.Organizator == name
+                           select data;
+
+            return await consulta.ToListAsync();
+        }
+
         public void DeleteTournament(int tid) {
             string sql = "SP_DELETE_TOURNAMENT @TID";
             SqlParameter pamTid = new SqlParameter("@TID", tid);
@@ -250,6 +268,7 @@ namespace VTChallenge.Repositories {
                 Name = name,
                 Rank = rank,
                 DateInit = dateinit,
+                Description = description,
                 Platform = pid,
                 Players = players,
                 Organizator = organizator,
@@ -284,7 +303,14 @@ namespace VTChallenge.Repositories {
             await this.context.SaveChangesAsync();
         }
 
-       
+        public async Task<Round> FindRoundAsync(int rid) {
+            return await this.context.Rounds.FirstOrDefaultAsync(x => x.Rid == rid);
+        }
+
+
+
+
+
 
 
 
