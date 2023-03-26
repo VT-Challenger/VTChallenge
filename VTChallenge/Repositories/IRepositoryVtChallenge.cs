@@ -26,6 +26,10 @@ namespace VTChallenge.Repositories {
         int TotalMatchesRound(int rid);
         int TotalMatchesRoundWinner(int rid);
         Task InsertMatchesNextRoundAsync(int rid);
-
+        int GetMaxIdTournament();
+        int GetMinIdRoundTournament(int tid);
+        Task InsertTournamentAsync(int tid, string name, string rank, DateTime dateinit, string description, int pid, int players, string organizator, string image);
+        Task InsertRoundAsync(string name, DateTime date, int tid);
+        Task InsertMatchAsync(int tblue, int tred, DateTime time, int rid);
     }
 }

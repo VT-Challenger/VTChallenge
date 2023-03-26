@@ -78,6 +78,47 @@ namespace VTChallenge.Controllers {
         public IActionResult CreateTournament() { return View(); }
 
         [AuthorizeUsers]
+        [HttpPost]
+        public async Task<IActionResult> CreateTournament(string jsonTournament, string jsonRounds, string jsonMatches) {
+            int tid = this.repo.GetMaxIdTournament();
+            Tournament tournament = JsonConvert.DeserializeObject<Tournament>(jsonTournament);
+
+            await this.repo.InsertTournamentAsync(
+                tournament.Tid = tid + 1,
+                tournament.Name,
+                tournament.Rank,
+                tournament.DateInit,
+                tournament.Description,
+                tournament.Platform,
+                tournament.Players,
+                HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                tournament.Image
+            );
+
+            List<Round> rounds = JsonConvert.DeserializeObject<List<Round>>(jsonRounds);
+            foreach (Round round in rounds) {
+                await this.repo.InsertRoundAsync(
+                    round.Name,
+                    round.Date,
+                    tid + 1
+                );
+            }
+
+            int roundMatch = this.repo.GetMinIdRoundTournament(tid + 1);
+            List<Match> matches = JsonConvert.DeserializeObject<List<Match>>(jsonMatches);
+            foreach (Match match in matches) {
+                await this.repo.InsertMatchAsync(
+                    match.Tblue,
+                    match.Tred,
+                    match.Date,
+                    roundMatch
+                );
+            }
+
+            return RedirectToAction("ListTournamentsUser", "Tournaments");
+        }
+
+        [AuthorizeUsers]
         public IActionResult EditTournament(int tid) {
             TournamentComplete tournamentComplete = this.repo.GetTournamentComplete(tid);
             ViewData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);

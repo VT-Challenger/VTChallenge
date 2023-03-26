@@ -44,8 +44,7 @@ function generateRounds(teams) {
                                 <input
                                     class="multisteps-form__input form-control"
                                     type="text"
-                                    value="${nombresRondas[i + (4 - numRondas)]
-            }"
+                                    value="${nombresRondas[i + (4 - numRondas)] }"
                                     name="nameRound"
                                     readonly
                                 />
@@ -174,21 +173,10 @@ function generateClashes(teams, nombreRonda) {
 
 function generateData() {
     /*DATA JSON TABLA TOURNAMENT */
-    var rango = $('select[name="rangoTorneo"]').val();
-
-    var nombreArchivo = rango.substring(
-        rango.lastIndexOf("/") + 1,
-        rango.lastIndexOf(".")
-    );
-
-    var rangoNombre = nombreArchivo
-        .substring(0, nombreArchivo.lastIndexOf("_"))
-        .replace(/_/g, " ");
-
     let jsonTournament = {
         Tid: 1,
         Name: $('input[name="nameTorneo"]').val(),
-        Rank: rangoNombre,
+        Rank: $('select[name="rangoTorneo"]').val(),
         DateInit: $('input[name="dateTorneo"]').val(),
         Description: $('textarea[name="descriptionTorneo"]').val(),
         Platform: 1,
@@ -260,15 +248,12 @@ function generateData() {
         }).then((result) => {
             if (result.isConfirmed) {
                 showLoading();
-                console.log(jsonTournament);
-                console.log(rounds);
-                console.log(matches);
-                $.ajax({
-                    url: "",
-                    success: (r) => {
-                        window.location =
-                            "";
-                    },
+                $.post("/Tournaments/CreateTournament", {
+                    jsonTournament: JSON.stringify(jsonTournament),
+                    jsonRounds: JSON.stringify(rounds),
+                    jsonMatches: JSON.stringify(matches)
+                }).done(function (data) {
+                    window.location = "/Tournaments/ListTournamentsUser";
                 });
             }
         });

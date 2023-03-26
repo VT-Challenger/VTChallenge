@@ -233,6 +233,59 @@ namespace VTChallenge.Repositories {
             await this.context.Database.ExecuteSqlRawAsync(sql, pamrid);
         }
 
+        public int GetMaxIdTournament() {
+            return this.context.Tournaments.Max(t => t.Tid);
+        }
+
+        public int GetMinIdRoundTournament(int tid) {
+            return this.context.Rounds
+                    .Where(r => r.Tid == tid && r.Rid == this.context.Rounds.Where(r2 => r2.Tid == tid).Min(r2 => r2.Rid))
+                    .Select(r => r.Rid)
+                    .FirstOrDefault();
+        }
+
+        public async Task InsertTournamentAsync(int tid, string name, string rank, DateTime dateinit, string description, int pid, int players, string organizator, string image) {
+            Tournament tournament = new Tournament() {
+                Tid = tid,
+                Name = name,
+                Rank = rank,
+                DateInit = dateinit,
+                Platform = pid,
+                Players = players,
+                Organizator = organizator,
+                Image = image
+            };
+            this.context.Tournaments.Add(tournament);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task InsertRoundAsync(string name, DateTime date, int tid) {
+            Round round = new Round() {
+                Rid = await this.context.Rounds.MaxAsync(r => r.Rid)+1,
+                Name = name,
+                Date = date,
+                Tid = tid
+            };
+            this.context.Rounds.Add(round);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task InsertMatchAsync(int tblue, int tred, DateTime time, int rid) {
+            Match match = new Match() {
+                Mid = await this.context.Matches.MaxAsync(m => m.Mid) + 1,
+                Tblue = tblue,
+                Tred = tred,
+                Rblue = 0,
+                Rred = 0,
+                Date = time,
+                Rid = rid
+            };
+            this.context.Matches.Add(match);
+            await this.context.SaveChangesAsync();
+        }
+
+       
+
 
 
         #endregion

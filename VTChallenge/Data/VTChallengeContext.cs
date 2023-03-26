@@ -9,6 +9,7 @@ namespace VTChallenge.Data {
         public DbSet<Users> Users { get; set; }
         public DbSet<Round> Rounds { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
         #endregion
 
         #region VISTAS

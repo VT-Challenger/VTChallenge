@@ -21,10 +21,10 @@ namespace VTChallenge.Models {
         public string? Description { get; set; }
 
         [Column("PID")]
-        public string Platform { get; set; }
+        public int Platform { get; set; }
 
-        [Column("PALYERS")]
-        public string Players { get; set; }
+        [Column("PLAYERS")]
+        public int Players { get; set; }
 
         [Column("ORGANIZATOR")]
         public string Organizator { get; set; }
