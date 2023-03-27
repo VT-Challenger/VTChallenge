@@ -21,6 +21,11 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
+        public IActionResult Trayectoria() {
+            return View();
+        }
+
+        [AuthorizeUsers]
         public async Task<IActionResult> UpdateProfile(string uid) {
             //HAY QUE ACTUALIZAR LOS CLAIMS TAMBIEN
             await this.repo.UpdateProfileAsync(uid);

@@ -81,12 +81,12 @@ namespace VTChallenge.Repositories {
 
         public async Task<int> GetTotalWinsAsync(string uid) {
             var totalWins = (from m in this.context.Matches
-                             join r in this.context.Rounds on m.Rid equals r.Rid
-                             join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
-                             where r.Name == "Final" &&
-                             ((m.Tred == tp.Tid && m.Rred > m.Rblue) || (m.Tblue == tp.Tid && m.Rblue > m.Rred)) &&
-                             tp.Uid == uid
-                             select m).Count();
+                                             join r in this.context.Rounds on m.Rid equals r.Rid
+                                             join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
+                                             where r.Name == "Final" &&
+                                             ((m.Tred == tp.Team && m.Rred > m.Rblue) || (m.Tblue == tp.Team && m.Rblue > m.Rred)) &&
+                                             tp.Uid == uid
+                                             select m).Count();
             return (int)totalWins;
         }
 
@@ -119,6 +119,7 @@ namespace VTChallenge.Repositories {
 
         public List<TournamentComplete> GetTournaments() {
             var consulta = from data in this.context.TournamentCompletes
+                           orderby data.DateInit descending
                            select data;
 
             return consulta.ToList();
@@ -127,6 +128,7 @@ namespace VTChallenge.Repositories {
         public async Task<List<TournamentComplete>> GetTournamentCompletesFindAsync(string filtro, string rank) {
             var consulta = from data in this.context.TournamentCompletes
                            where data.Name.Contains(filtro) && (data.Rank.Contains("Unranked") || data.Rank.Contains(rank))
+                           orderby data.DateInit descending
                            select data;
 
             return await consulta.ToListAsync();
@@ -135,6 +137,7 @@ namespace VTChallenge.Repositories {
         public async Task<List<TournamentComplete>> GetTournamentsByRankAsync(string rank) {
             var consulta = from data in this.context.TournamentCompletes
                            where data.Rank.Contains(rank) || data.Rank.Contains("Unranked")
+                           orderby data.DateInit descending
                            select data;
 
             return await consulta.ToListAsync();
@@ -194,6 +197,7 @@ namespace VTChallenge.Repositories {
         public List<TournamentComplete> GetTournamentsUser(string name) {
             var consulta = from data in this.context.TournamentCompletes
                            where data.Organizator == name
+                           orderby data.DateInit descending
                            select data;
             return consulta.ToList();
         }

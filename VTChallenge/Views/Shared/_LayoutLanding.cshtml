@@ -58,60 +58,8 @@
         <div class="card_novedades">
 
             @*SACARLOS DE LA BBDD*@
-            <div class="div_novedades">
-
-                <div class="img_novedades" style='background-image: url("../imgs/neon_card.jpeg");'>
-                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
-                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
-
-                    <div class="person_nov">
-                        <span>15/80</span>
-                        <img src="" alt="">
-                    </div>
-                </div>
-
-                <div class="txt_novedades">
-                    <span class="txt_nombre">Neon Cup</span>
-                    <span class="txt_fecha">13 Mar 2023</span>
-                </div>
-
-            </div>
-
-            <div class="div_novedades">
-                <div class="img_novedades" style='background-image: url("../imgs/banner_Agua.jpg");'>
-                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
-                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
-
-                    <div class="person_nov">
-                        <span>0/80</span>
-                        <img src="../imgs/person.png" alt="">
-                    </div>
-                </div>
-
-                <div class="txt_novedades">
-                    <span class="txt_nombre">Harbor Cup</span>
-                    <span class="txt_fecha">31 Jul 2023</span>
-                </div>
-
-            </div>
-
-            <div class="div_novedades">
-                <div class="img_novedades" style='background-image: url("../imgs/neon_card.jpeg");'>
-                    <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
-                    <img class="rank_nov" src="../imgs/diamante2.png" alt="" draggable="false">
-
-                    <div class="person_nov">
-                        <span>78/80</span>
-                        <img src="../imgs/person.png" alt="">
-                    </div>
-                </div>
-
-                <div class="txt_novedades">
-                    <span class="txt_nombre">Neon Cup</span>
-                    <span class="txt_fecha">9 Ene 2023</span>
-                </div>
-
-            </div>
+            @RenderBody()
+            
 
             <div class="cont_tourn">
                 <div class="tournament-rank">
@@ -194,7 +142,7 @@
         </div>
 
     </footer>
-    @RenderBody()
+
 
 </body>
 

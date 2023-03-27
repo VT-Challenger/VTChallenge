@@ -24,7 +24,7 @@ namespace VTChallenge.Controllers {
         public async Task<IActionResult> ListTournaments() {
             string rank = HttpContext.User.FindFirst("RANGO").Value;
 
-            ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank);
+            ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank.Substring(0, rank.Length - 2).Trim());
             return View();
         }
 
@@ -36,7 +36,7 @@ namespace VTChallenge.Controllers {
             if(filtro == null) {
                 ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank);
             } else {
-                ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentCompletesFindAsync(filtro, rank);
+                ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentCompletesFindAsync(filtro, rank.Substring(0, rank.Length - 2).Trim());
             }
             return View();
         }

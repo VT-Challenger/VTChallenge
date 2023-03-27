@@ -1,3 +1,34 @@
-﻿@{
+﻿@model List<TournamentComplete>
+
+@{
     Layout = "_LayoutLanding";
 }
+
+
+@for(int i = 0; i< 3; i++) {
+
+    string rankFormat = $"{Model[i].Rank.Replace(" ", "_")}_Rank.png";
+    var fechaFormateada = Model[i].DateInit.ToString("dd MMM yyyy HH:mm");
+
+    <a asp-action="TournamentDetails" asp-controller="Tournaments" asp-route-tid="@Model[i].Tid">
+        <div class="div_novedades">
+
+            <div class="img_novedades" style='background-image: url("../imgs/tournaments/@Model[i].Image");'>
+                <!-- <div class="hover_rojo"><h1>Unirse</h1></div> -->
+                <img class="rank_nov" src="~/imgs/rangos/@rankFormat" alt="" draggable="false">
+
+                <div class="person_nov">
+                    <span>@Model[i].Inscriptions/@Model[i].LimitPlayers</span>
+                    <img src="~/imgs/icons/person.png" alt="">
+                </div>
+            </div>
+
+            <div class="txt_novedades">
+                <span class="txt_nombre">@Model[i].Name</span>
+                <span class="txt_fecha">@fechaFormateada</span>
+            </div>
+
+        </div>
+    </a>
+}
+

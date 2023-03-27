@@ -9,6 +9,7 @@
 @section scriptUpdate{
 <script>
     function UpdateProfile(uid){
+        showLoading();
         $.ajax({
             url: "/Users/UpdateProfile?uid=" + uid,
             success: (r) => {
@@ -16,7 +17,10 @@
                 "/Users/UpdateProfile?uid=" + uid;
             },
         })
-    } 
+    }
+    function showLoading() {
+        document.getElementById("loading").style.display = "block";
+    }
 </script>
 }
 <div class="menu">
@@ -35,6 +39,18 @@
     </div>
 </div>
 
+
+<div id="loading">
+    <div id="loading-content">
+        <img src="~/imgs/icons/loading.gif" alt="Cargando..." />
+        <div class="text-loading">
+            Actualizando Perfil
+            <div class="spinner-grow text-light" role="status"></div>
+            <div class="spinner-grow text-light" role="status"></div>
+            <div class="spinner-grow text-light" role="status"></div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="main-body">
         <div class="row mt-4">

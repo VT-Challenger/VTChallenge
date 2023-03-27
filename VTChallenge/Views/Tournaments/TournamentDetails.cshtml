@@ -69,6 +69,17 @@
     
 }
 
+<div id="loading">
+    <div id="loading-content">
+        <img src="~/imgs/icons/loading.gif" alt="Cargando..." />
+        <div class="text-loading">
+            Realizando Inscripcion
+            <div class="spinner-grow text-light" role="status"></div>
+            <div class="spinner-grow text-light" role="status"></div>
+            <div class="spinner-grow text-light" role="status"></div>
+        </div>
+    </div>
+</div>
 
 <div class="header">
     <img src="~/imgs/tournaments/@tournament.Image" class="image-background" />
@@ -152,7 +163,6 @@
                     <h3>@tournament.Organizator</h3>
                 </div>
                 <div class="card-organizator">
-                    <span class="title-organizator">@tournament.Organizator</span>
                     <img src="~/imgs/app/template-card.png"
                          class="template" />
                     <img src="@tournament.ImageOrganization"
@@ -288,6 +298,7 @@
             confirmButtonText: "Confirmar",
         }).then((result) => {
             if (result.isConfirmed) {
+                showLoading();
                 $.ajax({
                     url: "/Tournaments/InscriptionPlayer?tid=" + tid,
                     success: (r) => {
@@ -298,5 +309,8 @@
             }
             return false;
         });
+    }
+    function showLoading() {
+        document.getElementById("loading").style.display = "block";
     }
 </script>
