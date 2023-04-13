@@ -42,14 +42,14 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
-        public IActionResult TournamentDetails(int tid) {
+        public async Task<IActionResult> TournamentDetails(int tid) {
 
-            ViewData["TOURNAMENT"] = this.repo.GetTournamentComplete(tid);
-            ViewData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
-            ViewData["ROUNDSNAME"] = this.repo.GetRounds(tid);
-            ViewData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
-            ViewData["TOURNAMENTWINNER"] = this.repo.GetTournamentWinner(tid);
-            ViewData["VALIDATEINSCRIPTION"] = this.repo.ValidateInscription(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            ViewData["TOURNAMENT"] = await this.repo.GetTournamentComplete(tid);
+            ViewData["PLAYERSTOURNAMENT"] = await this.repo.GetPlayersTournament(tid);
+            ViewData["ROUNDSNAME"] = await this.repo.GetRounds(tid);
+            ViewData["MATCHESTOURNAMENT"] = await this.repo.GetMatchesTournament(tid);
+            ViewData["TOURNAMENTWINNER"] = await this.repo.GetTournamentWinner(tid);
+            ViewData["VALIDATEINSCRIPTION"] = await this.repo.ValidateInscription(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace VTChallenge.Controllers {
             this.repo.InscriptionPlayerTeamAle(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             //DATA CORREOS
-            TournamentComplete tournament = this.repo.GetTournamentComplete(tid);
+            TournamentComplete tournament = await this.repo.GetTournamentComplete(tid);
             string user = HttpContext.User.Identity.Name;
             int espacios = tournament.LimitPlayers - tournament.Inscriptions;
             string contenidoOrg = this.helperMails.PlantillaInscriptionOrg(user, espacios);
@@ -75,8 +75,8 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
-        public IActionResult ListTournamentsUser() {
-            ViewData["LISTTOURNAMENTSUSER"] = this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
+        public async Task<IActionResult> ListTournamentsUser() {
+            ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
             return View();
         }
 
@@ -84,7 +84,7 @@ namespace VTChallenge.Controllers {
         [HttpPost]
         public async  Task<IActionResult> ListTournamentsUser(string filtro) {
             if(filtro == null) {
-                ViewData["LISTTOURNAMENTSUSER"] = this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
+                ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
             } else {
                 ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUserFindAsync(HttpContext.User.Identity.Name, filtro);
             }
@@ -93,8 +93,8 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
-        public IActionResult DeleteTournament(int tid) {
-            this.repo.DeleteTournament(tid);
+        public async Task<IActionResult> DeleteTournament(int tid) {
+            await this.repo.DeleteTournament(tid);
             return RedirectToAction("ListTournamentsUser", "Tournaments");
         }
 
@@ -151,11 +151,11 @@ namespace VTChallenge.Controllers {
         }
 
         [AuthorizeUsers]
-        public IActionResult EditTournament(int tid) {
-            TournamentComplete tournamentComplete = this.repo.GetTournamentComplete(tid);
-            ViewData["PLAYERSTOURNAMENT"] = this.repo.GetPlayersTournament(tid);
-            ViewData["ROUNDSNAME"] = this.repo.GetRounds(tid);
-            ViewData["MATCHESTOURNAMENT"] = this.repo.GetMatchesTournament(tid);
+        public async Task<IActionResult> EditTournament(int tid) {
+            TournamentComplete tournamentComplete = await this.repo.GetTournamentComplete(tid);
+            ViewData["PLAYERSTOURNAMENT"] = await this.repo.GetPlayersTournament(tid);
+            ViewData["ROUNDSNAME"] = await this.repo.GetRounds(tid);
+            ViewData["MATCHESTOURNAMENT"] = await this.repo.GetMatchesTournament(tid);
             return View(tournamentComplete);
         }
 
@@ -177,7 +177,7 @@ namespace VTChallenge.Controllers {
                 await this.repo.UpdateMatchesTournamentAsync(match.Mid, match.Rblue, match.Rred);
             }
  
-            if(this.repo.TotalMatchesRoundWinner(rid) == this.repo.TotalMatchesRound(rid) && this.repo.TotalMatchesRound(rid) != 0) {
+            if(this.repo.TotalMatchesRoundWinner(rid) == this.repo.TotalMatchesRound(rid) && await this.repo.TotalMatchesRound(rid) != 0) {
                 await this.repo.InsertMatchesNextRoundAsync(rid);
             }
             return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });

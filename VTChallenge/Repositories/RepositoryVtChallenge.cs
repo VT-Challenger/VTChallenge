@@ -26,10 +26,10 @@ namespace VTChallenge.Repositories {
         }
 
         #region METHODS USERS
-        public List<Users> getUser() {
+        public async Task<List<Users>> GetUsers() {
             var consulta = from data in this.context.Users
                            select data;
-            return consulta.ToList();
+            return await consulta.ToListAsync();
         }
 
         public async Task<Users> FindUserAsync(string uid) {
@@ -106,23 +106,23 @@ namespace VTChallenge.Repositories {
         #endregion
 
         #region METHODS TOURNAMENTS
-        public List<TournamentPlayers> GetPlayersTournament(int tid) {
+        public async Task<List<TournamentPlayers>> GetPlayersTournament(int tid) {
             var consulta = from data in this.context.TournamentPlayers
                            where data.Tid == tid
                            select data;
-            return consulta.OrderBy(x => x.Team).ToList();
+            return await consulta.OrderBy(x => x.Team).ToListAsync();
         }
 
-        public TournamentComplete GetTournamentComplete(int tid) {
-            return this.context.TournamentCompletes.FirstOrDefault(z => z.Tid == tid);
+        public async Task<TournamentComplete> GetTournamentComplete(int tid) {
+            return await this.context.TournamentCompletes.FirstOrDefaultAsync(z => z.Tid == tid);
         }
 
-        public List<TournamentComplete> GetTournaments() {
+        public async Task<List<TournamentComplete>> GetTournaments() {
             var consulta = from data in this.context.TournamentCompletes
                            orderby data.DateInit descending
                            select data;
 
-            return consulta.ToList();
+            return await consulta.ToListAsync();
         }
 
         public async Task<List<TournamentComplete>> GetTournamentCompletesFindAsync(string filtro, string rank) {
@@ -143,14 +143,14 @@ namespace VTChallenge.Repositories {
             return await consulta.ToListAsync();
         }
 
-        public List<Round> GetRounds(int tid) {
+        public async Task<List<Round>> GetRounds(int tid) {
             var consulta = from data in this.context.Rounds
                            where data.Tid == tid
                            select data;
-            return consulta.ToList();
+            return await consulta.ToListAsync();
         }
 
-        public List<MatchRound> GetMatchesTournament(int tid) {
+        public async Task<List<MatchRound>> GetMatchesTournament(int tid) {
             var consulta = from match in this.context.Matches
                            join round in this.context.Rounds on match.Rid equals round.Rid
                            where round.Tid == tid
@@ -163,29 +163,31 @@ namespace VTChallenge.Repositories {
                                Date = match.Date,
                                Fase = round.Name
                            };
-            return consulta.ToList();
+            return await consulta.ToListAsync();
         }
 
-        public List<TournamentPlayers> GetTournamentWinner(int tid) {
+        public async Task<List<TournamentPlayers>> GetTournamentWinner(int tid) {
             string sql = "SP_GETGANADOR_TOURNAMENT @TID";
             SqlParameter pamTid = new SqlParameter("@TID", tid);
 
             var consulta = this.context.TournamentPlayers.FromSqlRaw(sql, pamTid);
-            return consulta.AsEnumerable().ToList();
+
+            //return consulta.AsEnumerable().ToList();
+            return await consulta.ToListAsync();
         }
 
-        public void InscriptionPlayerTeamAle(int tid, string uid) {
+        public async Task InscriptionPlayerTeamAle(int tid, string uid) {
             string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
             SqlParameter[] pams = new SqlParameter[] {
                 new SqlParameter("@TID", tid),
                 new SqlParameter("@UID", uid)
             };
 
-            this.context.Database.ExecuteSqlRaw(sql, pams);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pams);
         }
 
-        public bool ValidateInscription(int tid, string uid) {
-            var consulta = this.context.TournamentPlayers.FirstOrDefault(z => z.Tid == tid && z.Uid == uid);
+        public async Task<bool> ValidateInscription(int tid, string uid) {
+            var consulta = await this.context.TournamentPlayers.FirstOrDefaultAsync(z => z.Tid == tid && z.Uid == uid);
 
             if (consulta != null) {
                 return true;
@@ -194,12 +196,12 @@ namespace VTChallenge.Repositories {
             }
         }
 
-        public List<TournamentComplete> GetTournamentsUser(string name) {
+        public async Task<List<TournamentComplete>> GetTournamentsUser(string name) {
             var consulta = from data in this.context.TournamentCompletes
                            where data.Organizator == name
                            orderby data.DateInit descending
                            select data;
-            return consulta.ToList();
+            return await consulta.ToListAsync();
         }
 
 
@@ -211,11 +213,11 @@ namespace VTChallenge.Repositories {
             return await consulta.ToListAsync();
         }
 
-        public void DeleteTournament(int tid) {
+        public async Task DeleteTournament(int tid) {
             string sql = "SP_DELETE_TOURNAMENT @TID";
             SqlParameter pamTid = new SqlParameter("@TID", tid);
 
-            this.context.Database.ExecuteSqlRaw(sql, pamTid);
+            await this.context.Database.ExecuteSqlRawAsync(sql, pamTid);
         }
 
         public async Task<Match> FindMatchAsync(int mid) {
@@ -238,13 +240,13 @@ namespace VTChallenge.Repositories {
             await this.context.SaveChangesAsync();
         }
 
-        public int TotalMatchesRoundWinner(int rid) {
-            var consulta = this.context.Matches.Where(m => m.Rid == rid && (m.Rblue != null && m.Rred != null && m.Rblue != m.Rred)).Count();
+        public async Task<int> TotalMatchesRoundWinner(int rid) {
+            var consulta = await this.context.Matches.Where(m => m.Rid == rid && (m.Rblue != null && m.Rred != null && m.Rblue != m.Rred)).CountAsync();
             return (int)consulta;
         }
 
-        public int TotalMatchesRound(int rid) {
-            var consulta = this.context.Matches.Where(m => m.Rid == rid).Count();
+        public async Task<int> TotalMatchesRound(int rid) {
+            var consulta = await this.context.Matches.Where(m => m.Rid == rid).CountAsync();
             return (int)consulta;
         }
 
@@ -310,12 +312,6 @@ namespace VTChallenge.Repositories {
         public async Task<Round> FindRoundAsync(int rid) {
             return await this.context.Rounds.FirstOrDefaultAsync(x => x.Rid == rid);
         }
-
-
-
-
-
-
 
 
         #endregion

@@ -54,7 +54,7 @@
                         <p class="card-footer-text">
                             @fechaFormateada
                         </p>
-                        @if (repo.ValidateInscription(tournament.Tid, uid)) {
+                        @if (await repo.ValidateInscription(tournament.Tid, uid)) {
                             <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Detalles</a>
                         }else if(tournament.Inscriptions < tournament.LimitPlayers) {
                             <a asp-controller="Tournaments" asp-action="TournamentDetails" asp-route-tid="@tournament.Tid" class="card-button">Unirse</a>

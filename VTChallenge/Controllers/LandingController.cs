@@ -11,8 +11,8 @@ namespace VTChallenge.Controllers {
             this.repo = repo;
         }
 
-        public IActionResult Index() {
-            List<TournamentComplete> tournaments = this.repo.GetTournaments();
+        public async Task<IActionResult> Index() {
+            List<TournamentComplete> tournaments = await this.repo.GetTournaments();
             return View(tournaments);
         }
     }
