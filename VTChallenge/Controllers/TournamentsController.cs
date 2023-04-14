@@ -33,7 +33,7 @@ namespace VTChallenge.Controllers {
         public async Task<IActionResult> ListTournaments(string filtro) {
             string rank = HttpContext.User.FindFirst("RANGO").Value;
 
-            if(filtro == null) {
+            if (filtro == null) {
                 ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentsByRankAsync(rank);
             } else {
                 ViewData["LISTTOURNAMENTS"] = await this.repo.GetTournamentCompletesFindAsync(filtro, rank.Substring(0, rank.Length - 2).Trim());
@@ -55,7 +55,7 @@ namespace VTChallenge.Controllers {
 
         [AuthorizeUsers]
         public async Task<IActionResult> InscriptionPlayer(int tid) {
-            this.repo.InscriptionPlayerTeamAle(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            await this.repo.InscriptionPlayerTeamAle(tid, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             //DATA CORREOS
             TournamentComplete tournament = await this.repo.GetTournamentComplete(tid);
@@ -82,13 +82,13 @@ namespace VTChallenge.Controllers {
 
         [AuthorizeUsers]
         [HttpPost]
-        public async  Task<IActionResult> ListTournamentsUser(string filtro) {
-            if(filtro == null) {
+        public async Task<IActionResult> ListTournamentsUser(string filtro) {
+            if (filtro == null) {
                 ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUser(HttpContext.User.Identity.Name);
             } else {
                 ViewData["LISTTOURNAMENTSUSER"] = await this.repo.GetTournamentsUserFindAsync(HttpContext.User.Identity.Name, filtro);
             }
-  
+
             return View();
         }
 
@@ -106,13 +106,13 @@ namespace VTChallenge.Controllers {
         public async Task<IActionResult> CreateTournament(string jsonTournament, string jsonRounds, string jsonMatches, IFormFile imageTournament) {
             int tid = this.repo.GetMaxIdTournament();
             Tournament tournament = JsonConvert.DeserializeObject<Tournament>(jsonTournament);
-            
+
             string nameImage = "vtchallenge" + HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value + "-" + tournament.Name.ToString().Replace(" ", "-") + ".jpg";
 
             string protocol = HttpContext.Request.IsHttps ? "https://" : "http://";
             string domainName = HttpContext.Request.Host.Value.ToString();
             string url = protocol + domainName;
-            await this.helperFiles.UploadFileAsync(imageTournament, nameImage , url, Folders.Tournaments);
+            await this.helperFiles.UploadFileAsync(imageTournament, nameImage, url, Folders.Tournaments);
 
             await this.repo.InsertTournamentAsync(
                 tournament.Tid = tid + 1,
@@ -172,12 +172,12 @@ namespace VTChallenge.Controllers {
         [HttpPost]
         public async Task<IActionResult> UpdateUserTournament(int tid, string data) {
             List<Match> partidas = JsonConvert.DeserializeObject<List<Match>>(data);
-            int rid = partidas[partidas.Count -1].Rid;
+            int rid = partidas[partidas.Count - 1].Rid;
             foreach (Match match in partidas) {
                 await this.repo.UpdateMatchesTournamentAsync(match.Mid, match.Rblue, match.Rred);
             }
- 
-            if(this.repo.TotalMatchesRoundWinner(rid) == this.repo.TotalMatchesRound(rid) && await this.repo.TotalMatchesRound(rid) != 0) {
+
+            if (this.repo.TotalMatchesRoundWinner(rid) == this.repo.TotalMatchesRound(rid) && await this.repo.TotalMatchesRound(rid) != 0) {
                 await this.repo.InsertMatchesNextRoundAsync(rid);
             }
             return RedirectToAction("EditTournament", "Tournaments", new { tid = tid });
