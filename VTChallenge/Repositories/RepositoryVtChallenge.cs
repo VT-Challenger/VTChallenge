@@ -1,8 +1,10 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 using VTChallenge.Data;
 using VTChallenge.Helpers;
 using VTChallenge.Models;
@@ -176,16 +178,45 @@ namespace VTChallenge.Repositories {
             return await consulta.ToListAsync();
         }
 
+        //public async Task InscriptionPlayerTeamAle(int tid, string uid) {
+        //    string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
+        //    SqlParameter[] pams = new SqlParameter[] {
+        //        new SqlParameter("@TID", tid),
+        //        new SqlParameter("@UID", uid)
+        //    };
+
+        //    await this.context.Database.ExecuteSqlRawAsync(sql, pams);
+        //}
+
         public async Task InscriptionPlayerTeamAle(int tid, string uid) {
-            string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
+            var tournament = await this.context.Tournaments.FirstOrDefaultAsync(x => x.Tid == tid);
+            int numEquipos = (tournament.Players / 5);
+
+            List<int> equiposTournament = Enumerable.Range(1, numEquipos).ToList();
+
+            var teamComplete = this.context.TournamentPlayers.Where(tp => tp.Tid == tid)
+                                                                   .GroupBy(tp => tp.Team)
+                                                                   .Where(g => g.Count() == 5)
+                                                                   .Select(g => g.Key);
+            List<int> listTeamsComplete = await teamComplete.ToListAsync();
+
+            //LISTA DE LOS EQUIPOS DISPONIBLES
+            List<int> listEquiposDisponibles = equiposTournament.Except(listTeamsComplete).Concat(listTeamsComplete.Except(equiposTournament)).ToList();
+
+            //ESCOGER UN EQUIPO RANDOM
+            Random random = new Random();
+            int indiceAleatorio = random.Next(listEquiposDisponibles.Count);
+            int team = listEquiposDisponibles[indiceAleatorio];
+
+            string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID,@TEAM";
             SqlParameter[] pams = new SqlParameter[] {
-                new SqlParameter("@TID", tid),
-                new SqlParameter("@UID", uid)
-            };
+                    new SqlParameter("@TID", tid),
+                    new SqlParameter("@UID", uid),
+                    new SqlParameter("@TEAM", team)
+                };
 
             await this.context.Database.ExecuteSqlRawAsync(sql, pams);
         }
-
         public async Task<bool> ValidateInscription(int tid, string uid) {
             var consulta = await this.context.TournamentPlayers.FirstOrDefaultAsync(z => z.Tid == tid && z.Uid == uid);
 
