@@ -82,14 +82,15 @@ namespace VTChallenge.Repositories {
         }
 
         public async Task<int> GetTotalWinsAsync(string uid) {
-            var totalWins = (from m in this.context.Matches
-                                             join r in this.context.Rounds on m.Rid equals r.Rid
-                                             join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
-                                             where r.Name == "Final" &&
-                                             ((m.Tred == tp.Team && m.Rred > m.Rblue) || (m.Tblue == tp.Team && m.Rblue > m.Rred)) &&
-                                             tp.Uid == uid
-                                             select m).Count();
-            return (int)totalWins;
+            var victories = (from m in this.context.Matches
+                             join r in this.context.Rounds on m.Rid equals r.Rid
+                             where r.Name == "Final" &&
+                                   ((m.Rred > m.Rblue) || (m.Rblue > m.Rred))
+                             join tp in this.context.TournamentPlayers on r.Tid equals tp.Tid
+                             where tp.Uid == uid
+                             select r.Tid).Distinct().Count();
+
+            return (int)victories;
         }
 
         public async Task UpdateProfileAsync(string uid) {
@@ -177,16 +178,6 @@ namespace VTChallenge.Repositories {
             //return consulta.AsEnumerable().ToList();
             return await consulta.ToListAsync();
         }
-
-        //public async Task InscriptionPlayerTeamAle(int tid, string uid) {
-        //    string sql = "SP_INSCRIPTION_PLAYER_TEAMALE @TID,@UID";
-        //    SqlParameter[] pams = new SqlParameter[] {
-        //        new SqlParameter("@TID", tid),
-        //        new SqlParameter("@UID", uid)
-        //    };
-
-        //    await this.context.Database.ExecuteSqlRawAsync(sql, pams);
-        //}
 
         public async Task InscriptionPlayerTeamAle(int tid, string uid) {
             var tournament = await this.context.Tournaments.FirstOrDefaultAsync(x => x.Tid == tid);
