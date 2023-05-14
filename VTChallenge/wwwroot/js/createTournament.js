@@ -234,6 +234,8 @@ function generateData() {
     formData.append("jsonRounds", JSON.stringify(rounds));
     formData.append("jsonMatches", JSON.stringify(matches));
 
+    console.log(formData);
+
 
 
     if (rounds.length == 0 || matches.length == 0) {
